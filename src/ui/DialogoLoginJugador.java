@@ -12,6 +12,7 @@ import dominio.Usuario;
 import java.awt.Frame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 //import uy.edu.ort.dominio.Usuario;
 //import uy.edu.ort.dominio.UsuarioGenerico;
 //import uy.edu.ort.logica.FachadaServicios;
@@ -22,21 +23,17 @@ import java.util.logging.Logger;
  */
 public class DialogoLoginJugador extends DialogoLogin {
 
-    public DialogoLoginJugador(Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoLoginJugador(Frame parent, boolean modal,FachadaServicios f) {
+        super(parent, modal,f);
         this.setTitle("Ingrese sus credenciales de Jugador");
     }
 
     @Override
-    protected Usuario loginUsuario(String cedula,String password) {
-        try {
-            return FachadaServicios.getInstancia().loginJugador(cedula, password);
-        } catch (PasswordUsuarioInvalidoException ex) {
-            Logger.getLogger(DialogoLoginJugador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CedulaUsuarioInvalidaException ex) {
-            Logger.getLogger(DialogoLoginJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public Usuario loginUsuario(String cedula,String password) {
+        
+            return super.controlador.loginJugador(cedula, password);
+      
+     
     }
 
     @Override
@@ -45,5 +42,10 @@ public class DialogoLoginJugador extends DialogoLogin {
         
 //        TODO aca va un dialogo que muestra las mesas activas?
 //        new DialogoAgenda((java.awt.Frame) this.getParent(), false, (Usuario) usuario).setVisible(true);
+    }
+
+    @Override
+    public void mostrarMensajeError(String mensaje) {
+            JOptionPane.showMessageDialog(this, "Login incorrecto, revise usuario y passoword y reintente.", "Login incorrecto", JOptionPane.ERROR_MESSAGE);
     }
 }

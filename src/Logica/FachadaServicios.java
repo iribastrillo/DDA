@@ -16,7 +16,7 @@ import dominio.Usuario;
  *
  * @author Usuario
  */
-public  class FachadaServicios {
+public class FachadaServicios {
     
     private static  FachadaServicios instancia;
     private ServicioMesas servicioMesa;
@@ -31,7 +31,7 @@ public  class FachadaServicios {
     }
     
 
-    public FachadaServicios() {
+    private FachadaServicios() {
       servicioMesa=new ServicioMesas();
       servicioUsuarios=new ServicioUsuarios();
     }

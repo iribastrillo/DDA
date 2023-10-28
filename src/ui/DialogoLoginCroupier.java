@@ -13,6 +13,7 @@ import dominio.Usuario;
 import java.awt.Frame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 //import uy.edu.ort.dominio.Administrador;
 //import uy.edu.ort.dominio.UsuarioGenerico;
 //import uy.edu.ort.logica.FachadaServicios;
@@ -23,8 +24,8 @@ import java.util.logging.Logger;
  */
 public class DialogoLoginCroupier extends DialogoLogin {
 
-    public DialogoLoginCroupier(Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoLoginCroupier(Frame parent, boolean modal, FachadaServicios f) {
+        super(parent, modal,f);
         this.setTitle("Ingrese sus credenciales de Administrador");
     }
 
@@ -33,15 +34,11 @@ public class DialogoLoginCroupier extends DialogoLogin {
 
 
     @Override
-    protected Usuario loginUsuario(String cedula, String password) {
-           try {
-            return FachadaServicios.getInstancia().loginCroupier(cedula, password);
-        } catch (PasswordUsuarioInvalidoException ex) {
-            Logger.getLogger(DialogoLoginJugador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CedulaUsuarioInvalidaException ex) {
-            Logger.getLogger(DialogoLoginJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public Usuario loginUsuario(String cedula, String password) {
+           
+               
+            return super.controlador.loginCroupier(cedula, password);
+         
      }
     
         @Override
@@ -50,4 +47,11 @@ public class DialogoLoginCroupier extends DialogoLogin {
 //        new DialogoUsuariosConectados((java.awt.Frame) this.getParent(), false, (Croupier) usuario).setVisible(true);
         
     }
+
+    @Override
+    public void mostrarMensajeError(String mensaje) {
+            JOptionPane.showMessageDialog(this, "Login incorrecto, revise usuario y passoword y reintente.", "Login incorrecto", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
 }

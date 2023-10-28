@@ -1,5 +1,8 @@
 package ui;
 
+import Controlador.ControladorLogin;
+import Logica.FachadaServicios;
+import Vista.IVistaLogin;
 import dominio.Usuario;
 import javax.swing.JOptionPane;
 //import uy.edu.ort.dominio.Usuario;
@@ -10,16 +13,20 @@ import javax.swing.JOptionPane;
  *
  * @author ddauser
  */
-public abstract class DialogoLogin extends javax.swing.JDialog {
-
+public abstract class DialogoLogin extends javax.swing.JDialog implements IVistaLogin {
+    
+     protected final ControladorLogin controlador;
     /**
      * Creates new form DialogoLogin
      */
-    public DialogoLogin(java.awt.Frame parent, boolean modal) {
+    public DialogoLogin(java.awt.Frame parent, boolean modal, FachadaServicios f) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(parent);
+        controlador=new ControladorLogin(f,this);
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,7 +120,9 @@ public abstract class DialogoLogin extends javax.swing.JDialog {
         }
     }
 
-    protected abstract Usuario loginUsuario(String cedula, String password);
+    public abstract Usuario loginUsuario(String cedula, String password);
 
     protected abstract void ejecutarCasoUsoInicial(Usuario usuario);
+    
+    public abstract void mostrarMensajeError(String mensaje);
 }

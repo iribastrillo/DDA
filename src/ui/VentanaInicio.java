@@ -2,6 +2,9 @@ package ui;
 
 //import uy.edu.ort.logica.FachadaServicios;
 
+import Logica.FachadaServicios;
+
+
 /**
  *
  * @author ddauser
@@ -11,9 +14,11 @@ public class VentanaInicio extends javax.swing.JFrame {
     /**
      * Creates new form VentanaInicio
      */
-    public VentanaInicio() {
+    FachadaServicios f;
+    public VentanaInicio(FachadaServicios f) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.f=f;
     }
 
     @SuppressWarnings("unchecked")
@@ -80,10 +85,11 @@ public class VentanaInicio extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loginJugador() {
-        new DialogoLoginJugador(this, false).setVisible(true);
+        new DialogoLoginJugador(this, false,f).setVisible(true);
     }
 
     private void loginCroupier() {
-        new DialogoLoginCroupier(this, false).setVisible(true);
+        new DialogoLoginCroupier(this, false,f).setVisible(true);
+        
     }
 }

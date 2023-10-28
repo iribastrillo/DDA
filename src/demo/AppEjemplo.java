@@ -6,6 +6,7 @@ package demo;
 
 import Exceptions.UsuarioYaExisteException;
 import Logica.DatosPrueba;
+import Logica.FachadaServicios;
 import componente.PanelRuleta;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,16 +22,18 @@ public class AppEjemplo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+          FachadaServicios f = FachadaServicios.getInstancia();
        DatosPrueba datosPrueba = new DatosPrueba();
         try {
+            
             datosPrueba.iniciar();
         } catch (UsuarioYaExisteException ex) {
             System.out.println("Algun usuario ya existe");
             Logger.getLogger(AppEjemplo.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-          new VentanaInicio().setVisible(true);
+      
+          new VentanaInicio(f).setVisible(true);
        
 //       new VentanaMesa().setVisible(true);
 //       new PanelRuleta().setVisible(true);
