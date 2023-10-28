@@ -8,7 +8,7 @@ package ui;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Logica.FachadaServicios;
-import dominio.Croupier;
+import dominio.Crupier;
 import dominio.Usuario;
 import java.awt.Frame;
 import java.util.logging.Level;
@@ -43,7 +43,9 @@ public class DialogoLoginCroupier extends DialogoLogin {
     
         @Override
     protected void ejecutarCasoUsoInicial(Usuario usuario) {
-        System.out.println("Caso de uso inicial para usuario Croupier");
+     
+        System.out.println("DialogoLoginCrupier: Caso de uso inicial para usuario Croupier");
+        new DialogoCrearMesa((java.awt.Frame) this.getParent(),false,super.f,(Crupier) usuario).setVisible(true);
 //        new DialogoUsuariosConectados((java.awt.Frame) this.getParent(), false, (Croupier) usuario).setVisible(true);
         
     }

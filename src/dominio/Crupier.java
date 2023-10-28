@@ -8,17 +8,17 @@ package dominio;
  *
  * @author Usuario
  */
-public class Croupier extends Usuario {
+public class Crupier extends Usuario {
     
     private Mesa mesaAsignada;
   
 
-    public Croupier(Mesa mesaAsignada, String nombreCompleto, String cedula, String password) {
+    public Crupier(Mesa mesaAsignada, String nombreCompleto, String cedula, String password) {
         super(nombreCompleto, cedula, password);
         this.mesaAsignada = mesaAsignada;
     }
     
-    public Croupier(  String cedula, String password) {
+    public Crupier(  String cedula, String password) {
         super( cedula, password);
      
     }

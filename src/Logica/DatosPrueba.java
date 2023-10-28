@@ -5,7 +5,7 @@
 package Logica;
 
 import Exceptions.UsuarioYaExisteException;
-import dominio.Croupier;
+import dominio.Crupier;
 import dominio.Jugador;
 import dominio.Mesa;
 import java.util.logging.Level;
@@ -31,13 +31,13 @@ public class DatosPrueba {
         Mesa mesa_2 = new Mesa();
         Mesa mesa_3 = new Mesa();
 
-        Croupier[] crupieres = new Croupier[]{
-            new Croupier(mesa_1, "Croupier_1", "101", "aaa"),
-            new Croupier(mesa_2, "Croupier_2", "102", "bbb"),
-            new Croupier(mesa_3, "Croupier_3", "103", "ccc")
+        Crupier[] crupieres = new Crupier[]{
+            new Crupier(mesa_1, "Croupier_1", "101", "aaa"),
+            new Crupier(mesa_2, "Croupier_2", "102", "bbb"),
+            new Crupier(mesa_3, "Croupier_3", "103", "ccc")
         };
 
-        for (Croupier c : crupieres) {
+        for (Crupier c : crupieres) {
             FachadaServicios.getInstancia().agrear(c);
         }
 

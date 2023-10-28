@@ -8,6 +8,7 @@ package ui;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Logica.FachadaServicios;
+import dominio.Jugador;
 import dominio.Usuario;
 import java.awt.Frame;
 import java.util.logging.Level;
@@ -38,7 +39,8 @@ public class DialogoLoginJugador extends DialogoLogin {
 
     @Override
     protected void ejecutarCasoUsoInicial(Usuario usuario) {
-        System.out.println("Caso de uso Incial para usuario Jugador");
+        System.out.println("DialogoLoginCrupier: Caso de uso inicial para usuario Croupier");
+        new DialogoListarMesas((java.awt.Frame) this.getParent(),false,super.f,(Jugador) usuario).setVisible(true);
         
 //        TODO aca va un dialogo que muestra las mesas activas?
 //        new DialogoAgenda((java.awt.Frame) this.getParent(), false, (Usuario) usuario).setVisible(true);

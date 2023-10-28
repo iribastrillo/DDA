@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 public abstract class DialogoLogin extends javax.swing.JDialog implements IVistaLogin {
     
      protected final ControladorLogin controlador;
+     protected final FachadaServicios f;
     /**
      * Creates new form DialogoLogin
      */
@@ -24,6 +25,7 @@ public abstract class DialogoLogin extends javax.swing.JDialog implements IVista
         initComponents();
         this.setLocationRelativeTo(parent);
         controlador=new ControladorLogin(f,this);
+        this.f=f;
     }
     
 

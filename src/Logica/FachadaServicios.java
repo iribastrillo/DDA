@@ -8,7 +8,7 @@ import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.NombreUsuarioInvalidoException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioYaExisteException;
-import dominio.Croupier;
+import dominio.Crupier;
 import dominio.Jugador;
 import dominio.Usuario;
 
@@ -45,7 +45,7 @@ public class FachadaServicios {
 
     public Usuario loginCroupier(String cedula, String password) throws CedulaUsuarioInvalidaException, PasswordUsuarioInvalidoException {
         
-            Croupier u = new Croupier(cedula, password);
+            Crupier u = new Crupier(cedula, password);
             u.validarUsuarioLogin();
            return servicioUsuarios.loginCroupier(u);
     
@@ -62,7 +62,7 @@ public class FachadaServicios {
 
     }
 
-    void agrear(Croupier croupier) throws UsuarioYaExisteException {
+    void agrear(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
     }
     

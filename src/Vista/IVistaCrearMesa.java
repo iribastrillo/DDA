@@ -4,14 +4,10 @@
  */
 package Vista;
 
-import dominio.Usuario;
-
 /**
  *
  * @author Usuario
  */
-public interface IVistaLogin {
-   public Usuario loginUsuario(String cedula, String password);
-   
-   public void mostrarMensajeError(String mensaje);
- }
+public interface IVistaCrearMesa {
+    
+}

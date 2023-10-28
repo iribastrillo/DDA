@@ -31,9 +31,10 @@ public class ControladorLogin {
         try {
             return fachada.loginCroupier(cedula, password);
         } catch (CedulaUsuarioInvalidaException ex) {
-            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            vista.mostrarMensajeError(ex.getMessage());
         } catch (PasswordUsuarioInvalidoException ex) {
-            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
+            vista.mostrarMensajeError(ex.getMessage());
         }
         return null;
     }
@@ -42,12 +43,11 @@ public class ControladorLogin {
         try {
             return fachada.loginJugador(cedula, password);
         } catch (CedulaUsuarioInvalidaException ex) {
-            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
+            vista.mostrarMensajeError(ex.getMessage());
         } catch (PasswordUsuarioInvalidoException ex) {
-            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, null, ex);
+            vista.mostrarMensajeError(ex.getMessage());
         }
         return null;
     }
-     
 
 }

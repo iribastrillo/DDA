@@ -5,7 +5,7 @@
 package Logica;
 
 import Exceptions.UsuarioYaExisteException;
-import dominio.Croupier;
+import dominio.Crupier;
 import dominio.Jugador;
 import dominio.Usuario;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.HashMap;
  */
 public class ServicioUsuarios {
 
-    private HashMap<String,Croupier> croupieres;
+    private HashMap<String,Crupier> croupieres;
     private HashMap<String,Jugador> jugadores;
     private HashMap<String, Jugador> jugadoresActivos;
 
@@ -31,7 +31,7 @@ public class ServicioUsuarios {
         
     }
 
-    void agregar(Croupier croupier) throws UsuarioYaExisteException {
+    void agregar(Crupier croupier) throws UsuarioYaExisteException {
         if(!croupieres.containsKey(croupier.getCedula())){
         croupieres.put(croupier.getCedula(),croupier);}
         else{
@@ -59,9 +59,9 @@ public class ServicioUsuarios {
         return null;
     }
 
-    public Croupier loginCroupier(Usuario u) {
+    public Crupier loginCroupier(Usuario u) {
         if (croupieres.containsKey(u.getCedula())){
-           Croupier c = croupieres.get(u.getCedula());
+           Crupier c = croupieres.get(u.getCedula());
            if (c.getPassword().equals(u.getPassword())){
                return c;
            }
