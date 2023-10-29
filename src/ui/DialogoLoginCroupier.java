@@ -26,7 +26,7 @@ public class DialogoLoginCroupier extends DialogoLogin {
 
     public DialogoLoginCroupier(Frame parent, boolean modal, FachadaServicios f) {
         super(parent, modal,f);
-        this.setTitle("Ingrese sus credenciales de Administrador");
+        this.setTitle("Ingrese sus credenciales de Crupier");
     }
 
  

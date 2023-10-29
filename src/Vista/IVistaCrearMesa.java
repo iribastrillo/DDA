@@ -5,6 +5,7 @@
 package Vista;
 
 import dominio.EnumTipoApuesta;
+import dominio.Mesa;
 
 /**
  *
@@ -15,4 +16,6 @@ public interface IVistaCrearMesa {
    public void cargarListaTiposDeApuestas(String[] tiposApuesta);
    public void tipoDeApuestaSeleccionado();
    public void iniciarMesa();
+
+    public void mostrarMesaCrupier(Mesa mesaIniciada);
 }

@@ -31,7 +31,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         mLoginAdministrador = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Bienvenido a Sistema de Agendas");
+        setTitle("Bienvenido a Sistema de Ruleta");
 
         jMenu1.setText("Usuario");
 

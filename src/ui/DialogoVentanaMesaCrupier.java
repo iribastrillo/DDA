@@ -1,20 +1,28 @@
-package demo;
+package ui;
 
+import Controlador.ControladorVistaMesaCrupier;
+import Logica.FachadaServicios;
+import Vista.IVistaMesaCrupier;
 import componente.PanelRuleta;
+import dominio.Mesa;
 
 /**
  *
  * @author digregor
  */
-public class VentanaMesa_bkp extends javax.swing.JFrame {
+public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier{
 
     int apuestaRojo = 0;
+        protected final ControladorVistaMesaCrupier controlador;
+    protected final Mesa m;
 
     /**
      * Creates new form NewJFrame
      */
-    public VentanaMesa_bkp() {
+    public DialogoVentanaMesaCrupier(Mesa m, FachadaServicios f) {
         initComponents();
+        this.m=m;
+        this.controlador=new ControladorVistaMesaCrupier(f,this); 
     }
 
     /**

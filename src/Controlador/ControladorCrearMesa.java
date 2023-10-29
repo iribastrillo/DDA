@@ -8,6 +8,7 @@ import Logica.FachadaServicios;
 import Vista.IVistaCrearMesa;
 import dominio.Crupier;
 import dominio.EnumTipoApuesta;
+import dominio.Mesa;
 import java.util.ArrayList;
 
 /**
@@ -50,6 +51,9 @@ public class ControladorCrearMesa {
         for (String tipoApuesta:tiposDeApuesta){
             tiposDeApuestaSeleccionados.add(EnumTipoApuesta.valueOf(tipoApuesta));
         }
-        fachada.iniciarMesa(c,tiposDeApuestaSeleccionados);
+        Mesa mesaIniciada=fachada.iniciarMesa(c,tiposDeApuestaSeleccionados);
+        if(mesaIniciada!= null){
+            vista.mostrarMesaCrupier(mesaIniciada);
+        }
     }
 }

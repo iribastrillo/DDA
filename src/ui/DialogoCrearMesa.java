@@ -27,6 +27,7 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
 
     protected final ControladorCrearMesa controlador;
     protected final Crupier c;
+    protected final FachadaServicios f;
 
     /**
      * Creates new form DialogoCrearMesa
@@ -38,6 +39,7 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
         this.c = crupier;
         this.setTitle(String.format("Crear Mesa, Crupier logueado: %s", c.getNombreCompleto()));
         controlador.cargarListaTiposDeApuestas();
+        this.f=f;
     }
 
     /**
@@ -130,11 +132,18 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     public void iniciarMesa() {
       Object[] tipoApuestaSeleccionada =  jListaTiposApuesta.getSelectedValues();
       String[] stringArr=Arrays.copyOf(tipoApuestaSeleccionada,tipoApuestaSeleccionada.length,String[].class);
+        System.out.printf("Tipos de Apuesta Seleccionadas para la mesa %s",Arrays.toString(stringArr));
         controlador.inciarMesa(c,stringArr);
     }
     
-    public void mostrarMesa(Mesa mesaIniciada){
-        
+    @Override
+    public void mostrarMesaCrupier(Mesa mesaIniciada){
+                new DialogoVentanaMesaCrupier(mesaIniciada,f).setVisible(true);
+                this.dispose();
+                 
+                 
+                //new DialogoVentanaMesaCrupier((java.awt.Frame) this.getParent(),false,super.f,(Crupier) usuario).setVisible(true);
+
         
     }
 }

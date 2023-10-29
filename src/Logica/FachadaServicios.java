@@ -13,6 +13,7 @@ import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
 import dominio.EnumTipoApuesta;
 import dominio.Jugador;
+import dominio.Mesa;
 import dominio.Usuario;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,8 +72,8 @@ public class FachadaServicios {
         servicioUsuarios.agregar(croupier);
     }
 
-    public void iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) {
-        servicioMesa.agregar(c,tipoApuestas);
+    public Mesa iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) {
+       return servicioMesa.agregar(c,tipoApuestas);
      }
 
     HashMap<String, Crupier> getCrupieres() {

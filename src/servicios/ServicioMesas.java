@@ -23,10 +23,12 @@ public class ServicioMesas {
         this.mesasCerradas = new ArrayList<>();
     }
 
-    public void agregar(Crupier c, ArrayList<EnumTipoApuesta> tipoApuestas) {
-      
+    public Mesa agregar(Crupier c, ArrayList<EnumTipoApuesta> tipoApuestas) {
+      /// Agregar excepciones si hay..
         Mesa m = new Mesa(tipoApuestas,c);
         mesasActivas.add(m);
+        
+        return m;
 
     }
     
