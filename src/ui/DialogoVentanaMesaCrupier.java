@@ -4,16 +4,18 @@ import Controlador.ControladorVistaMesaCrupier;
 import Logica.FachadaServicios;
 import Vista.IVistaMesaCrupier;
 import componente.PanelRuleta;
+import dominio.EnumTipoApuesta;
 import dominio.Mesa;
+import java.util.ArrayList;
 
 /**
  *
  * @author digregor
  */
-public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier{
+public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier {
 
     int apuestaRojo = 0;
-        protected final ControladorVistaMesaCrupier controlador;
+    protected final ControladorVistaMesaCrupier controlador;
     protected final Mesa m;
 
     /**
@@ -21,8 +23,13 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
      */
     public DialogoVentanaMesaCrupier(Mesa m, FachadaServicios f) {
         initComponents();
-        this.m=m;
-        this.controlador=new ControladorVistaMesaCrupier(f,this); 
+        ocultarDocenas();
+        ocultarColor();
+        ocultarParidad();
+        this.m = m;
+        this.controlador = new ControladorVistaMesaCrupier(f, this);
+        ocultarColor();
+        controlador.mostrarTiposApuestaSeleccionados(m);
     }
 
     /**
@@ -41,11 +48,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         jButton5 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
         r = new componente.PanelRuleta();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,38 +97,10 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
             }
         });
 
-        jButton6.setText("Mostrar colores");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setText("Ocultar colores");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
         jButton8.setText("Reanudar tablero");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
-            }
-        });
-
-        jButton9.setText("Mostrar docenas");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setText("Ocultar docenas");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
             }
         });
 
@@ -137,7 +112,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,17 +133,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton7)))
-                        .addGap(64, 64, 64))))
+                        .addGap(70, 474, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,15 +141,10 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                 .addGap(18, 18, 18)
                 .addComponent(r, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton7)
-                    .addComponent(jButton6))
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton10)
-                    .addComponent(jButton9)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -213,16 +173,14 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         r.setApuesta(23, 0);
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void mostrarColor() {                                         
         r.setVisible(PanelRuleta.ROJO, true);
         r.setVisible(PanelRuleta.NEGRO, true);
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    }                                        
+    private void ocultarColor() {                                         
         r.setVisible(PanelRuleta.ROJO, false);
         r.setVisible(PanelRuleta.NEGRO, false);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }                                        
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         r.pausar();
@@ -251,33 +209,55 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
             r.eliminarEscuchadores();
         }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void mostrarDocenas() {                                         
         r.setVisible(PanelRuleta.PRIMERA_DOCENA, true);
         r.setVisible(PanelRuleta.SEGUNDA_DOCENA, true);
         r.setVisible(PanelRuleta.TERCERA_DOCENA, true);
 
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    }                                        
+    private void ocultarDocenas() {                                         
         r.setVisible(PanelRuleta.PRIMERA_DOCENA, false);
         r.setVisible(PanelRuleta.SEGUNDA_DOCENA, false);
         r.setVisible(PanelRuleta.TERCERA_DOCENA, false);
-    }//GEN-LAST:event_jButton10ActionPerformed
+
+    }        
+    
+    private void mostrarParidad(){
+        r.setVisible(PanelRuleta.PAR,true);
+        r.setVisible(PanelRuleta.IMPAR,true);
+    }
+     private void ocultarParidad(){
+        r.setVisible(PanelRuleta.PAR,false);
+        r.setVisible(PanelRuleta.IMPAR,false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JTextField jTextField1;
     private componente.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarTiposApuestaSeleccionados(ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados) {
+        for (EnumTipoApuesta enumApuesta : listarTiposApuestaSeleccionados) {
+            switch (enumApuesta) {
+                case Paridad: 
+                    mostrarParidad();
+                    break;
+                case Colores:
+                    mostrarColor();
+                    break;
+                case Docenas:
+                    mostrarDocenas();
+                    break;
+
+            }
+        }
+    }
 }

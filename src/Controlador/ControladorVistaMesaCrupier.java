@@ -6,6 +6,7 @@ package Controlador;
 
 import Logica.FachadaServicios;
 import Vista.IVistaMesaCrupier;
+import dominio.Mesa;
 
 /**
  *
@@ -19,6 +20,11 @@ public class ControladorVistaMesaCrupier {
     public ControladorVistaMesaCrupier(FachadaServicios fachada, IVistaMesaCrupier vista) {
         this.fachada = fachada;
         this.vista = vista;
+    }
+
+    public void mostrarTiposApuestaSeleccionados(Mesa m) {
+        vista.mostrarTiposApuestaSeleccionados(m.listarTiposApuestaSeleccionados());
+
     }
     
     

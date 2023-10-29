@@ -22,21 +22,21 @@ public class AppEjemplo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-          FachadaServicios f = FachadaServicios.getInstancia();
-       DatosPrueba datosPrueba = new DatosPrueba();
+        FachadaServicios f = FachadaServicios.getInstancia();
+        DatosPrueba datosPrueba = new DatosPrueba();
         try {
-            
+
             datosPrueba.iniciar(f);
         } catch (UsuarioYaExisteException ex) {
             System.out.println("Algun usuario ya existe");
             Logger.getLogger(AppEjemplo.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         }
-      
-          new VentanaInicio(f).setVisible(true);
-       
+
+        new VentanaInicio(f).setVisible(true);
+
 //       new VentanaMesa().setVisible(true);
 //       new PanelRuleta().setVisible(true);
     }
-    
+
 }

@@ -33,5 +33,9 @@ public class Mesa {
         this.tiposApuesta = tiposApuesta;
         this.c = c;
     }
+    
+    public ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados(){
+        return this.tiposApuesta;
+    }
 
 }

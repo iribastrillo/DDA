@@ -4,10 +4,15 @@
  */
 package Vista;
 
+import dominio.EnumTipoApuesta;
+import java.util.ArrayList;
+
 /**
  *
  * @author Usuario
  */
 public interface IVistaMesaCrupier {
+
+    public void mostrarTiposApuestaSeleccionados(ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados);
     
 }
