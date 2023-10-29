@@ -113,11 +113,10 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void cargarListaTiposDeApuestas(String[] tiposApuesta) {
-
+    public void cargarListaTiposDeApuestas(String[] tiposApuesta) {  
         
         jListaTiposApuesta.setListData(tiposApuesta);
-
+        
     }
 
     public void tipoDeApuestaSeleccionado() {
@@ -132,7 +131,7 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     public void iniciarMesa() {
       Object[] tipoApuestaSeleccionada =  jListaTiposApuesta.getSelectedValues();
       String[] stringArr=Arrays.copyOf(tipoApuestaSeleccionada,tipoApuestaSeleccionada.length,String[].class);
-        System.out.printf("Tipos de Apuesta Seleccionadas para la mesa %s",Arrays.toString(stringArr));
+        System.out.printf("DialogoCrearMesa: Tipos de Apuesta Seleccionadas para la mesa %s",Arrays.toString(stringArr));
         controlador.inciarMesa(c,stringArr);
     }
     
