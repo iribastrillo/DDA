@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package servicios;
 
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
@@ -31,7 +31,7 @@ public class ServicioUsuarios {
         
     }
 
-    void agregar(Crupier croupier) throws UsuarioYaExisteException {
+    public void agregar(Crupier croupier) throws UsuarioYaExisteException {
         if(!croupieres.containsKey(croupier.getCedula())){
         croupieres.put(croupier.getCedula(),croupier);}
         else{
@@ -39,7 +39,7 @@ public class ServicioUsuarios {
         }
      }
 
-    void agregar(Jugador jugador)  throws UsuarioYaExisteException {
+   public void agregar(Jugador jugador)  throws UsuarioYaExisteException {
         if(!croupieres.containsKey(jugador.getCedula())){
         jugadores.put(jugador.getCedula(),jugador);}
         else{
@@ -53,7 +53,7 @@ public class ServicioUsuarios {
       if (jugadores.containsKey(u.getCedula())){
            Jugador j = jugadores.get(u.getCedula());
            if (j.getPassword().equals(u.getPassword())){
-               return j;
+                return j;
            }
         }
         return null;
@@ -67,6 +67,10 @@ public class ServicioUsuarios {
            }
         }
         return null;
+    }
+
+    public HashMap<String, Crupier> getCrupieres() {
+        return this.croupieres;
     }
 
    

@@ -8,6 +8,7 @@ import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
 import dominio.Jugador;
 import dominio.Mesa;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,9 @@ import java.util.logging.Logger;
  */
 public class DatosPrueba {
 
-    public static void iniciar() throws UsuarioYaExisteException {
+    public static void iniciar(FachadaServicios fachada) throws UsuarioYaExisteException {
+        
+      
 
         Jugador[] jugadores = new Jugador[]{
             new Jugador(1000, "Jugador_1", "201", "aaa"),
@@ -27,24 +30,29 @@ public class DatosPrueba {
             new Jugador(205, "Jugador_5", "205", "eee")
         };
 
-        Mesa mesa_1 = new Mesa();
-        Mesa mesa_2 = new Mesa();
-        Mesa mesa_3 = new Mesa();
 
         Crupier[] crupieres = new Crupier[]{
-            new Crupier(mesa_1, "Croupier_1", "101", "aaa"),
-            new Crupier(mesa_2, "Croupier_2", "102", "bbb"),
-            new Crupier(mesa_3, "Croupier_3", "103", "ccc")
+            new Crupier( "Croupier_1", "101", "aaa"),
+            new Crupier( "Croupier_2", "102", "bbb"),
+            new Crupier( "Croupier_3", "103", "ccc")
         };
+        
+
 
         for (Crupier c : crupieres) {
-            FachadaServicios.getInstancia().agrear(c);
+            fachada.agrear(c);
         }
 
         for (Jugador j : jugadores) {
-            FachadaServicios.getInstancia().agrear(j);
+            fachada.agrear(j);
 
         }
+        
+        // Crear mesas
+//       HashMap<String,Crupier> croupieres= FachadaServicios.getInstancia().getCrupieres();
+//       for(Crupier c: crupieres){
+//           fachada.iniciarMesa(c, EnumTipoApuesta.Colores);
+//       }
 
     }
 

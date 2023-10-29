@@ -10,17 +10,23 @@ package dominio;
  */
 public class Crupier extends Usuario {
     
-    private Mesa mesaAsignada;
   
-
-    public Crupier(Mesa mesaAsignada, String nombreCompleto, String cedula, String password) {
+ 
+  
+ // Constructor para crear un  Crupier al cargar la aplicacion
+    public Crupier(String nombreCompleto, String cedula, String password) {
         super(nombreCompleto, cedula, password);
-        this.mesaAsignada = mesaAsignada;
+         
+       
     }
     
+    // Constructor para crear un  objeto crupiera la hora de loguearse
+    //para validar si existe, si los campos estan cargados etc etc
     public Crupier(  String cedula, String password) {
         super( cedula, password);
      
     }
+    
+    
     
 }

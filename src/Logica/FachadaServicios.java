@@ -4,13 +4,18 @@
  */
 package Logica;
 
+import servicios.ServicioMesas;
+import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.NombreUsuarioInvalidoException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
+import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Usuario;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -65,6 +70,15 @@ public class FachadaServicios {
     void agrear(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
     }
+
+    public void iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) {
+        servicioMesa.agregar(c,tipoApuestas);
+     }
+
+    HashMap<String, Crupier> getCrupieres() {
+        return servicioUsuarios.getCrupieres();
+    }
+    
     
    
 }

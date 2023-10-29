@@ -2,12 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package dominio;
 
 /**
  *
  * @author Usuario
  */
-public class ServicioMesas {
-    
+public enum EnumTipoApuesta {
+    Apuesta_Directa,
+    Paridad,
+    Colores,
+    Docenas
+   
 }

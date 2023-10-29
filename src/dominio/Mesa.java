@@ -16,12 +16,18 @@ public class Mesa {
     private float balance;
     private ArrayList<Integer> numerosSorteados;
     private  boolean bloqueada;
+    // por defecto el tipo de apuesta directa siempre esta
+    // se le puede agregar los otros 3 tipos de apuestas opcionales
+    private ArrayList<EnumTipoApuesta> tiposApuesta;
+    private Crupier c;
 
-    public Mesa() {
+    public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier c) {
         this.id = id++;
         this.balance=0;
         this.numerosSorteados=new ArrayList<>();
         this.bloqueada=false;
+        this.tiposApuesta=tiposApuesta;
+        this.c=c;
     }
     
 

@@ -4,10 +4,15 @@
  */
 package Vista;
 
+import dominio.EnumTipoApuesta;
+
 /**
  *
  * @author Usuario
  */
 public interface IVistaCrearMesa {
     
+   public void cargarListaTiposDeApuestas(String[] tiposApuesta);
+   public void tipoDeApuestaSeleccionado();
+   public void iniciarMesa();
 }
