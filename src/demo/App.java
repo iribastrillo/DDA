@@ -16,7 +16,7 @@ import ui.VentanaInicio;
  *
  * @author digregor
  */
-public class AppEjemplo {
+public class App {
 
     /**
      * @param args the command line arguments
@@ -29,7 +29,7 @@ public class AppEjemplo {
             datosPrueba.iniciar(f);
         } catch (UsuarioYaExisteException ex) {
             System.out.println("Algun usuario ya existe");
-            Logger.getLogger(AppEjemplo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 
