@@ -4,14 +4,10 @@
  */
 package Vista;
 
-import dominio.Jugador;
-import dominio.Mesa;
-
 /**
  *
- * @author Usuario
+ * @author nacho
  */
-public interface IVistaUnirse {
-    public void cargarMesasActivas ();
-    public void mostrarMesaJugador (Mesa mesa, Jugador jugador);
+public interface IVistaMesaJugador {
+    
 }

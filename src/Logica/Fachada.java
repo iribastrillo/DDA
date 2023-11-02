@@ -25,11 +25,11 @@ import java.util.HashMap;
 public class Fachada {
     
     private static  Fachada instancia;
-    private ServicioMesas servicioMesa;
+    private ServicioMesas servicioMesas;
     private ServicioUsuarios servicioUsuarios;
 
     public ServicioMesas getServicioMesa() {
-        return servicioMesa;
+        return servicioMesas;
     }
 
     public ServicioUsuarios getServicioUsuarios() {
@@ -38,7 +38,7 @@ public class Fachada {
     
 
     private Fachada() {
-      servicioMesa=new ServicioMesas();
+      servicioMesas=new ServicioMesas();
       servicioUsuarios=new ServicioUsuarios();
     }
     
@@ -73,7 +73,7 @@ public class Fachada {
     }
     
     void agregar(Mesa mesa) throws UsuarioYaExisteException {
-        servicioMesa.agregar(mesa);
+        servicioMesas.agregar(mesa);
     }
 
     public Mesa iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) {
@@ -85,6 +85,10 @@ public class Fachada {
     }
 
     public ArrayList<Mesa> getMesasActivas() {
-        return servicioMesa.getMesasActivas();
+        return servicioMesas.getMesasActivas();
+    }
+
+    public Mesa getMesa(int mesa) {
+        return servicioMesas.getMesa(mesa);
     }
 }

@@ -50,12 +50,6 @@ public class DatosPrueba {
             fachada.agregar(m);
         }
         
-        // Crear mesas
-//       HashMap<String,Crupier> croupieres= FachadaServicios.getInstancia().getCrupieres();
-//       for(Crupier c: crupieres){
-//           fachada.iniciarMesa(c, EnumTipoApuesta.Colores);
-//       }
-
     }
 
 }

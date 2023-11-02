@@ -30,10 +30,9 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
         this.controlador=new ControladorUnirse(fachada,this);
         this.jugador=jugador;
         this.fachada = fachada;
-        this.mesaSeleccionada = 0;
         initComponents();
-        this.cargarMesasActivas(fachada.getMesasActivas());
-        this.setTitle(String.format("Mesas abiertas, Usuario logueado: %s", jugador.getNombreCompleto()));
+        this.cargarMesasActivas();
+        this.setTitle("Mesas activas");
 
     }
 
@@ -49,6 +48,7 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
         join = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         mesasActivas = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -72,6 +72,8 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
             }
         });
 
+        jLabel1.setText("Selecciona una mesa para unirte:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,18 +83,23 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mesasActivas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(join, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mesasActivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(join)
                     .addComponent(logout))
@@ -103,7 +110,8 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
     }// </editor-fold>//GEN-END:initComponents
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
-        this.controlador.unirse(1, this.jugador);
+        int id = Integer.parseInt(this.mesasActivas.getSelectedItem().toString());
+        this.controlador.unirse(id, this.jugador);
     }//GEN-LAST:event_joinActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
@@ -111,20 +119,27 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void mesasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesasActivasActionPerformed
-        // TODO add your handling code here:
+        System.out.println(this.mesasActivas.getSelectedItem());
     }//GEN-LAST:event_mesasActivasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton join;
     private javax.swing.JButton logout;
     private javax.swing.JComboBox<String> mesasActivas;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void cargarMesasActivas(ArrayList<Mesa> mesasActivas) {
+    public void cargarMesasActivas() {
+        ArrayList<Mesa> mesasActivas = fachada.getMesasActivas();
         for (Mesa mesa: mesasActivas) {
-            this.mesasActivas.addItem("Mesa " + String.valueOf(mesa.getId()));
+            this.mesasActivas.addItem(String.valueOf(mesa.getId()));
         }
+    }
+
+    @Override
+    public void mostrarMesaJugador(Mesa mesa, Jugador jugador) {
+        new DialogoVentanaMesaJugador (mesa, jugador).setVisible(true);
     }
 }

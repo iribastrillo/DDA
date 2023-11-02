@@ -7,6 +7,7 @@ package Controlador;
 import Logica.Fachada;
 import dominio.Jugador;
 import Vista.IVistaUnirse;
+import dominio.Mesa;
 
 /**
  *
@@ -21,8 +22,10 @@ public class ControladorUnirse {
         this.fachada = fachada;
         this.vista = vista;
     }
-    public void unirse (int mesa, Jugador jugador) {
-        
+    public void unirse (int id, Jugador jugador) {
+        Mesa mesa = fachada.getMesa(id);
+        mesa.agregarJugador(jugador);
+        this.vista.mostrarMesaJugador(mesa, jugador);
     }
     public void logout () {
         

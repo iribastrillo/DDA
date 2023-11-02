@@ -136,12 +136,7 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     
     @Override
     public void mostrarMesaCrupier(Mesa mesaIniciada){
-                new DialogoVentanaMesaCrupier(mesaIniciada,f).setVisible(true);
-                this.dispose();
-                 
-                 
-                //new DialogoVentanaMesaCrupier((java.awt.Frame) this.getParent(),false,super.f,(Crupier) usuario).setVisible(true);
-
-        
+        new DialogoVentanaMesaCrupier(mesaIniciada,f).setVisible(true);
+        this.dispose();    
     }
 }

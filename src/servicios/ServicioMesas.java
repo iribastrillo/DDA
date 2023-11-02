@@ -6,6 +6,7 @@ package servicios;
 
 import dominio.Crupier;
 import dominio.EnumTipoApuesta;
+import dominio.Jugador;
 import dominio.Mesa;
 import java.util.ArrayList;
 
@@ -44,4 +45,8 @@ public class ServicioMesas {
         mesasActivas.add(mesa);        
         return mesa;
     }    
+
+    public Mesa getMesa(int mesa) {
+        return mesasActivas.get(mesa);
+    }
 }
