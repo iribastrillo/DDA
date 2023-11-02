@@ -5,18 +5,11 @@
  */
 package ui;
 
-import Exceptions.CedulaUsuarioInvalidaException;
-import Exceptions.PasswordUsuarioInvalidoException;
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import dominio.Crupier;
 import dominio.Usuario;
 import java.awt.Frame;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-//import uy.edu.ort.dominio.Administrador;
-//import uy.edu.ort.dominio.UsuarioGenerico;
-//import uy.edu.ort.logica.FachadaServicios;
 
 /**
  *
@@ -24,14 +17,10 @@ import javax.swing.JOptionPane;
  */
 public class DialogoLoginCroupier extends DialogoLogin {
 
-    public DialogoLoginCroupier(Frame parent, boolean modal, FachadaServicios f) {
+    public DialogoLoginCroupier(Frame parent, boolean modal, Fachada f) {
         super(parent, modal,f);
         this.setTitle("Ingrese sus credenciales de Crupier");
     }
-
- 
-
-
 
     @Override
     public Usuario loginUsuario(String cedula, String password) {
@@ -45,7 +34,7 @@ public class DialogoLoginCroupier extends DialogoLogin {
     protected void ejecutarCasoUsoInicial(Usuario usuario) {
      
         System.out.println("DialogoLoginCrupier: Caso de uso inicial para usuario Croupier");
-        new DialogoCrearMesa((java.awt.Frame) this.getParent(),false,super.f,(Crupier) usuario).setVisible(true);
+        new DialogoCrearMesa((java.awt.Frame) this.getParent(),false,super.fachada,(Crupier) usuario).setVisible(true);
 //        new DialogoUsuariosConectados((java.awt.Frame) this.getParent(), false, (Croupier) usuario).setVisible(true);
         
     }

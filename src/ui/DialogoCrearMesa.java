@@ -5,7 +5,7 @@
 package ui;
 
 import Controlador.ControladorCrearMesa;
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import Vista.IVistaCrearMesa;
 import dominio.Crupier;
 import dominio.EnumTipoApuesta;
@@ -27,12 +27,12 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
 
     protected final ControladorCrearMesa controlador;
     protected final Crupier c;
-    protected final FachadaServicios f;
+    protected final Fachada f;
 
     /**
      * Creates new form DialogoCrearMesa
      */
-    public DialogoCrearMesa(java.awt.Frame parent, boolean modal, FachadaServicios f, Crupier crupier) {
+    public DialogoCrearMesa(java.awt.Frame parent, boolean modal, Fachada f, Crupier crupier) {
         super(parent, modal);
         this.controlador = new ControladorCrearMesa(f, this);
         initComponents();

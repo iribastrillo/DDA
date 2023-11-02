@@ -18,10 +18,8 @@ import java.util.logging.Logger;
  */
 public class DatosPrueba {
 
-    public static void iniciar(FachadaServicios fachada) throws UsuarioYaExisteException {
-        
-      
-
+    public static void iniciar(Fachada fachada) throws UsuarioYaExisteException 
+    {
         Jugador[] jugadores = new Jugador[]{
             new Jugador(1000, "Jugador_1", "201", "aaa"),
             new Jugador(500, "Jugador_2", "202", "bbb"),
@@ -30,14 +28,12 @@ public class DatosPrueba {
             new Jugador(205, "Jugador_5", "205", "eee")
         };
 
-
         Crupier[] crupieres = new Crupier[]{
             new Crupier( "Croupier_1", "101", "aaa"),
             new Crupier( "Croupier_2", "102", "bbb"),
             new Crupier( "Croupier_3", "103", "ccc")
         };
         
-
 
         for (Crupier c : crupieres) {
             fachada.agrear(c);

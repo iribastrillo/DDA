@@ -6,7 +6,7 @@ package Controlador;
 
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import Vista.IVistaLogin;
 import dominio.Usuario;
 import java.util.logging.Level;
@@ -18,10 +18,10 @@ import java.util.logging.Logger;
  */
 public class ControladorLogin {
 
-    private final FachadaServicios fachada;
+    private final Fachada fachada;
     private final IVistaLogin vista;
 
-    public ControladorLogin(FachadaServicios fachada, IVistaLogin vista) {
+    public ControladorLogin(Fachada fachada, IVistaLogin vista) {
         this.fachada = fachada;
         this.vista = vista;
 

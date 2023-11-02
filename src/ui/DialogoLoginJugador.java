@@ -7,7 +7,7 @@ package ui;
 
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import dominio.Jugador;
 import dominio.Usuario;
 import java.awt.Frame;
@@ -24,23 +24,20 @@ import javax.swing.JOptionPane;
  */
 public class DialogoLoginJugador extends DialogoLogin {
 
-    public DialogoLoginJugador(Frame parent, boolean modal,FachadaServicios f) {
+    public DialogoLoginJugador(Frame parent, boolean modal,Fachada f) {
         super(parent, modal,f);
         this.setTitle("Ingrese sus credenciales de Jugador");
     }
 
     @Override
     public Usuario loginUsuario(String cedula,String password) {
-        
-            return super.controlador.loginJugador(cedula, password);
-      
-     
+            return super.controlador.loginJugador(cedula, password); 
     }
 
     @Override
     protected void ejecutarCasoUsoInicial(Usuario usuario) {
         System.out.println("DialogoLoginCrupier: Caso de uso inicial para usuario Croupier");
-        new DialogoListarMesas((java.awt.Frame) this.getParent(),false,super.f,(Jugador) usuario).setVisible(true);
+        new DialogoUnirse((java.awt.Frame) this.getParent(),false,super.fachada,(Jugador) usuario).setVisible(true);
         
 //        TODO aca va un dialogo que muestra las mesas activas?
 //        new DialogoAgenda((java.awt.Frame) this.getParent(), false, (Usuario) usuario).setVisible(true);

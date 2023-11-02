@@ -1,9 +1,9 @@
 package ui;
 
 import Controlador.ControladorVistaMesaCrupier;
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import Vista.IVistaMesaCrupier;
-import componente.PanelRuleta;
+import componentes.PanelRuleta;
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     /**
      * Creates new form NewJFrame
      */
-    public DialogoVentanaMesaCrupier(Mesa m, FachadaServicios f) {
+    public DialogoVentanaMesaCrupier(Mesa m, Fachada f) {
         initComponents();
         ocultarDocenas();
         ocultarColor();
@@ -49,7 +49,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         jTextField1 = new javax.swing.JTextField();
         jCheckBox2 = new javax.swing.JCheckBox();
         jButton8 = new javax.swing.JButton();
-        r = new componente.PanelRuleta();
+        r = new componentes.PanelRuleta();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -240,7 +240,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JTextField jTextField1;
-    private componente.PanelRuleta r;
+    private componentes.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
 
     @Override

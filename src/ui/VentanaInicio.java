@@ -2,7 +2,7 @@ package ui;
 
 //import uy.edu.ort.logica.FachadaServicios;
 
-import Logica.FachadaServicios;
+import Logica.Fachada;
 
 
 /**
@@ -14,42 +14,58 @@ public class VentanaInicio extends javax.swing.JFrame {
     /**
      * Creates new form VentanaInicio
      */
-    FachadaServicios f;
-    public VentanaInicio(FachadaServicios f) {
+    Fachada fachada;
+    
+    public VentanaInicio(Fachada fachada) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.f=f;
+        this.fachada = fachada;
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jugadorLogin = new javax.swing.JButton();
+        crupierLogin = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        mLogin = new javax.swing.JMenuItem();
-        mLoginAdministrador = new javax.swing.JMenuItem();
+        Exit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Bienvenido a Sistema de Ruleta");
+        setTitle("¡Bienvenido!");
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
 
-        jMenu1.setText("Usuario");
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel1.setText("¡Bienvenido!");
 
-        mLogin.setText("Login Jugador");
-        mLogin.addActionListener(new java.awt.event.ActionListener() {
+        jugadorLogin.setText("Jugador");
+        jugadorLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mLoginJugadorActionPerformed(evt);
+                jugadorLoginActionPerformed(evt);
             }
         });
-        jMenu1.add(mLogin);
 
-        mLoginAdministrador.setText("Login Croupier");
-        mLoginAdministrador.addActionListener(new java.awt.event.ActionListener() {
+        crupierLogin.setText("Crupier");
+        crupierLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mLoginCroupierActionPerformed(evt);
+                crupierLoginActionPerformed(evt);
             }
         });
-        jMenu1.add(mLoginAdministrador);
+
+        jLabel2.setText("Elige  tu rol para ingresar a la ruleta");
+
+        jMenu1.setText("Menu");
+
+        Exit.setText("Salir");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitJugadorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Exit);
 
         jMenuBar1.add(jMenu1);
 
@@ -59,37 +75,66 @@ public class VentanaInicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jugadorLogin)
+                        .addGap(31, 31, 31)
+                        .addComponent(crupierLogin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(40, 40, 40))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crupierLogin)
+                    .addComponent(jugadorLogin))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mLoginJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLoginJugadorActionPerformed
+    private void ExitJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitJugadorActionPerformed
         this.loginJugador();
-    }//GEN-LAST:event_mLoginJugadorActionPerformed
+    }//GEN-LAST:event_ExitJugadorActionPerformed
 
-    private void mLoginCroupierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLoginCroupierActionPerformed
+    private void crupierLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crupierLoginActionPerformed
         this.loginCroupier();
-    }//GEN-LAST:event_mLoginCroupierActionPerformed
+    }//GEN-LAST:event_crupierLoginActionPerformed
+
+    private void jugadorLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugadorLoginActionPerformed
+       this.loginJugador();
+    }//GEN-LAST:event_jugadorLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Exit;
+    private javax.swing.JButton crupierLogin;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem mLogin;
-    private javax.swing.JMenuItem mLoginAdministrador;
+    private javax.swing.JButton jugadorLogin;
     // End of variables declaration//GEN-END:variables
 
     private void loginJugador() {
-        new DialogoLoginJugador(this, false,f).setVisible(true);
+        new DialogoLoginJugador(this, false,fachada).setVisible(true);
     }
 
     private void loginCroupier() {
-        new DialogoLoginCroupier(this, false,f).setVisible(true);
+        new DialogoLoginCroupier(this, false,fachada).setVisible(true);
         
     }
 }

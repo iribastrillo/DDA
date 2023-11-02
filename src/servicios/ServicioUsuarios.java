@@ -26,10 +26,6 @@ public class ServicioUsuarios {
         jugadores=new HashMap();
         jugadoresActivos=new HashMap();
     }
-    
-    public void agregarJugador(String cedula, String Nombre){
-        
-    }
 
     public void agregar(Crupier croupier) throws UsuarioYaExisteException {
         if(!croupieres.containsKey(croupier.getCedula())){
@@ -46,7 +42,6 @@ public class ServicioUsuarios {
             throw new UsuarioYaExisteException("El usuario ya existe");
         }
      }
-    
     
     public Usuario loginJugador(Usuario u) {
         
@@ -67,6 +62,12 @@ public class ServicioUsuarios {
            }
         }
         return null;
+    }
+    
+    public Jugador login (String nombreUsuario, String contrasena) {
+        
+        return null;
+        
     }
 
     public HashMap<String, Crupier> getCrupieres() {

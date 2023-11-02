@@ -153,7 +153,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="componente.PanelRuleta" name="r">
+    <Component class="componentes.PanelRuleta" name="r">
     </Component>
   </SubComponents>
 </Form>

@@ -4,7 +4,7 @@
  */
 package Controlador;
 
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import Vista.IVistaMesaCrupier;
 import dominio.Mesa;
 
@@ -14,10 +14,10 @@ import dominio.Mesa;
  */
 public class ControladorVistaMesaCrupier {
 
-    private final FachadaServicios fachada;
+    private final Fachada fachada;
     private final IVistaMesaCrupier vista;
 
-    public ControladorVistaMesaCrupier(FachadaServicios fachada, IVistaMesaCrupier vista) {
+    public ControladorVistaMesaCrupier(Fachada fachada, IVistaMesaCrupier vista) {
         this.fachada = fachada;
         this.vista = vista;
     }

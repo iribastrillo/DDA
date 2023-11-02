@@ -4,7 +4,7 @@
  */
 package Controlador;
 
-import Logica.FachadaServicios;
+import Logica.Fachada;
 import Vista.IVistaCrearMesa;
 import dominio.Crupier;
 import dominio.EnumTipoApuesta;
@@ -18,11 +18,11 @@ import java.util.Arrays;
  */
 public class ControladorCrearMesa {
 
-    private final FachadaServicios fachada;
+    private final Fachada fachada;
     private final IVistaCrearMesa vista;
     EnumTipoApuesta tipoApuesta;
 
-    public ControladorCrearMesa(FachadaServicios fachada, IVistaCrearMesa vista) {
+    public ControladorCrearMesa(Fachada fachada, IVistaCrearMesa vista) {
         this.fachada = fachada;
         this.vista = vista;
         System.out.println("ControladorCrearMesa: Caso de Uso Crupier");
