@@ -4,7 +4,6 @@
  */
 package Vista;
 
-import dominio.EnumTipoApuesta;
 import dominio.Mesa;
 
 /**

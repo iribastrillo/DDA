@@ -6,11 +6,10 @@ package Logica;
 
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
+import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
@@ -34,14 +33,21 @@ public class DatosPrueba {
             new Crupier( "Croupier_3", "103", "ccc")
         };
         
+        Mesa [] mesas = new Mesa [] {
+            new Mesa(new ArrayList<EnumTipoApuesta> (), crupieres [0]),
+            new Mesa(new ArrayList<EnumTipoApuesta> (), crupieres [1]),
+        };
 
         for (Crupier c : crupieres) {
-            fachada.agrear(c);
+            fachada.agregar(c);
         }
 
         for (Jugador j : jugadores) {
-            fachada.agrear(j);
-
+            fachada.agregar(j);
+        }
+        
+        for (Mesa m : mesas) {
+            fachada.agregar(m);
         }
         
         // Crear mesas

@@ -6,26 +6,33 @@ package ui;
 
 import Controlador.ControladorUnirse;
 import Logica.Fachada;
-import Vista.IVistaListarMesas;
 import dominio.Jugador;
+import Vista.IVistaUnirse;
+import dominio.Mesa;
+import java.util.ArrayList;
 
 /**
  *
  * @author Usuario
  */
-public class DialogoUnirse extends javax.swing.JDialog implements IVistaListarMesas {
+public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
     
        protected final ControladorUnirse controlador;
        protected final Jugador jugador;
+       protected final Fachada fachada;
+       protected int mesaSeleccionada;
 
     /**
      * Creates new form DialogoListarMesas
      */
-    public DialogoUnirse(java.awt.Frame parent, boolean modal,Fachada f, Jugador jugador) {
+    public DialogoUnirse(java.awt.Frame parent, boolean modal,Fachada fachada, Jugador jugador) {
         super(parent, modal);
-        this.controlador=new ControladorUnirse(f,this);
+        this.controlador=new ControladorUnirse(fachada,this);
         this.jugador=jugador;
+        this.fachada = fachada;
+        this.mesaSeleccionada = 0;
         initComponents();
+        this.cargarMesasActivas(fachada.getMesasActivas());
         this.setTitle(String.format("Mesas abiertas, Usuario logueado: %s", jugador.getNombreCompleto()));
 
     }
@@ -39,14 +46,11 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaListarMe
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaMesas = new javax.swing.JList<>();
         join = new javax.swing.JButton();
         logout = new javax.swing.JButton();
+        mesasActivas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jScrollPane1.setViewportView(listaMesas);
 
         join.setText("Ingresar");
         join.addActionListener(new java.awt.event.ActionListener() {
@@ -62,26 +66,33 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaListarMe
             }
         });
 
+        mesasActivas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesasActivasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(join, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mesasActivas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(join, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
+                .addComponent(mesasActivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(join)
                     .addComponent(logout))
@@ -92,18 +103,28 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaListarMe
     }// </editor-fold>//GEN-END:initComponents
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
-        this.controlador.unirse(1, null);
+        this.controlador.unirse(1, this.jugador);
     }//GEN-LAST:event_joinActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         this.controlador.logout();
     }//GEN-LAST:event_logoutActionPerformed
 
+    private void mesasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesasActivasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mesasActivasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton join;
-    private javax.swing.JList<String> listaMesas;
     private javax.swing.JButton logout;
+    private javax.swing.JComboBox<String> mesasActivas;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void cargarMesasActivas(ArrayList<Mesa> mesasActivas) {
+        for (Mesa mesa: mesasActivas) {
+            this.mesasActivas.addItem("Mesa " + String.valueOf(mesa.getId()));
+        }
+    }
 }

@@ -5,8 +5,8 @@
 package Controlador;
 
 import Logica.Fachada;
-import Vista.IVistaListarMesas;
 import dominio.Jugador;
+import Vista.IVistaUnirse;
 
 /**
  *
@@ -15,9 +15,9 @@ import dominio.Jugador;
 public class ControladorUnirse {
     
         private final Fachada fachada;
-        private final IVistaListarMesas vista;
+        private final IVistaUnirse vista;
 
-    public ControladorUnirse(Fachada fachada, IVistaListarMesas vista) {
+    public ControladorUnirse(Fachada fachada, IVistaUnirse vista) {
         this.fachada = fachada;
         this.vista = vista;
     }

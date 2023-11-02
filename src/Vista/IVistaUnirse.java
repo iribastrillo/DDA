@@ -4,10 +4,13 @@
  */
 package Vista;
 
+import dominio.Mesa;
+import java.util.ArrayList;
+
 /**
  *
  * @author Usuario
  */
-public interface IVistaListarMesas {
-    
+public interface IVistaUnirse {
+    public void cargarMesasActivas (ArrayList<Mesa> mesasActivas);
 }

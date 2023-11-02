@@ -14,6 +14,22 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class ServicioMesas {
+
+    public ArrayList<Mesa> getMesasActivas() {
+        return mesasActivas;
+    }
+
+    public void setMesasActivas(ArrayList<Mesa> mesasActivas) {
+        this.mesasActivas = mesasActivas;
+    }
+
+    public ArrayList<Mesa> getMesasCerradas() {
+        return mesasCerradas;
+    }
+
+    public void setMesasCerradas(ArrayList<Mesa> mesasCerradas) {
+        this.mesasCerradas = mesasCerradas;
+    }
     
     private ArrayList<Mesa> mesasActivas;
     private ArrayList<Mesa> mesasCerradas; //O bloqueadas?
@@ -23,13 +39,9 @@ public class ServicioMesas {
         this.mesasCerradas = new ArrayList<>();
     }
 
-    public Mesa agregar(Crupier c, ArrayList<EnumTipoApuesta> tipoApuestas) {
+    public Mesa agregar(Mesa mesa) {
       /// Agregar excepciones si hay..
-        Mesa m = new Mesa(tipoApuestas,c);
-        mesasActivas.add(m);
-        
-        return m;
-
-    }
-    
+        mesasActivas.add(mesa);        
+        return mesa;
+    }    
 }

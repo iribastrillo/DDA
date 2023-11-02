@@ -108,7 +108,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitJugadorActionPerformed
-        this.loginJugador();
+        System.exit(0);
     }//GEN-LAST:event_ExitJugadorActionPerformed
 
     private void crupierLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crupierLoginActionPerformed

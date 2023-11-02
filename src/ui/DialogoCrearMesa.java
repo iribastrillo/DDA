@@ -116,7 +116,6 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     public void cargarListaTiposDeApuestas(String[] tiposApuesta) {  
         
         jListaTiposApuesta.setListData(tiposApuesta);
-        
     }
 
     public void tipoDeApuestaSeleccionado() {

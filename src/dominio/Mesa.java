@@ -13,7 +13,8 @@ import java.util.Arrays;
  */
 public class Mesa {
 
-    private static int id = 1;
+    private static int autoId = 0;
+    private int id;
     private float balance;
     private ArrayList<Integer> numerosSorteados;
     private boolean bloqueada;
@@ -23,19 +24,45 @@ public class Mesa {
     private Crupier c;
 
     public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier c) {
-        this.id = id++;
+        this.id = autoId;
         this.balance = 0;
         this.numerosSorteados = new ArrayList<>();
         this.bloqueada = false;
         //Se agrega apuesta directa por defecto a la lista de apuestas seleccionada;
         tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
-        System.out.printf("Clase Mesa: Tipos de apuestas seleccionados %s", Arrays.toString(tiposApuesta.toArray()));
         this.tiposApuesta = tiposApuesta;
         this.c = c;
+        
+        autoId ++;
     }
     
     public ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados(){
         return this.tiposApuesta;
+    }
+    
+    
+    public int getId() {
+        return id;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public ArrayList<Integer> getNumerosSorteados() {
+        return numerosSorteados;
+    }
+
+    public boolean isBloqueada() {
+        return bloqueada;
+    }
+
+    public ArrayList<EnumTipoApuesta> getTiposApuesta() {
+        return tiposApuesta;
+    }
+
+    public Crupier getC() {
+        return c;
     }
 
 }

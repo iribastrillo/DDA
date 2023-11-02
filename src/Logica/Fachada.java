@@ -63,23 +63,28 @@ public class Fachada {
            return servicioUsuarios.loginJugador(j);
     }
 
-    void agrear(Jugador jugador) throws UsuarioYaExisteException {
+    void agregar(Jugador jugador) throws UsuarioYaExisteException {
          servicioUsuarios.agregar(jugador);
 
     }
 
-    void agrear(Crupier croupier) throws UsuarioYaExisteException {
+    void agregar(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
+    }
+    
+    void agregar(Mesa mesa) throws UsuarioYaExisteException {
+        servicioMesa.agregar(mesa);
     }
 
     public Mesa iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) {
-       return servicioMesa.agregar(c,tipoApuestas);
+       return null;
      }
 
     HashMap<String, Crupier> getCrupieres() {
         return servicioUsuarios.getCrupieres();
     }
-    
-    
-   
+
+    public ArrayList<Mesa> getMesasActivas() {
+        return servicioMesa.getMesasActivas();
+    }
 }
