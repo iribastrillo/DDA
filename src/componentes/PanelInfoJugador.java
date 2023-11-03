@@ -27,7 +27,7 @@ public class PanelInfoJugador extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     
     public void setSaldoInicial (float saldoInicial) {
-        this.saldoInicial.setText(String.valueOf(saldoInicial));
+        this.saldoInicial.setText("$" + String.valueOf(saldoInicial));
     }
     
     public void setNombreJugador (String nombre) {
@@ -53,6 +53,11 @@ public class PanelInfoJugador extends javax.swing.JPanel {
         numeroSorteado = new javax.swing.JLabel();
         saldoInicial = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        chip1 = new javax.swing.JButton();
+        chip5 = new javax.swing.JButton();
+        chip50 = new javax.swing.JButton();
+        chip10 = new javax.swing.JButton();
+        chip100 = new javax.swing.JButton();
 
         ruleta.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ruleta.setText("Ruleta #3");
@@ -62,6 +67,7 @@ public class PanelInfoJugador extends javax.swing.JPanel {
 
         userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/profile-user.png"))); // NOI18N
 
+        playerName.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         playerName.setText("Montgomery Burns");
 
         numeroSorteado.setBackground(new java.awt.Color(255, 102, 102));
@@ -73,6 +79,31 @@ public class PanelInfoJugador extends javax.swing.JPanel {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/money.png"))); // NOI18N
 
+        chip1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        chip1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip1.setText("1");
+        chip1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chip1ActionPerformed(evt);
+            }
+        });
+
+        chip5.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        chip5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip5.setText("5");
+
+        chip50.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        chip50.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip50.setText("50");
+
+        chip10.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        chip10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip10.setText("10");
+
+        chip100.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        chip100.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip100.setText("100");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,23 +111,35 @@ public class PanelInfoJugador extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(saldoInicial)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
-                        .addComponent(ruleta)
-                        .addGap(18, 18, 18)
-                        .addComponent(ronda)
-                        .addGap(110, 110, 110)
-                        .addComponent(userIcon)
-                        .addGap(18, 18, 18)
-                        .addComponent(playerName)
-                        .addGap(53, 53, 53))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(saldoInicial)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ruleta)
+                                .addGap(18, 18, 18)
+                                .addComponent(ronda)
+                                .addGap(148, 148, 148)
+                                .addComponent(playerName)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 157, Short.MAX_VALUE)
+                                .addComponent(chip1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(chip5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(chip10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(chip50, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(chip100)
+                                .addGap(104, 104, 104)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userIcon)
+                            .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jSeparator1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,23 +153,38 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(userIcon)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(ruleta)
                                 .addComponent(ronda)
-                                .addComponent(saldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(playerName)
-                                .addComponent(userIcon)))
-                        .addGap(18, 18, 18)))
+                                .addComponent(saldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(playerName)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chip1)
+                    .addComponent(chip5)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(chip10)
+                        .addComponent(chip50)
+                        .addComponent(chip100)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void chip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chip1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton chip1;
+    private javax.swing.JButton chip10;
+    private javax.swing.JButton chip100;
+    private javax.swing.JButton chip5;
+    private javax.swing.JButton chip50;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel numeroSorteado;
