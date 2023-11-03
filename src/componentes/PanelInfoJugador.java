@@ -34,6 +34,14 @@ public class PanelInfoJugador extends javax.swing.JPanel {
         this.playerName.setText(nombre);
     }
     
+    public void setNumeroMesa (int mesa) {
+        this.ruleta.setText("Ruleta #" + String.valueOf(mesa));
+    }
+    
+    public void setNumeroRonda (int ronda) {
+        this.ronda.setText("Ronda #" + String.valueOf(ronda));
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

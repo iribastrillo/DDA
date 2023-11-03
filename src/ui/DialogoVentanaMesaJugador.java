@@ -5,8 +5,6 @@ import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
 import dominio.Jugador;
 import dominio.Mesa;
-import javax.swing.JLabel;
-
 /**
  *
  * @author digregor
@@ -14,9 +12,9 @@ import javax.swing.JLabel;
 public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVistaMesaJugador{
 
     int apuestaRojo = 0;
-    private ControladorVistaMesaJugador controlador;
-    private Mesa mesa;
-    private Jugador jugador;
+    private final ControladorVistaMesaJugador controlador;
+    private final Mesa mesa;
+    private final Jugador jugador;
 
     /**
      * Creates new form NewJFrame
@@ -28,6 +26,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.controlador = new ControladorVistaMesaJugador (this);
         this.panelInfoJugador1.setSaldoInicial(jugador.getSaldoInicial());
         this.panelInfoJugador1.setNombreJugador(jugador.getNombreCompleto());
+        this.panelInfoJugador1.setNumeroMesa(mesa.getId());
     }
 
     /**
