@@ -4,6 +4,7 @@
  */
 package dominio;
 
+import Exceptions.UsuarioYaEstaEnLaMesaException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -71,7 +72,10 @@ public class Mesa {
         return crupier;
     }
     
-    public void agregarJugador (Jugador jugador) {
+    public void agregarJugador (Jugador jugador) throws UsuarioYaEstaEnLaMesaException {
+        if (jugadores.contains(jugador)) {
+            throw new UsuarioYaEstaEnLaMesaException ("El usuario ya está en la mesa.");
+        }
         jugadores.add (jugador);
     }
 

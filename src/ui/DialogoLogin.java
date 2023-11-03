@@ -1,8 +1,8 @@
 package ui;
 
-import Controlador.ControladorLogin;
+import controladores.ControladorLogin;
 import Logica.Fachada;
-import Vista.IVistaLogin;
+import vistas.IVistaLogin;
 import dominio.Usuario;
 import javax.swing.JOptionPane;
 /**

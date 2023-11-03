@@ -4,12 +4,16 @@
  */
 package ui;
 
-import Controlador.ControladorUnirse;
+import Exceptions.UsuarioYaEstaEnLaMesaException;
+import controladores.ControladorUnirse;
 import Logica.Fachada;
 import dominio.Jugador;
-import Vista.IVistaUnirse;
+import vistas.IVistaUnirse;
 import dominio.Mesa;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -111,11 +115,15 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
         int id = Integer.parseInt(this.mesasActivas.getSelectedItem().toString());
-        this.controlador.unirse(id, this.jugador);
+           try {
+               this.controlador.unirse(id, this.jugador);
+           } catch (UsuarioYaEstaEnLaMesaException ex) {
+               Logger.getLogger(DialogoUnirse.class.getName()).log(Level.SEVERE, null, ex);
+           }
     }//GEN-LAST:event_joinActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        this.controlador.logout();
+        this.logout();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void mesasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesasActivasActionPerformed
@@ -141,5 +149,15 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
     @Override
     public void mostrarMesaJugador(Mesa mesa, Jugador jugador) {
         new DialogoVentanaMesaJugador (mesa, jugador).setVisible(true);
+    }
+
+    @Override
+    public void logout() {
+        this.dispose();
+    }
+
+    @Override
+    public void mostrarDialogoDeError(UsuarioYaEstaEnLaMesaException e) {
+        JOptionPane.showMessageDialog(this, "El usuario ya se encuentra en la mesa.", "Intenta en otra mesa", JOptionPane.ERROR_MESSAGE);
     }
 }

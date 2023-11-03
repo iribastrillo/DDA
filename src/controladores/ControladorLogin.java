@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador;
+package controladores;
 
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Logica.Fachada;
-import Vista.IVistaLogin;
+import vistas.IVistaLogin;
 import dominio.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;

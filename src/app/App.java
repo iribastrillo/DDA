@@ -34,9 +34,6 @@ public class App {
         }
 
         new VentanaInicio(f).setVisible(true);
-
-//       new VentanaMesa().setVisible(true);
-//       new PanelRuleta().setVisible(true);
     }
 
 }

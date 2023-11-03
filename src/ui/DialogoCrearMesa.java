@@ -4,9 +4,9 @@
  */
 package ui;
 
-import Controlador.ControladorCrearMesa;
+import controladores.ControladorCrearMesa;
 import Logica.Fachada;
-import Vista.IVistaCrearMesa;
+import vistas.IVistaCrearMesa;
 import dominio.Crupier;
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
