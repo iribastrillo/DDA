@@ -10,6 +10,14 @@ package dominio;
  */
 public class Jugador extends Usuario {
 
+    public float getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(float saldoInicial) {
+        this.saldoInicial = saldoInicial;
+    }
+
     private float saldoInicial;
 
     public Jugador(float saldoInicial, String nombreCompleto, String cedula, String password) {

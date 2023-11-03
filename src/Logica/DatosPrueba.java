@@ -20,7 +20,7 @@ public class DatosPrueba {
     public static void iniciar(Fachada fachada) throws UsuarioYaExisteException 
     {
         Jugador[] jugadores = new Jugador[]{
-            new Jugador(1000, "Jugador_1", "201", "aaa"),
+            new Jugador(1000, "Ignacio Ribas", "IRibas", "iribas"),
             new Jugador(500, "Jugador_2", "202", "bbb"),
             new Jugador(203, "Jugador_3", "203", "ccc"),
             new Jugador(204, "Jugador_4", "204", "ddd"),
