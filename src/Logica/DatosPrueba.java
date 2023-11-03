@@ -21,7 +21,7 @@ public class DatosPrueba {
     {
         Jugador[] jugadores = new Jugador[]{
             new Jugador(1000, "Ignacio Ribas", "IRibas", "iribas"),
-            new Jugador(500, "Jugador_2", "202", "bbb"),
+            new Jugador(500, "Agustín Miller", "AMiller", "amiller"),
             new Jugador(203, "Jugador_3", "203", "ccc"),
             new Jugador(204, "Jugador_4", "204", "ddd"),
             new Jugador(205, "Jugador_5", "205", "eee")
