@@ -768,7 +768,6 @@ public class PanelRuleta extends javax.swing.JPanel {
         });
         add(b_1d, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 198, 190, 30));
 
-        b_2d.setBackground(new java.awt.Color(70, 80, 82));
         b_2d.setText("2 doc.");
         b_2d.setBorder(null);
         b_2d.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
