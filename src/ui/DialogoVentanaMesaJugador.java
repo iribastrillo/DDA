@@ -27,6 +27,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.panelInfoJugador1.setSaldoInicial(jugador.getSaldoInicial());
         this.panelInfoJugador1.setNombreJugador(jugador.getNombreCompleto());
         this.panelInfoJugador1.setNumeroMesa(mesa.getId());
+        this.panelInfoJugador1.setNumeroRonda(mesa.getRondaActual().getId());
     }
 
     /**

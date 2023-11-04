@@ -6,7 +6,6 @@ package dominio;
 
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -19,9 +18,8 @@ public class Mesa {
     private float balance;
     private ArrayList<Integer> numerosSorteados;
     private ArrayList<Jugador> jugadores;
+    private ArrayList<Ronda> rondas;
     private boolean bloqueada;
-    // por defecto el tipo de apuesta directa siempre esta
-    // se le puede agregar los otros 3 tipos de apuestas opcionales
     private ArrayList<EnumTipoApuesta> tiposApuesta;
     private Crupier crupier;
 
@@ -30,12 +28,13 @@ public class Mesa {
         this.balance = 0;
         this.numerosSorteados = new ArrayList<>();
         this.jugadores = new ArrayList<>();
+        this.rondas = new ArrayList <>();
         this.bloqueada = false;
-        //Se agrega apuesta directa por defecto a la lista de apuestas seleccionada;
-        tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
         this.tiposApuesta = tiposApuesta;
         this.crupier = crupier;
         
+        this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
+        this.rondas.add(new Ronda());
         autoId ++;
     }
     
@@ -77,6 +76,18 @@ public class Mesa {
             throw new UsuarioYaEstaEnLaMesaException ("El usuario ya está en la mesa.");
         }
         jugadores.add (jugador);
+    }
+
+    public ArrayList<Ronda> getRondas() {
+        return rondas;
+    }
+    
+    public Ronda getRondaActual () {
+        return this.rondas.get(this.rondas.size() - 1);
+    }
+    
+    public Ronda getRondaAnterior () {
+        return this.rondas.get(this.rondas.size() - 2);
     }
 
 }
