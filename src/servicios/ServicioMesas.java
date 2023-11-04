@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package servicios;
+import Exceptions.MesaNoEncontradaException;
+import Exceptions.UsuarioYaEstaEnLaMesaException;
+import dominio.Jugador;
 import dominio.Mesa;
+import dominio.modelosVista.ModeloJugadorSaldo;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +15,19 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class ServicioMesas {
+
+    public boolean agregarJugador(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
+        
+        Mesa mesa=getMesa(id);
+        if(mesa==null){
+            String mensaje=String.format("Mesa con id: %s No encontrada", id);
+            throw new MesaNoEncontradaException(mensaje);
+        }        
+        mesa.agregarJugador(jugador);
+        
+        //Si no hay excepciones, retorno true.
+        return true;
+     }
 
     public ArrayList<Mesa> getMesasActivas() {
         return mesasActivas;
@@ -44,5 +61,15 @@ public class ServicioMesas {
 
     public Mesa getMesa(int mesa) {
         return mesasActivas.get(mesa);
+    }
+
+    public ArrayList<ModeloJugadorSaldo> obtenerJugadoresSaldoParaMesa(Mesa m) {
+        ArrayList<ModeloJugadorSaldo>jugadoresSaldo=new ArrayList<>();
+        ArrayList<Jugador> jugadores =m.getJugadores();
+        for(Jugador j :jugadores){
+            ModeloJugadorSaldo jugadorSaldo= new ModeloJugadorSaldo(j.getNombreCompleto(),j.getSaldoInicial());
+            jugadoresSaldo.add(jugadorSaldo);
+        }
+        return jugadoresSaldo;
     }
 }

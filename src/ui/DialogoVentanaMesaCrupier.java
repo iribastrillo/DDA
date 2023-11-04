@@ -5,10 +5,13 @@ import Logica.Fachada;
  
 import componentes.PanelRuleta;
 import controladores.ControladorVistaMesaCrupier;
+
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
+import dominio.modelosVista.ModeloJugadorSaldo;
 import java.util.ArrayList;
 import vistas.IVistaMesaCrupier;
+ 
 
 /**
  *
@@ -23,15 +26,22 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     /**
      * Creates new form NewJFrame
      */
-    public DialogoVentanaMesaCrupier(Mesa m, Fachada f) {
+    public DialogoVentanaMesaCrupier(Mesa m) {
         initComponents();
         ocultarDocenas();
         ocultarColor();
         ocultarParidad();
         this.m = m;
-        this.controlador = new ControladorVistaMesaCrupier(f, this);
+        this.controlador = new ControladorVistaMesaCrupier(m, this);
         ocultarColor();
         controlador.mostrarTiposApuestaSeleccionados(m);
+        controlador.cargarNumeroDeMesaEnPanel(m);
+        controlador.cargarTotalApostadoEnPanel(m);
+        controlador.cargarNumeroDeRondaEnPanel(m);
+        controlador.cargarNumeroDeApuestasEnPanel(m);
+        
+        this.panelInfoCrupier1.setNumeroMesa(m.getId());
+        
     }
 
     /**
@@ -43,186 +53,55 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jButton8 = new javax.swing.JButton();
         r = new componentes.PanelRuleta();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable_Rondas = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_Jugadores = new javax.swing.JTable();
+        panelInfoCrupier1 = new componentes.PanelInfoCrupier();
+        panelTableroRuleta1 = new componentes.PanelTableroRuleta();
+        jLabel1 = new javax.swing.JLabel();
+        lbl_ultimosLanzamientos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Limpiar apuestas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Ultimos Lanzamientos:");
 
-        jButton2.setText("Apostar 100 al 23");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Borrar apuesta del 23");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Pausar tablero");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Agregar 10 a la apuesta del rojo");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jTextField1.setText("50");
-
-        jCheckBox2.setText("Apostar en seleccion");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setText("Reanudar tablero");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
-        jTable_Rondas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Ronda", "Balance anterior", "Apuestas", "Recoleccion", "Liquidacion", "Balance posterior"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTable_Rondas);
-
-        jTable_Jugadores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Jugador", "Saldo"
-            }
-        ));
-        jTable_Jugadores.setCellSelectionEnabled(true);
-        jScrollPane1.setViewportView(jTable_Jugadores);
+        lbl_ultimosLanzamientos.setText("N/A");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(r, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTableroRuleta1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(115, 115, 115)
-                                            .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(27, 27, 27)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))))
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_ultimosLanzamientos))
+                            .addComponent(panelInfoCrupier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 70, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
+                .addComponent(panelInfoCrupier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(r, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jLabel1)
+                    .addComponent(lbl_ultimosLanzamientos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(panelTableroRuleta1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        r.limpiar();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        r.setApuesta(23, 100);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        r.setApuesta(23, 0);
-    }//GEN-LAST:event_jButton3ActionPerformed
     private void mostrarColor() {                                         
         r.setVisible(PanelRuleta.ROJO, true);
         r.setVisible(PanelRuleta.NEGRO, true);
@@ -231,34 +110,6 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         r.setVisible(PanelRuleta.ROJO, false);
         r.setVisible(PanelRuleta.NEGRO, false);
     }                                        
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        r.pausar();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        r.reanudar();
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        apuestaRojo += 10;
-        r.setApuesta(PanelRuleta.ROJO, apuestaRojo);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        if (jCheckBox2.isSelected()) {
-            r.agregar(new PanelRuleta.Escuchador() {
-                @Override
-                public void celdaSeleccionada(int universalCellCode) {
-                    int apuesta = Integer.valueOf(jTextField1.getText());
-                    System.out.println("Id de celda seleccionada: " + universalCellCode + ". Apuesta anterior: " + r.getApuesta(universalCellCode) + ". Apuesta nueva:" + apuesta);
-                    r.setApuesta(universalCellCode, apuesta);
-                }
-            });
-        } else {
-            r.eliminarEscuchadores();
-        }
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
     private void mostrarDocenas() {                                         
         r.setVisible(PanelRuleta.PRIMERA_DOCENA, true);
         r.setVisible(PanelRuleta.SEGUNDA_DOCENA, true);
@@ -282,18 +133,10 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable_Jugadores;
-    private javax.swing.JTable jTable_Rondas;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lbl_ultimosLanzamientos;
+    private componentes.PanelInfoCrupier panelInfoCrupier1;
+    private componentes.PanelTableroRuleta panelTableroRuleta1;
     private componentes.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
 
@@ -313,5 +156,31 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
             }
         }
+    }
+
+    @Override
+    public void cargarNumeroDeMesaEnPanel(int id) {
+        this.panelInfoCrupier1.setNumeroMesa(id);
+        }
+
+    @Override
+    public void cargarTotalApostadoEnPanel(Mesa m) {
+         this.panelInfoCrupier1.setTotalApostado(m.getBalance());
+     }
+
+    @Override
+    public void cargarNumeroDeRondaEnPanel(int id) {
+       this.panelInfoCrupier1.setNumeroRonda(id);
+    }
+
+    @Override
+    public void cargarNumeroDeApuestasEnPanel(int cantidadApuestas) {
+        this.panelInfoCrupier1.setCantidadApuestas(cantidadApuestas);
+     }
+
+    @Override
+    public void cargarListaJugadores(ArrayList<ModeloJugadorSaldo> jugadoresSaldo) {
+        this.panelTableroRuleta1.setJugadoresSaldo(jugadoresSaldo);
+
     }
 }

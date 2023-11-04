@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author Usuario
  */
-public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
+public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse{
     
        protected final ControladorUnirse controlador;
        protected final Jugador jugador;
@@ -122,11 +122,16 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
         int id = Integer.parseInt(this.mesasActivas.getSelectedItem().toString());
-           try {
-               this.controlador.unirse(id, this.jugador);
-           } catch (UsuarioYaEstaEnLaMesaException ex) {
-               Logger.getLogger(DialogoUnirse.class.getName()).log(Level.SEVERE, null, ex);
-           }
+        
+        this.controlador.unirse(id, this.jugador);
+
+       
+        // Try catch en el controlador
+//        try {
+//               this.controlador.unirse(id, this.jugador);
+//           } catch (UsuarioYaEstaEnLaMesaException ex) {
+//               Logger.getLogger(DialogoUnirse.class.getName()).log(Level.SEVERE, null, ex);
+//           }
     }//GEN-LAST:event_joinActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
@@ -148,7 +153,9 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
 
     @Override
     public void cargarMesasActivas() {
-        ArrayList<Mesa> mesasActivas = fachada.getMesasActivas();
+        ArrayList<Mesa> mesasActivas = this.controlador.getMesasActivas(); 
+        //Sacamos los items que ya hay por si actualizamos la lista no queden duplicados los que ya estaban
+        this.mesasActivas.removeAllItems();
         for (Mesa mesa: mesasActivas) {
             this.mesasActivas.addItem(String.valueOf(mesa.getId()));
         }
@@ -165,7 +172,7 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse {
     }
 
     @Override
-    public void mostrarDialogoDeError(UsuarioYaEstaEnLaMesaException e) {
+    public void mostrarDialogoDeError(String mensaje) {
         JOptionPane.showMessageDialog(this, "El usuario ya se encuentra en la mesa.", "Intenta en otra mesa", JOptionPane.ERROR_MESSAGE);
     }
 }

@@ -17,6 +17,7 @@ public class Jugador extends Usuario {
     public void setSaldoInicial(float saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
+    
 
     private float saldoInicial;
 

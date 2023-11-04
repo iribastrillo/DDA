@@ -17,4 +17,6 @@ public interface IVistaCrearMesa {
    public void iniciarMesa();
 
     public void mostrarMesaCrupier(Mesa mesaIniciada);
+
+    public void mostaMensajeError(String message);
 }

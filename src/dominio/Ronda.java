@@ -4,6 +4,8 @@
  */
 package dominio;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author nacho
@@ -16,6 +18,7 @@ public class Ronda {
     private float recoleccion;
     private float liquidacion;
     private int numeroSorteado;
+    private ArrayList<Apuesta>apuestas;
     
     public Ronda () {
         this.id = autoId;
@@ -23,6 +26,7 @@ public class Ronda {
         this.balancePosterior = 0;
         this.recoleccion = 0;
         this.liquidacion = 0;
+        this.apuestas=new ArrayList<>();
     }
 
     public int getId() {
@@ -67,5 +71,8 @@ public class Ronda {
 
     public void setNumeroSorteado(int numeroSorteado) {
         this.numeroSorteado = numeroSorteado;
+    }
+    public int getCantidadApuestas(){
+        return apuestas.size();
     }
 }

@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import Exceptions.UsuarioYaExisteException;
 import Logica.Fachada;
 import vistas.IVistaCrearMesa;
 import dominio.Crupier;
@@ -11,6 +12,8 @@ import dominio.EnumTipoApuesta;
 import dominio.Mesa;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -63,9 +66,15 @@ public class ControladorCrearMesa {
             tiposDeApuestaSeleccionados.add(EnumTipoApuesta.valueOf(tipoApuesta));
         }
 //        System.out.printf("ControladorCrearMesa: Tipos de apuestas seleccionados %s",Arrays.toString(tiposDeApuestaSeleccionados.toArray()));
-        Mesa mesaIniciada = fachada.iniciarMesa(c, tiposDeApuestaSeleccionados);
-        if (mesaIniciada != null) {
-            vista.mostrarMesaCrupier(mesaIniciada);
+        Mesa mesaIniciada;
+        try {
+            mesaIniciada = fachada.iniciarMesa(c, tiposDeApuestaSeleccionados);
+            
+             vista.mostrarMesaCrupier(mesaIniciada);
+        } catch (UsuarioYaExisteException ex) {
+            vista.mostaMensajeError(ex.getMessage());
+            Logger.getLogger(ControladorCrearMesa.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 }

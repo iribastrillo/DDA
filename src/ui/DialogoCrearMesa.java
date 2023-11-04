@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -136,7 +137,12 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     
     @Override
     public void mostrarMesaCrupier(Mesa mesaIniciada){
-        new DialogoVentanaMesaCrupier(mesaIniciada,f).setVisible(true);
+        new DialogoVentanaMesaCrupier(mesaIniciada).setVisible(true);
         this.dispose();    
+    }
+
+    @Override
+    public void mostaMensajeError(String message) {
+            JOptionPane.showMessageDialog(this, "Error al crear una mesa: "+message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

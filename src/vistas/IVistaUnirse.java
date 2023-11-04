@@ -17,5 +17,5 @@ public interface IVistaUnirse {
     public void mostrarMesaJugador (Mesa mesa, Jugador jugador);
     public void logout ();
 
-    public void mostrarDialogoDeError(UsuarioYaEstaEnLaMesaException e);
+    public void mostrarDialogoDeError(String mensaje);
 }

@@ -4,17 +4,23 @@
  */
 package Logica;
 
+import Common.Observable;
+import Common.Observador;
 import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
+import Exceptions.MesaNoEncontradaException;
 import Exceptions.NombreUsuarioInvalidoException;
 import Exceptions.PasswordUsuarioInvalidoException;
+import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
+import dominio.EnumEventos;
 import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Usuario;
+import dominio.modelosVista.ModeloJugadorSaldo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,7 +28,7 @@ import java.util.HashMap;
  *
  * @author Usuario
  */
-public class Fachada {
+public class Fachada  extends Observable implements Observador {
     
     private static  Fachada instancia;
     private ServicioMesas servicioMesas;
@@ -63,21 +69,24 @@ public class Fachada {
            return servicioUsuarios.loginJugador(j);
     }
 
-    void agregar(Jugador jugador) throws UsuarioYaExisteException {
+    public void agregar(Jugador jugador) throws UsuarioYaExisteException {
          servicioUsuarios.agregar(jugador);
 
     }
 
-    void agregar(Crupier croupier) throws UsuarioYaExisteException {
+    public void agregar(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
     }
     
-    void agregar(Mesa mesa) throws UsuarioYaExisteException {
+    public void agregar(Mesa mesa) throws UsuarioYaExisteException {
         servicioMesas.agregar(mesa);
+        avisar(EnumEventos.FACHADA_NUEVA_MESA_AGREGADA);
     }
 
-    public Mesa iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) {
-       return null;
+    public Mesa iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) throws UsuarioYaExisteException {
+        Mesa mesa= new Mesa(  tipoApuestas, c);
+        agregar(mesa);
+       return mesa;
      }
 
     HashMap<String, Crupier> getCrupieres() {
@@ -90,5 +99,23 @@ public class Fachada {
 
     public Mesa getMesa(int mesa) {
         return servicioMesas.getMesa(mesa);
+    }
+
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    // Agregar jugador a mesa
+    public void agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
+       
+          getServicioMesa().agregarJugador(id,jugador);
+          avisar(EnumEventos.LOGIN_JUGADOR_MESA);
+       
+
+    }
+
+    public ArrayList<ModeloJugadorSaldo> cargarJugadoresSaldo(Mesa m) {
+       return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
 }
