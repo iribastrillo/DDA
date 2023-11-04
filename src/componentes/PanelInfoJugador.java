@@ -27,7 +27,7 @@ public class PanelInfoJugador extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     
     public void setSaldoInicial (float saldoInicial) {
-        this.saldoInicial.setText(String.valueOf(saldoInicial));
+        this.saldoInicial.setText("$" + String.valueOf(saldoInicial));
     }
     
     public void setNombreJugador (String nombre) {
@@ -67,6 +67,7 @@ public class PanelInfoJugador extends javax.swing.JPanel {
 
         userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/profile-user.png"))); // NOI18N
 
+        playerName.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         playerName.setText("Montgomery Burns");
 
         numeroSorteado.setBackground(new java.awt.Color(255, 102, 102));
@@ -132,17 +133,15 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saldoInicial)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
                         .addComponent(ruleta)
                         .addGap(18, 18, 18)
                         .addComponent(ronda)
-                        .addGap(110, 110, 110)
-                        .addComponent(userIcon)
-                        .addGap(18, 18, 18)
+                        .addGap(124, 124, 124)
                         .addComponent(playerName)
-                        .addGap(53, 53, 53))
+                        .addGap(57, 57, 57)
+                        .addComponent(userIcon))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,15 +165,13 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                         .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ruleta)
-                                .addComponent(ronda)
-                                .addComponent(saldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(playerName)
-                                .addComponent(userIcon)))
-                        .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ruleta)
+                            .addComponent(ronda)
+                            .addComponent(saldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(playerName)
+                            .addComponent(userIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

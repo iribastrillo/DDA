@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 public class Mesa {
 
-    private static int autoId = 1;
+    private static int autoId = 0;
     private int id;
     private float balance;
     private ArrayList<Integer> numerosSorteados;
