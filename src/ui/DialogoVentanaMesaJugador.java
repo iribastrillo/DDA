@@ -186,11 +186,11 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        r.setApuesta(23, 100);
+        r.setApuesta(selector.universalCellCode, panelInfoJugador1.getModelo().getTotal());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        r.setApuesta(23, 0);
+        r.setApuesta(selector.universalCellCode, panelInfoJugador1.getModelo().getTotal());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -255,6 +255,8 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         @Override
         public void celdaSeleccionada(int universalCellCode) {
             this.universalCellCode = universalCellCode;
+            String label = "Apostar " + "$" + panelInfoJugador1.getModelo().getTotal() + " al " + String.valueOf(universalCellCode);
+            jButton2.setText(label);
         }
         
     }
