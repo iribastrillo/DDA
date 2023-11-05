@@ -41,7 +41,7 @@ public class DialogoLoginCroupier extends DialogoLogin {
 
     @Override
     public void mostrarMensajeError(String mensaje) {
-            JOptionPane.showMessageDialog(this, "Login incorrecto, revise usuario y passoword y reintente.", "Login incorrecto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, mensaje, "Login incorrecto", JOptionPane.ERROR_MESSAGE);
     }
     
     

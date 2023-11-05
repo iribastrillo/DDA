@@ -12,6 +12,8 @@ import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.NombreUsuarioInvalidoException;
 import Exceptions.PasswordUsuarioInvalidoException;
+import Exceptions.UsuarioCrupierTieneSesionActivaException;
+import Exceptions.UsuarioNoEncontradoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
@@ -54,10 +56,11 @@ public class Fachada extends Observable implements Observador {
         return instancia;
     }
 
-    public Usuario loginCroupier(String cedula, String password) throws CedulaUsuarioInvalidaException, PasswordUsuarioInvalidoException {
+    public Usuario loginCroupier(String cedula, String password) throws CedulaUsuarioInvalidaException, PasswordUsuarioInvalidoException, UsuarioCrupierTieneSesionActivaException, UsuarioNoEncontradoException {
 
         Crupier u = new Crupier(cedula, password);
         u.validarUsuarioLogin();
+        
         return servicioUsuarios.loginCroupier(u);
 
     }
@@ -108,9 +111,10 @@ public class Fachada extends Observable implements Observador {
     // Agregar jugador a mesa
     public Mesa agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
 
+        Mesa mesa=getServicioMesa().agregarJugador(id, jugador);
         avisar(EnumEventos.LOGIN_JUGADOR_MESA);
 
-        return getServicioMesa().agregarJugador(id, jugador);
+        return mesa;
 
     }
 

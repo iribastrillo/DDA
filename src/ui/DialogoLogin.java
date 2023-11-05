@@ -136,7 +136,9 @@ public abstract class DialogoLogin extends javax.swing.JDialog implements IVista
         
         Usuario usuario = loginUsuario(cedula, password);
         if (usuario == null) {
-            JOptionPane.showMessageDialog(this, "Login incorrecto, revise usuario y passoword y reintente.", "Login incorrecto", JOptionPane.ERROR_MESSAGE);
+            //TODO: Sacar esta if, ya que si el usuario es nulo se debe tirar un error a nivel del controlador
+            // especializado de login usuario o crupier            
+           JOptionPane.showMessageDialog(this, "Login incorrecto, revise usuario y passoword y reintente.", "Login incorrecto", JOptionPane.ERROR_MESSAGE);
         } else {
             ejecutarCasoUsoInicial(usuario);
             this.dispose();

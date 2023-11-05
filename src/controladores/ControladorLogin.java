@@ -6,6 +6,8 @@ package controladores;
 
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
+import Exceptions.UsuarioCrupierTieneSesionActivaException;
+import Exceptions.UsuarioNoEncontradoException;
 import Logica.Fachada;
 import vistas.IVistaLogin;
 import dominio.Usuario;
@@ -30,10 +32,8 @@ public class ControladorLogin {
     public Usuario loginCroupier(String cedula, String password) {
         try {
             return fachada.loginCroupier(cedula, password);
-        } catch (CedulaUsuarioInvalidaException ex) {
-            Logger.getLogger(ControladorLogin.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            vista.mostrarMensajeError(ex.getMessage());
-        } catch (PasswordUsuarioInvalidoException ex) {
+
+        } catch (CedulaUsuarioInvalidaException | PasswordUsuarioInvalidoException | UsuarioCrupierTieneSesionActivaException  | UsuarioNoEncontradoException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
         return null;
