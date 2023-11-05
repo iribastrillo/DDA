@@ -28,9 +28,9 @@ import java.util.HashMap;
  *
  * @author Usuario
  */
-public class Fachada  extends Observable implements Observador {
-    
-    private static  Fachada instancia;
+public class Fachada extends Observable implements Observador {
+
+    private static Fachada instancia;
     private ServicioMesas servicioMesas;
     private ServicioUsuarios servicioUsuarios;
 
@@ -41,53 +41,52 @@ public class Fachada  extends Observable implements Observador {
     public ServicioUsuarios getServicioUsuarios() {
         return servicioUsuarios;
     }
-    
 
     private Fachada() {
-      servicioMesas=new ServicioMesas();
-      servicioUsuarios=new ServicioUsuarios();
+        servicioMesas = new ServicioMesas();
+        servicioUsuarios = new ServicioUsuarios();
     }
-    
-    public synchronized static Fachada getInstancia(){
-       if(instancia==null){
-           instancia=new Fachada();
-       }
-       return instancia;
+
+    public synchronized static Fachada getInstancia() {
+        if (instancia == null) {
+            instancia = new Fachada();
+        }
+        return instancia;
     }
 
     public Usuario loginCroupier(String cedula, String password) throws CedulaUsuarioInvalidaException, PasswordUsuarioInvalidoException {
-        
-            Crupier u = new Crupier(cedula, password);
-            u.validarUsuarioLogin();
-           return servicioUsuarios.loginCroupier(u);
-    
+
+        Crupier u = new Crupier(cedula, password);
+        u.validarUsuarioLogin();
+        return servicioUsuarios.loginCroupier(u);
+
     }
 
     public Usuario loginJugador(String cedula, String password) throws PasswordUsuarioInvalidoException, CedulaUsuarioInvalidaException {
-         Jugador j = new Jugador(cedula, password);
-            j.validarUsuarioLogin();
-           return servicioUsuarios.loginJugador(j);
+        Jugador j = new Jugador(cedula, password);
+        j.validarUsuarioLogin();
+        return servicioUsuarios.loginJugador(j);
     }
 
     public void agregar(Jugador jugador) throws UsuarioYaExisteException {
-         servicioUsuarios.agregar(jugador);
+        servicioUsuarios.agregar(jugador);
 
     }
 
     public void agregar(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
     }
-    
+
     public void agregar(Mesa mesa) throws UsuarioYaExisteException {
         servicioMesas.agregar(mesa);
         avisar(EnumEventos.FACHADA_NUEVA_MESA_AGREGADA);
     }
 
-    public Mesa iniciarMesa(Crupier c,ArrayList< EnumTipoApuesta> tipoApuestas) throws UsuarioYaExisteException {
-        Mesa mesa= new Mesa(  tipoApuestas, c);
+    public Mesa iniciarMesa(Crupier c, ArrayList< EnumTipoApuesta> tipoApuestas) throws UsuarioYaExisteException {
+        Mesa mesa = new Mesa(tipoApuestas, c);
         agregar(mesa);
-       return mesa;
-     }
+        return mesa;
+    }
 
     HashMap<String, Crupier> getCrupieres() {
         return servicioUsuarios.getCrupieres();
@@ -107,15 +106,15 @@ public class Fachada  extends Observable implements Observador {
     }
 
     // Agregar jugador a mesa
-    public void agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
-       
-          getServicioMesa().agregarJugador(id,jugador);
-          avisar(EnumEventos.LOGIN_JUGADOR_MESA);
-       
+    public Mesa agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
+
+        avisar(EnumEventos.LOGIN_JUGADOR_MESA);
+
+        return getServicioMesa().agregarJugador(id, jugador);
 
     }
 
     public ArrayList<ModeloJugadorSaldo> cargarJugadoresSaldo(Mesa m) {
-       return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
+        return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
 }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class ServicioMesas {
 
-    public boolean agregarJugador(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
+    public Mesa agregarJugador(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
         
         Mesa mesa=getMesa(id);
         if(mesa==null){
@@ -26,7 +26,7 @@ public class ServicioMesas {
         mesa.agregarJugador(jugador);
         
         //Si no hay excepciones, retorno true.
-        return true;
+        return mesa;
      }
 
     public ArrayList<Mesa> getMesasActivas() {

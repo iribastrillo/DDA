@@ -33,22 +33,23 @@ public class ControladorUnirse implements Observador{
     }
     public void unirse (int id, Jugador jugador) {
         
-            try {
-                fachada.agregar(id,jugador);
-            } catch (MesaNoEncontradaException   |UsuarioYaEstaEnLaMesaException ex) {
-                vista.mostrarDialogoDeError(ex.getMessage());
-             } 
+//            try {
+//                Mesa mesa=fachada.agregar(id,jugador);
+//                this.vista.mostrarMesaJugador(mesa, jugador);
+//            } catch (MesaNoEncontradaException   |UsuarioYaEstaEnLaMesaException ex) {
+//                vista.mostrarDialogoDeError(ex.getMessage());
+//             } 
         
         // Se paso la logica de agregar a Fachada, a su vez como fachada es Observable,
         //emitira evento cuando se agregue el jugador, que lo estara escuchando la mesa para mostrar el jugador y el saldo
         
-//        Mesa mesa = fachada.getMesa(id);
-//        try {
-//            mesa.agregarJugador(jugador);
-//            this.vista.mostrarMesaJugador(mesa, jugador);
-//        } catch (UsuarioYaEstaEnLaMesaException e) {
-//            this.vista.mostrarDialogoDeError(e);
-//        }
+        Mesa mesa = fachada.getMesa(id);
+        try {
+            mesa.agregarJugador(jugador);
+            this.vista.mostrarMesaJugador(mesa, jugador);
+        } catch (UsuarioYaEstaEnLaMesaException e) {
+            this.vista.mostrarDialogoDeError(e.getMessage());
+        }
     }
 
     @Override
