@@ -1,12 +1,16 @@
 package ui;
 
+import Common.DisplayerStrategy;
+import Common.IDisplayerStrategy;
 import controladores.ControladorVistaMesaJugador;
 import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
+import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloInfoJugador;
 import dominio.modelosVista.ModeloJugador;
+import java.util.ArrayList;
 /**
  *
  * @author digregor
@@ -17,6 +21,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private final ControladorVistaMesaJugador controlador;
     private final Mesa mesa;
     private final Jugador jugador;
+    private final IDisplayerStrategy displayer = new DisplayerStrategy ();
 
     /**
      * Creates new form NewJFrame
@@ -33,6 +38,8 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
                 mesa.getId(),
                 mesa.getRondaActual().getId()
         )); 
+        this.displayer.ocultarTodo(r);
+        this.controlador.mostrarTiposDeApuesta (mesa);
         this.panelInfoJugador1.actualizar();
     }
     
@@ -215,4 +222,22 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private componentes.PanelInfoJugador panelInfoJugador1;
     private componentes.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarTiposDeApuesta(ArrayList<EnumTipoApuesta> tiposDeApuesta) {
+        for (EnumTipoApuesta enumApuesta : tiposDeApuesta) {
+            switch (enumApuesta) {
+                case Paridad: 
+                    displayer.mostrarParidad(r);
+                    break;
+                case Colores:
+                    displayer.mostrarColor(r);
+                    break;
+                case Docenas:
+                    displayer.mostrarDocenas(r);
+                    break;
+
+            }
+        }
+    }
 }

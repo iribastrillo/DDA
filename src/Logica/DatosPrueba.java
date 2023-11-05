@@ -34,8 +34,8 @@ public class DatosPrueba {
         };
         
         Mesa [] mesas = new Mesa [] {
-            new Mesa(new ArrayList<EnumTipoApuesta> (), crupieres [0]),
-            new Mesa(new ArrayList<EnumTipoApuesta> (), crupieres [1]),
+            new Mesa(new ArrayList<> (), crupieres [0]),
+            new Mesa(new ArrayList<> (), crupieres [1]),
         };
 
         for (Crupier c : crupieres) {

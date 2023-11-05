@@ -227,7 +227,6 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
 
     private void chip5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip5ActionPerformed
         this.tomarFicha(5);
-
     }//GEN-LAST:event_chip5ActionPerformed
 
     private void chip10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip10ActionPerformed

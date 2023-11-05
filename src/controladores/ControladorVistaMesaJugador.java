@@ -8,6 +8,7 @@ import Common.Observable;
 import Common.Observador;
 import Logica.Fachada;
 import dominio.EnumEventos;
+import dominio.Mesa;
 import vistas.IVistaMesaJugador;
 
 /**
@@ -31,5 +32,9 @@ public class ControladorVistaMesaJugador implements Observador {
         if (e == EnumEventos.ABANDONAR_MESA) {
             this.vista.abandonar();
         }
+    }
+
+    public void mostrarTiposDeApuesta(Mesa mesa) {
+        vista.mostrarTiposDeApuesta (mesa.listarTiposApuestaSeleccionados());
     }
 }

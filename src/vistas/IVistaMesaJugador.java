@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import dominio.EnumTipoApuesta;
+import java.util.ArrayList;
+
 /**
  *
  * @author nacho
@@ -11,5 +14,7 @@ package vistas;
 public interface IVistaMesaJugador {
 
     public void abandonar();
+
+    public void mostrarTiposDeApuesta(ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados);
     
 }
