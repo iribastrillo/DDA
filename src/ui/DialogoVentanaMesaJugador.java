@@ -5,6 +5,7 @@ import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
 import dominio.Jugador;
 import dominio.Mesa;
+import dominio.modelosVista.ModeloPanelJugador;
 /**
  *
  * @author digregor
@@ -28,6 +29,11 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.panelInfoJugador1.setNombreJugador(jugador.getNombreCompleto());
         this.panelInfoJugador1.setNumeroMesa(mesa.getId());
         this.panelInfoJugador1.setNumeroRonda(mesa.getRondaActual().getId());
+        this.panelEstadisticasJugador.setModelo(new ModeloPanelJugador (jugador.getCedula(), mesa.getId()));
+    }
+    
+    public void salir (){
+        this.dispose();
     }
 
     /**

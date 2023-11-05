@@ -90,4 +90,14 @@ public class Mesa {
         return this.rondas.get(this.rondas.size() - 2);
     }
 
+    public void removerJugador(String cedula) {
+        Jugador j = null;
+        for (Jugador jugador: jugadores) {
+            if (jugador.getCedula() == cedula) {
+                j = jugador;
+            }
+        }
+        jugadores.remove(j);
+    }
+
 }

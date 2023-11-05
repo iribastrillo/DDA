@@ -4,17 +4,22 @@
  */
 package componentes;
 
+import controladores.ControladorPanelJugador;
+import dominio.modelosVista.ModeloPanelJugador;
 /**
  *
  * @author nacho
  */
 public class PanelJugador extends javax.swing.JPanel {
-
+    
+    private final ControladorPanelJugador controlador;
+    private ModeloPanelJugador modelo;
     /**
      * Creates new form PanelJugador
      */
     public PanelJugador() {
         initComponents();
+        this.controlador = new ControladorPanelJugador ();
     }
 
     /**
@@ -88,12 +93,12 @@ public class PanelJugador extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(abandonarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void abandonarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abandonarButtonActionPerformed
-        // TODO add your handling code here:
+        controlador.abandonar (modelo.getMesa(), modelo.getJugador());
     }//GEN-LAST:event_abandonarButtonActionPerformed
 
 
@@ -104,4 +109,13 @@ public class PanelJugador extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
+
+
+    public ModeloPanelJugador getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(ModeloPanelJugador modelo) {
+        this.modelo = modelo;
+    }   
 }

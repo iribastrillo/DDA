@@ -5,12 +5,10 @@
 package Logica;
 
 import Common.Observable;
-import Common.Observador;
 import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
-import Exceptions.NombreUsuarioInvalidoException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
 import Exceptions.UsuarioNoEncontradoException;
@@ -22,7 +20,7 @@ import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Usuario;
-import dominio.modelosVista.ModeloJugadorSaldo;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,7 +28,7 @@ import java.util.HashMap;
  *
  * @author Usuario
  */
-public class Fachada extends Observable implements Observador {
+public class Fachada extends Observable {
 
     private static Fachada instancia;
     private ServicioMesas servicioMesas;
@@ -103,11 +101,6 @@ public class Fachada extends Observable implements Observador {
         return servicioMesas.getMesa(mesa);
     }
 
-    @Override
-    public void actualizar(Observable origen, Object evento) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     // Agregar jugador a mesa
     public Mesa agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
 
@@ -118,7 +111,12 @@ public class Fachada extends Observable implements Observador {
 
     }
 
-    public ArrayList<ModeloJugadorSaldo> cargarJugadoresSaldo(Mesa m) {
+    public ArrayList<ModeloMesaJugador> cargarJugadoresSaldo(Mesa m) {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
+    }
+
+    public void abandonar(int mesa, String jugador) {
+        this.servicioMesas.abandonar (mesa, jugador);
+        avisar (EnumEventos.ABANDONAR_MESA);
     }
 }

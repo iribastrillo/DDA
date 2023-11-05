@@ -8,7 +8,7 @@ import controladores.ControladorVistaMesaCrupier;
 
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloJugadorSaldo;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
 import vistas.IVistaMesaCrupier;
  
@@ -179,7 +179,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
      }
 
     @Override
-    public void cargarListaJugadores(ArrayList<ModeloJugadorSaldo> jugadoresSaldo) {
+    public void cargarListaJugadores(ArrayList<ModeloMesaJugador> jugadoresSaldo) {
         this.panelTableroRuleta1.setJugadoresSaldo(jugadoresSaldo);
 
     }

@@ -4,17 +4,32 @@
  */
 package controladores;
 
+import Common.Observable;
+import Common.Observador;
+import Logica.Fachada;
+import dominio.EnumEventos;
 import vistas.IVistaMesaJugador;
 
 /**
  *
  * @author nacho
  */
-public class ControladorVistaMesaJugador {
+public class ControladorVistaMesaJugador implements Observador {
     
-    private IVistaMesaJugador vista;
+    private final IVistaMesaJugador vista;
+    private final Fachada fachada;
     
     public ControladorVistaMesaJugador (IVistaMesaJugador vista) {
         this.vista = vista;
+        this.fachada = Fachada.getInstancia();
+        this.fachada.agregar(this);
+    }
+
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        EnumEventos e = (EnumEventos) evento;
+        if (e == EnumEventos.ABANDONAR_MESA) {
+            this.vista.salir();
+        }
     }
 }

@@ -11,5 +11,6 @@ package dominio;
 public enum EnumEventos {
     LOGIN_JUGADOR_MESA,
     LOGOUT_JUGADOR_MESA,
-    FACHADA_NUEVA_MESA_AGREGADA;
+    FACHADA_NUEVA_MESA_AGREGADA,
+    ABANDONAR_MESA;
 }

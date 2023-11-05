@@ -9,5 +9,7 @@ package vistas;
  * @author nacho
  */
 public interface IVistaMesaJugador {
+
+    public void salir();
     
 }

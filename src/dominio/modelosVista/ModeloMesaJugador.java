@@ -4,15 +4,17 @@
  */
 package dominio.modelosVista;
 
+import dominio.Mesa;
+
 /**
  *
  * @author Usuario
  */
-public class ModeloJugadorSaldo {
+public class ModeloMesaJugador {
     private String nombreJugador;
     private Float saldoJugador;
 
-    public ModeloJugadorSaldo(String nombreJugador, Float saldoJugador) {
+    public ModeloMesaJugador(String nombreJugador, Float saldoJugador) {
         this.nombreJugador = nombreJugador;
         this.saldoJugador = saldoJugador;
     }

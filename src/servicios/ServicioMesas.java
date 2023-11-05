@@ -7,7 +7,7 @@ import Exceptions.MesaNoEncontradaException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import dominio.Jugador;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloJugadorSaldo;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
 
 /**
@@ -63,13 +63,18 @@ public class ServicioMesas {
         return mesasActivas.get(mesa);
     }
 
-    public ArrayList<ModeloJugadorSaldo> obtenerJugadoresSaldoParaMesa(Mesa m) {
-        ArrayList<ModeloJugadorSaldo>jugadoresSaldo=new ArrayList<>();
+    public ArrayList<ModeloMesaJugador> obtenerJugadoresSaldoParaMesa(Mesa m) {
+        ArrayList<ModeloMesaJugador>jugadoresSaldo=new ArrayList<>();
         ArrayList<Jugador> jugadores =m.getJugadores();
         for(Jugador j :jugadores){
-            ModeloJugadorSaldo jugadorSaldo= new ModeloJugadorSaldo(j.getNombreCompleto(),j.getSaldoInicial());
+            ModeloMesaJugador jugadorSaldo= new ModeloMesaJugador(j.getNombreCompleto(),j.getSaldoInicial());
             jugadoresSaldo.add(jugadorSaldo);
         }
         return jugadoresSaldo;
+    }
+
+    public void abandonar(int idMesa, String cedula) {
+        Mesa mesa = this.getMesa(idMesa);
+        mesa.removerJugador (cedula);
     }
 }
