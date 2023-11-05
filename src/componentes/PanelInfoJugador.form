@@ -62,12 +62,14 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="ruleta" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ronda" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="saldoInicial" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="playerName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="userIcon" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="ruleta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ronda" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="saldoInicial" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="playerName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>

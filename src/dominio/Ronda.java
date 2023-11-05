@@ -4,6 +4,8 @@
  */
 package dominio;
 
+import dominio.efectos.CompletoEfecto;
+import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
 
 /**
@@ -19,14 +21,18 @@ public class Ronda {
     private float liquidacion;
     private int numeroSorteado;
     private ArrayList<Apuesta>apuestas;
+    private StrategyEfecto efecto;
+    private Mesa mesa;
     
-    public Ronda () {
-        this.id = autoId;
+    public Ronda (Mesa mesa) {
+        this.id = ++autoId;
         this.balanceAnterior = 0;
         this.balancePosterior = 0;
         this.recoleccion = 0;
         this.liquidacion = 0;
         this.apuestas=new ArrayList<>();
+        this.efecto=new CompletoEfecto();
+        this.mesa=mesa;
     }
 
     public int getId() {
@@ -35,6 +41,22 @@ public class Ronda {
 
     public float getBalanceAnterior() {
         return balanceAnterior;
+    }
+
+    public ArrayList<Apuesta> getApuestas() {
+        return apuestas;
+    }
+
+    public void setApuestas(ArrayList<Apuesta> apuestas) {
+        this.apuestas = apuestas;
+    }
+
+    public StrategyEfecto getEfecto() {
+        return efecto;
+    }
+
+    public void setEfecto(StrategyEfecto efecto) {
+        this.efecto = efecto;
     }
 
     public void setBalanceAnterior(float balanceAnterior) {
@@ -70,7 +92,7 @@ public class Ronda {
     }
 
     public void setNumeroSorteado(int numeroSorteado) {
-        this.numeroSorteado = numeroSorteado;
+        this.numeroSorteado = efecto.obtenerNumero(mesa);
     }
     public int getCantidadApuestas(){
         return apuestas.size();

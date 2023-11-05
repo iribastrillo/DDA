@@ -6,9 +6,10 @@ package dominio;
 
 /**
  *
- * @author nacho
+ * @author Usuario
  */
-public class Apuesta {
-    // esto tendria casillero
-    // y monto
+public enum EnumEfectos {
+    COMPLETO,
+    PARCIAL,
+    SIMULADOR;
 }

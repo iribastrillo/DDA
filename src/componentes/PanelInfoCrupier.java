@@ -4,6 +4,10 @@
  */
 package componentes;
 
+import controladores.ControladorVistaMesaCrupier;
+import dominio.efectos.StrategyEfecto;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
@@ -16,8 +20,23 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
     /**
      * Creates new form PanelInfoJugador
      */
+    private List<EscuchadorEfectos> handlers;
+
     public PanelInfoCrupier() {
         initComponents();
+        handlers = new ArrayList();
+    }
+
+    public void agregar(EscuchadorEfectos escuchador) {
+        this.handlers.add(escuchador);
+    }
+
+    public void eliminarEscuchadores() {
+        this.handlers.clear();
+    }
+
+    public void eliminarEscuchador(EscuchadorEfectos escuchador) {
+        this.handlers.remove(escuchador);
     }
 
     /**
@@ -48,9 +67,21 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
         this.jLbl_cantidadApuestas_Valor.setText(String.valueOf(cantidadApuestas));
 
     }
-    
-    // Cargar listas de efectos
 
+    public void setDropdownEfectos(String[] efectos) {
+        for (String e : efectos) {
+            this.cb_efectos.addItem(e);
+        }
+
+    }
+
+    public interface EscuchadorEfectos {
+
+        public void efectoSeleccionado(String efecto);
+
+    }
+
+    // Cargar listas de efectos
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,7 +95,7 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
         jLbl_Apuestas_titulo = new javax.swing.JLabel();
         jLbl_cantidadApuestas_Valor = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cb_efectos = new javax.swing.JComboBox<>();
         javax.swing.JButton jBtn_LanzarPagar = new javax.swing.JButton();
         jBtn_CerrarMesa = new javax.swing.JButton();
 
@@ -89,7 +120,11 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
 
         jLabel3.setText("|");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_efectos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_efectosActionPerformed(evt);
+            }
+        });
 
         jBtn_LanzarPagar.setText("Lanzar/Pagar");
         jBtn_LanzarPagar.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +167,7 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLbl_cantidadApuestas_Valor)
                         .addGap(54, 54, 54)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_efectos, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jBtn_LanzarPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -166,7 +201,7 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
                             .addComponent(jLbl_Apuestas_titulo)
                             .addComponent(jLbl_cantidadApuestas_Valor)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_efectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtn_LanzarPagar))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -183,10 +218,20 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtn_CerrarMesaActionPerformed
 
+    private void cb_efectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_efectosActionPerformed
+        // TODO add your handling code here:
+        String efecto = this.cb_efectos.getSelectedItem().toString();
+        for(EscuchadorEfectos e: handlers){
+            e.efectoSeleccionado(efecto);
+        }
+
+
+    }//GEN-LAST:event_cb_efectosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cb_efectos;
     private javax.swing.JButton jBtn_CerrarMesa;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLbl_Apuestas_titulo;

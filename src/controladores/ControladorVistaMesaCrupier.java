@@ -7,7 +7,9 @@ package controladores;
 import Common.Observable;
 import Common.Observador;
 import Logica.Fachada;
+import dominio.EnumEfectos;
 import dominio.EnumEventos;
+import dominio.EnumTipoApuesta;
 import vistas.IVistaMesaCrupier;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloJugadorSaldo;
@@ -57,6 +59,22 @@ public class ControladorVistaMesaCrupier implements Observador {
            ArrayList<ModeloJugadorSaldo> jugadoresSaldo= this.fachada.cargarJugadoresSaldo(m);
              
               this.vista.cargarListaJugadores(jugadoresSaldo);
+    }
+    
+    public void cargarDropdownEfectos(){
+ 
+        
+        EnumEfectos[] valoresEnum = EnumEfectos.values();
+        String[] valoresEnumStrings = new String[valoresEnum.length];
+        for (int i = 0; i < valoresEnum.length; i++) {
+            
+       
+
+                valoresEnumStrings[i] = valoresEnum[i].name();
+          
+        }
+        vista.cargarDropdownEfectos(valoresEnumStrings);
+ 
     }
 
     @Override
