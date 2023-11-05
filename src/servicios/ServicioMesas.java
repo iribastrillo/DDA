@@ -8,7 +8,7 @@ import Exceptions.UsuarioYaEstaEnLaMesaException;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloInfoJugador;
-import dominio.modelosVista.ModeloInfoJugadores;
+import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 
 /**
@@ -64,11 +64,11 @@ public class ServicioMesas {
         return mesasActivas.get(mesa);
     }
 
-    public ArrayList<ModeloInfoJugadores> obtenerJugadoresSaldoParaMesa(Mesa m) {
-        ArrayList<ModeloInfoJugadores> jugadoresSaldo=new ArrayList<>();
+    public ArrayList<ModeloInfoCrupier> obtenerJugadoresSaldoParaMesa(Mesa m) {
+        ArrayList<ModeloInfoCrupier> jugadoresSaldo=new ArrayList<>();
         ArrayList<Jugador> jugadores =m.getJugadores();
         for(Jugador j :jugadores){
-            ModeloInfoJugadores jugadorSaldo= new ModeloInfoJugadores(j.getNombreCompleto(),j.getSaldoInicial());
+            ModeloInfoCrupier jugadorSaldo= new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldoInicial());
             jugadoresSaldo.add(jugadorSaldo);
         }
         return jugadoresSaldo;

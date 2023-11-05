@@ -8,11 +8,11 @@ package dominio.modelosVista;
  *
  * @author nacho
  */
-public class ModeloInfoJugadores {
+public class ModeloInfoCrupier {
     private String jugador;
     private float saldo;
     
-    public ModeloInfoJugadores (String jugador, float saldo) {
+    public ModeloInfoCrupier (String jugador, float saldo) {
         this.jugador = jugador;
         this.saldo = saldo;
     }

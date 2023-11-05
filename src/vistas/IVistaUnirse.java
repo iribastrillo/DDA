@@ -16,6 +16,5 @@ public interface IVistaUnirse {
     public void cargarMesasActivas ();
     public void mostrarMesaJugador (Mesa mesa, Jugador jugador);
     public void logout ();
-
     public void mostrarDialogoDeError(String mensaje);
 }

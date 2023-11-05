@@ -21,7 +21,7 @@ import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Usuario;
 import dominio.modelosVista.ModeloInfoJugador;
-import dominio.modelosVista.ModeloInfoJugadores;
+import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -112,7 +112,7 @@ public class Fachada extends Observable {
 
     }
 
-    public ArrayList<ModeloInfoJugadores> cargarJugadoresSaldo(Mesa m) {
+    public ArrayList<ModeloInfoCrupier> cargarJugadoresSaldo(Mesa m) {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
 

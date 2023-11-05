@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import vistas.IPanelInfoJugador;
 
 /**
  *
  * @author nacho
  */
-public class PanelInfoJugador extends javax.swing.JPanel {
+public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJugador{
     
     private ControladorInfoJugador controlador;
     private ArrayList<Integer> fichas;
@@ -54,7 +56,7 @@ public class PanelInfoJugador extends javax.swing.JPanel {
     }
     
     public void setMontoApostado () {
-        this.montoApostado.setText(String.valueOf(this.modelo.getTotal()));
+        this.montoApostado.setText("Apuesta: $" + String.valueOf(this.modelo.getTotal()));
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -74,6 +76,7 @@ public class PanelInfoJugador extends javax.swing.JPanel {
         chip50 = new javax.swing.JButton();
         chip100 = new javax.swing.JButton();
         montoApostado = new javax.swing.JLabel();
+        undoButton = new javax.swing.JButton();
 
         ruleta.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ruleta.setText("Ruleta #3");
@@ -139,6 +142,13 @@ public class PanelInfoJugador extends javax.swing.JPanel {
 
         montoApostado.setText("MontoApostado");
 
+        undoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/arrows.png"))); // NOI18N
+        undoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,19 +170,20 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                         .addGap(57, 57, 57)
                         .addComponent(userIcon))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addComponent(montoApostado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(55, 55, 55)
                         .addComponent(chip1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(20, 20, 20)
                         .addComponent(chip5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(20, 20, 20)
                         .addComponent(chip10, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(20, 20, 20)
                         .addComponent(chip50, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(20, 20, 20)
                         .addComponent(chip100)
-                        .addGap(66, 66, 66)
+                        .addGap(18, 18, 18)
+                        .addComponent(undoButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -203,51 +214,37 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                         .addComponent(chip5)
                         .addComponent(chip10)
                         .addComponent(chip50)
-                        .addComponent(chip100))
-                    .addComponent(montoApostado))
+                        .addComponent(chip100)
+                        .addComponent(montoApostado))
+                    .addComponent(undoButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void chip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip1ActionPerformed
-        try {
-            this.tomarFicha(1);
-        } catch (NoTieneSaldoDisponibleException ex) {
-            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.tomarFicha(1);
     }//GEN-LAST:event_chip1ActionPerformed
 
     private void chip5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip5ActionPerformed
-        try {
-            this.tomarFicha(5);
-        } catch (NoTieneSaldoDisponibleException ex) {
-            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.tomarFicha(5);
+
     }//GEN-LAST:event_chip5ActionPerformed
 
     private void chip10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip10ActionPerformed
-        try {
-            this.tomarFicha(10);
-        } catch (NoTieneSaldoDisponibleException ex) {
-            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.tomarFicha(10);
     }//GEN-LAST:event_chip10ActionPerformed
 
     private void chip50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip50ActionPerformed
-        try {
-            this.tomarFicha(50);
-        } catch (NoTieneSaldoDisponibleException ex) {
-            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.tomarFicha(50);
     }//GEN-LAST:event_chip50ActionPerformed
 
     private void chip100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip100ActionPerformed
-        try {
-            this.tomarFicha(100);
-        } catch (NoTieneSaldoDisponibleException ex) {
-            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.tomarFicha(100);
     }//GEN-LAST:event_chip100ActionPerformed
+
+    private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
+        this.undo();
+    }//GEN-LAST:event_undoButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -264,14 +261,24 @@ public class PanelInfoJugador extends javax.swing.JPanel {
     private javax.swing.JLabel ronda;
     private javax.swing.JLabel ruleta;
     private javax.swing.JLabel saldoInicial;
+    private javax.swing.JButton undoButton;
     private javax.swing.JLabel userIcon;
     // End of variables declaration//GEN-END:variables
     
-    private void tomarFicha(int i) throws NoTieneSaldoDisponibleException {
-        this.controlador.tomarFicha (i, this.modelo.getTotal(), this.modelo.getSaldoJugador());
-        int monto = 1 + this.modelo.getTotal();
-        this.modelo.agregarFicha (i);
-        this.actualizar();
+    private void undo () {
+        this.controlador.undo (this.modelo);
+        this.actualizar ();
+    }
+    
+    private void tomarFicha(int i) {
+        try {
+            this.controlador.tomarFicha (i, this.modelo, this);
+            int monto = 1 + this.modelo.getTotal();
+            this.modelo.agregarFicha (i);
+            this.actualizar();
+        } catch (NoTieneSaldoDisponibleException ex) {
+            this.mostrarDialogoDeError(ex.getMessage());
+        }
     }
     
     public ModeloInfoJugador getModelo() {
@@ -288,5 +295,10 @@ public class PanelInfoJugador extends javax.swing.JPanel {
         this.setNumeroMesa(this.modelo.getMesa());
         this.setNumeroRonda(this.modelo.getRonda());
         this.setMontoApostado();
+    }
+
+    @Override
+    public void mostrarDialogoDeError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Saldo insuficiente", JOptionPane.ERROR_MESSAGE);
     }
 }

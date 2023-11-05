@@ -34,19 +34,20 @@
                       <Component id="userIcon" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="montoApostado" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                       <Component id="chip1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="chip5" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="chip10" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="chip50" min="-2" pref="90" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="chip100" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="undoButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="numeroSorteado" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -87,8 +88,9 @@
                       <Component id="chip10" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="chip50" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="chip100" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="montoApostado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="montoApostado" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="undoButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -214,6 +216,16 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="MontoApostado"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="undoButton">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/componentes/arrows.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="undoButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
