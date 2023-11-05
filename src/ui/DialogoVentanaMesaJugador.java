@@ -21,6 +21,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private final ControladorVistaMesaJugador controlador;
     private final Mesa mesa;
     private final Jugador jugador;
+    private final Selector selector;
     private final IDisplayerStrategy displayer = new DisplayerStrategy ();
 
     /**
@@ -30,6 +31,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         initComponents();
         this.mesa = mesa;
         this.jugador = jugador;
+        this.selector = new Selector ();
         this.controlador = new ControladorVistaMesaJugador (this);
         this.panelEstadisticasJugador.setModelo(new ModeloJugador (jugador.getCedula(), mesa.getId()));
         this.panelInfoJugador1.setModelo(new ModeloInfoJugador (
@@ -41,6 +43,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.displayer.ocultarTodo(r);
         this.controlador.mostrarTiposDeApuesta (mesa);
         this.panelInfoJugador1.actualizar();
+        this.setup();
     }
     
     public void abandonar (){
@@ -239,5 +242,20 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
 
             }
         }
+    }
+    
+    private void setup () {
+        r.agregar(selector);
+    }
+    
+    private class Selector implements PanelRuleta.Escuchador {
+        
+        int universalCellCode;
+        
+        @Override
+        public void celdaSeleccionada(int universalCellCode) {
+            this.universalCellCode = universalCellCode;
+        }
+        
     }
 }
