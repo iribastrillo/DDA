@@ -6,9 +6,12 @@ package controladores;
 
 import Common.Observable;
 import Common.Observador;
+import Exceptions.NoTieneSaldoDisponibleException;
 import Logica.Fachada;
 import dominio.EnumEventos;
 import dominio.Mesa;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vistas.IVistaMesaJugador;
 
 /**
@@ -36,5 +39,14 @@ public class ControladorVistaMesaJugador implements Observador {
 
     public void mostrarTiposDeApuesta(Mesa mesa) {
         vista.mostrarTiposDeApuesta (mesa.listarTiposApuestaSeleccionados());
+    }
+
+    public void apostar(int n, int monto, String idJugador) {
+        try {
+            fachada.apostar (n, monto, idJugador);
+            vista.refrescar();
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(ControladorVistaMesaJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

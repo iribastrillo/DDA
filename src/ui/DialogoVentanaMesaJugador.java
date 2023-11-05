@@ -2,6 +2,7 @@ package ui;
 
 import Common.DisplayerStrategy;
 import Common.IDisplayerStrategy;
+import Logica.Fachada;
 import controladores.ControladorVistaMesaJugador;
 import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
@@ -15,13 +16,14 @@ import java.util.ArrayList;
  *
  * @author digregor
  */
-public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVistaMesaJugador{
+public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVistaMesaJugador {
 
     int apuestaRojo = 0;
+    private Jugador jugador;
     private final ControladorVistaMesaJugador controlador;
     private final Mesa mesa;
-    private final Jugador jugador;
     private final Selector selector;
+    private final Fachada fachada;
     private final IDisplayerStrategy displayer = new DisplayerStrategy ();
 
     /**
@@ -31,7 +33,9 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         initComponents();
         this.mesa = mesa;
         this.jugador = jugador;
+        
         this.selector = new Selector ();
+        this.fachada = Fachada.getInstancia();
         this.controlador = new ControladorVistaMesaJugador (this);
         this.panelEstadisticasJugador.setModelo(new ModeloJugador (jugador.getCedula(), mesa.getId()));
         this.panelInfoJugador1.setModelo(new ModeloInfoJugador (
@@ -90,7 +94,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             }
         });
 
-        jButton2.setText("Apostar 100 al 23");
+        jButton2.setText("Apostar al 0");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -168,7 +172,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -186,11 +190,15 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        r.setApuesta(selector.universalCellCode, panelInfoJugador1.getModelo().getTotal());
+        int n = selector.universalCellCode;
+        int monto = panelInfoJugador1.getModelo().getTotal();
+        String idJugador = jugador.getCedula();
+        r.setApuesta(n, monto);
+        controlador.apostar (n, monto, idJugador);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        r.setApuesta(selector.universalCellCode, panelInfoJugador1.getModelo().getTotal());
+        r.setApuesta(selector.universalCellCode, 0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -247,15 +255,27 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private void setup () {
         r.agregar(selector);
     }
-    
+
+    @Override
+    public void refrescar() {
+        this.jugador = fachada.getJugadorById(jugador.getCedula());
+        this.panelInfoJugador1.setModelo(new ModeloInfoJugador (
+                jugador.getNombreCompleto(),
+                jugador.getSaldoInicial(),
+                mesa.getId(),
+                mesa.getRondaActual().getId()
+        )); 
+        this.panelInfoJugador1.actualizar();
+    }
+
     private class Selector implements PanelRuleta.Escuchador {
         
-        int universalCellCode;
+        int universalCellCode = 0;
         
         @Override
         public void celdaSeleccionada(int universalCellCode) {
             this.universalCellCode = universalCellCode;
-            String label = "Apostar " + "$" + panelInfoJugador1.getModelo().getTotal() + " al " + String.valueOf(universalCellCode);
+            String label = "Apostar al " + String.valueOf(universalCellCode);
             jButton2.setText(label);
         }
         

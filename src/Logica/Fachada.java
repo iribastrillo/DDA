@@ -9,6 +9,7 @@ import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
 import Exceptions.UsuarioNoEncontradoException;
@@ -20,7 +21,6 @@ import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Usuario;
-import dominio.modelosVista.ModeloInfoJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,5 +119,13 @@ public class Fachada extends Observable {
     public void abandonar(int mesa, String jugador) {
         this.servicioMesas.abandonar (mesa, jugador);
         avisar (EnumEventos.ABANDONAR_MESA);
+    }
+
+    public void apostar(int n, int monto, String idJugador) throws NoTieneSaldoDisponibleException {
+        servicioUsuarios.apostar (n, monto, idJugador);
+    }
+
+    public Jugador getJugadorById(String cedula) {
+        return servicioUsuarios.getJugadorById(cedula);
     }
 }

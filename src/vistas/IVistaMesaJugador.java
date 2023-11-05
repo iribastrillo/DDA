@@ -17,4 +17,6 @@ public interface IVistaMesaJugador {
 
     public void mostrarTiposDeApuesta(ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados);
     
+    public void refrescar ();
+    
 }

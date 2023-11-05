@@ -29,6 +29,10 @@ public class Jugador extends Usuario {
         super(  cedula, password);
       
     }
+
+    public void descontar(int monto) {
+        this.saldoInicial -= monto;
+    }
    
     
     
