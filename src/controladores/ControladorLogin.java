@@ -30,7 +30,6 @@ public class ControladorLogin {
     public Usuario loginCroupier(String cedula, String password) {
         try {
             return fachada.loginCroupier(cedula, password);
-
         } catch (CedulaUsuarioInvalidaException | PasswordUsuarioInvalidoException | UsuarioCrupierTieneSesionActivaException  | UsuarioNoEncontradoException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
@@ -40,11 +39,9 @@ public class ControladorLogin {
     public Usuario loginJugador(String cedula, String password) {
         try {
             return fachada.loginJugador(cedula, password);
-        } catch (CedulaUsuarioInvalidaException ex) {
+        } catch (CedulaUsuarioInvalidaException |PasswordUsuarioInvalidoException |UsuarioNoEncontradoException ex) {
             vista.mostrarMensajeError(ex.getMessage());
-        } catch (PasswordUsuarioInvalidoException ex) {
-            vista.mostrarMensajeError(ex.getMessage());
-        }
+        } 
         return null;
     }
 
