@@ -99,9 +99,13 @@ public class ServicioUsuarios {
         }
         jugador.descontar (monto);
     }
+    
+    public void quitarApuesta(int uucod, int monto, String idJugador) {
+        Jugador jugador = this.getJugadorById(idJugador);
+        jugador.acreditar (monto);
+    }
 
     public Jugador getJugadorById(String idJugador) {
         return jugadores.get(idJugador);
     }
-
 }

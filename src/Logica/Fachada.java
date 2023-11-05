@@ -135,6 +135,10 @@ public class Fachada extends Observable {
     public void apostar(int n, int monto, String idJugador) throws NoTieneSaldoDisponibleException {
         servicioUsuarios.apostar (n, monto, idJugador);
     }
+    
+    public void quitarApuesta(int uucod, int monto, String idJugador) {
+        servicioUsuarios.quitarApuesta (uucod, monto, idJugador);
+    }
 
     public Jugador getJugadorById(String cedula) {
         return servicioUsuarios.getJugadorById(cedula);

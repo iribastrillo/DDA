@@ -49,4 +49,9 @@ public class ControladorVistaMesaJugador implements Observador {
             Logger.getLogger(ControladorVistaMesaJugador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void quitarApuesta(int uucod, int monto, String idJugador) {
+        fachada.quitarApuesta (uucod, monto, idJugador);
+        vista.refrescar ();
+    }
 }
