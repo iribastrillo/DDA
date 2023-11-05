@@ -4,6 +4,7 @@
  */
 package servicios;
 
+import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
 import Exceptions.UsuarioNoEncontradoException;
 import Exceptions.UsuarioYaExisteException;
@@ -91,4 +92,20 @@ public class ServicioUsuarios {
         return this.croupieres;
     }
 
+    public void apostar(int n, int monto, String idJugador) throws NoTieneSaldoDisponibleException {
+        Jugador jugador = this.getJugadorById (idJugador);
+        if (jugador.getSaldoInicial() < monto) {
+            throw new NoTieneSaldoDisponibleException ("No tiene saldo suficiente.");
+        }
+        jugador.descontar (monto);
+    }
+    
+    public void quitarApuesta(int uucod, int monto, String idJugador) {
+        Jugador jugador = this.getJugadorById(idJugador);
+        jugador.acreditar (monto);
+    }
+
+    public Jugador getJugadorById(String idJugador) {
+        return jugadores.get(idJugador);
+    }
 }

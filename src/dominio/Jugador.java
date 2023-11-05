@@ -11,26 +11,30 @@ package dominio;
 public class Jugador extends Usuario {
 
     public float getSaldoInicial() {
-        return saldoInicial;
+        return saldo;
     }
 
     public void setSaldoInicial(float saldoInicial) {
-        this.saldoInicial = saldoInicial;
+        this.saldo = saldoInicial;
     }
     
 
-    private float saldoInicial;
+    private float saldo;
 
     public Jugador(float saldoInicial, String nombreCompleto, String cedula, String password) {
         super(nombreCompleto, cedula, password);
-        this.saldoInicial = saldoInicial;
+        this.saldo = saldoInicial;
     }
      public Jugador(  String cedula, String password) {
         super(  cedula, password);
       
     }
-   
-    
-    
 
+    public void descontar(int monto) {
+        this.saldo -= monto;
+    }
+
+    public void acreditar(int monto) {
+        this.saldo += monto;
+    }
 }

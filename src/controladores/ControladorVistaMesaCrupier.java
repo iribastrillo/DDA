@@ -12,7 +12,7 @@ import dominio.EnumEventos;
 import dominio.EnumTipoApuesta;
 import vistas.IVistaMesaCrupier;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloJugadorSaldo;
+import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 
 /**
@@ -56,7 +56,7 @@ public class ControladorVistaMesaCrupier implements Observador {
     }
     
     private void cargarJugadoresYSaldoEnMesa(Mesa m){
-           ArrayList<ModeloJugadorSaldo> jugadoresSaldo= this.fachada.cargarJugadoresSaldo(m);
+           ArrayList<ModeloInfoCrupier> jugadoresSaldo= this.fachada.cargarJugadoresSaldo(m);
              
               this.vista.cargarListaJugadores(jugadoresSaldo);
     }

@@ -4,17 +4,54 @@
  */
 package controladores;
 
+import Common.Observable;
+import Common.Observador;
+import Exceptions.NoTieneSaldoDisponibleException;
+import Logica.Fachada;
+import dominio.EnumEventos;
+import dominio.Mesa;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vistas.IVistaMesaJugador;
 
 /**
  *
  * @author nacho
  */
-public class ControladorVistaMesaJugador {
+public class ControladorVistaMesaJugador implements Observador {
     
-    private IVistaMesaJugador vista;
+    private final IVistaMesaJugador vista;
+    private final Fachada fachada;
     
     public ControladorVistaMesaJugador (IVistaMesaJugador vista) {
         this.vista = vista;
+        this.fachada = Fachada.getInstancia();
+        this.fachada.agregar(this);
+    }
+
+    @Override
+    public void actualizar(Observable origen, Object evento) {
+        EnumEventos e = (EnumEventos) evento;
+        if (e == EnumEventos.ABANDONAR_MESA) {
+            this.vista.abandonar();
+        }
+    }
+
+    public void mostrarTiposDeApuesta(Mesa mesa) {
+        vista.mostrarTiposDeApuesta (mesa.listarTiposApuestaSeleccionados());
+    }
+
+    public void apostar(int n, int monto, String idJugador) {
+        try {
+            fachada.apostar (n, monto, idJugador);
+            vista.refrescar();
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(ControladorVistaMesaJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void quitarApuesta(int uucod, int monto, String idJugador) {
+        fachada.quitarApuesta (uucod, monto, idJugador);
+        vista.refrescar ();
     }
 }
