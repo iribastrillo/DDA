@@ -47,23 +47,23 @@ public class ServicioUsuarios {
         }
     }
 
-    public Usuario loginJugador(Usuario u) {
+    public Usuario loginJugador(Usuario u)  {
 
-        if (jugadores.containsKey(u.getCedula())) {
-            Jugador j = jugadores.get(u.getCedula());
+        Jugador j = jugadores.get(u.getCedula());
+        if (j != null) {
             if (j.getPassword().equals(u.getPassword())) {
 
-                //Si el usuario no se encuentra como conectado se agrega
                 if (!usuariosConectados.containsKey(j.getCedula())) {
                     usuariosConectados.put(j.getCedula(), j);
-                }
-                return j;
+                }  
             }
-        }
-        return null;
+        } 
+        return j;
+        
+     
     }
 
-    public Crupier loginCroupier(Usuario u) throws UsuarioCrupierTieneSesionActivaException, UsuarioNoEncontradoException {
+    public Crupier loginCroupier(Usuario u) throws UsuarioCrupierTieneSesionActivaException{
 
         Crupier c = croupieres.get(u.getCedula());
         if (c != null) {
@@ -76,8 +76,6 @@ public class ServicioUsuarios {
                     //Si el crupier ya se encuentra como conectado se tiramos exepcion
                     throw new UsuarioCrupierTieneSesionActivaException("El usuario ya tiene una sesion activa en el sistema");
                 }
-            } else {
-                throw new UsuarioNoEncontradoException("No se ha encontrado usuario para la combinacion de cedula y password");
             }
         }
         return c;

@@ -60,15 +60,26 @@ public class Fachada extends Observable implements Observador {
 
         Crupier u = new Crupier(cedula, password);
         u.validarUsuarioLogin();
-        
-        return servicioUsuarios.loginCroupier(u);
+
+        Usuario encontrado = servicioUsuarios.loginCroupier(u);
+        if (encontrado == null) {
+            throw new UsuarioNoEncontradoException("No se ha encontrado usuario para la combinacion de cedula y password");
+        } else {
+            return encontrado;
+        }
 
     }
 
-    public Usuario loginJugador(String cedula, String password) throws PasswordUsuarioInvalidoException, CedulaUsuarioInvalidaException {
+    public Usuario loginJugador(String cedula, String password) throws PasswordUsuarioInvalidoException, CedulaUsuarioInvalidaException, UsuarioNoEncontradoException {
         Jugador j = new Jugador(cedula, password);
         j.validarUsuarioLogin();
-        return servicioUsuarios.loginJugador(j);
+        Usuario encontrado = servicioUsuarios.loginJugador(j);
+        if (encontrado == null) {
+            throw new UsuarioNoEncontradoException("No se ha encontrado usuario para la combinacion de cedula y password");
+        } else {
+            return encontrado;
+        }
+
     }
 
     public void agregar(Jugador jugador) throws UsuarioYaExisteException {
@@ -111,7 +122,7 @@ public class Fachada extends Observable implements Observador {
     // Agregar jugador a mesa
     public Mesa agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
 
-        Mesa mesa=getServicioMesa().agregarJugador(id, jugador);
+        Mesa mesa = getServicioMesa().agregarJugador(id, jugador);
         avisar(EnumEventos.LOGIN_JUGADOR_MESA);
 
         return mesa;
