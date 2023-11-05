@@ -23,8 +23,8 @@ import java.util.logging.Logger;
  */
 public class ControladorUnirse implements Observador{
     
-        private final Fachada fachada;
-        private final IVistaUnirse vista;
+    private final Fachada fachada;
+    private final IVistaUnirse vista;
 
     public ControladorUnirse(Fachada fachada, IVistaUnirse vista) {
         this.fachada = fachada;

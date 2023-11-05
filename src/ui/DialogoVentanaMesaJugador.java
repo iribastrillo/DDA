@@ -5,7 +5,8 @@ import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
 import dominio.Jugador;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloPanelJugador;
+import dominio.modelosVista.ModeloInfoJugador;
+import dominio.modelosVista.ModeloJugador;
 /**
  *
  * @author digregor
@@ -25,14 +26,17 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.mesa = mesa;
         this.jugador = jugador;
         this.controlador = new ControladorVistaMesaJugador (this);
-        this.panelInfoJugador1.setSaldoInicial(jugador.getSaldoInicial());
-        this.panelInfoJugador1.setNombreJugador(jugador.getNombreCompleto());
-        this.panelInfoJugador1.setNumeroMesa(mesa.getId());
-        this.panelInfoJugador1.setNumeroRonda(mesa.getRondaActual().getId());
-        this.panelEstadisticasJugador.setModelo(new ModeloPanelJugador (jugador.getCedula(), mesa.getId()));
+        this.panelEstadisticasJugador.setModelo(new ModeloJugador (jugador.getCedula(), mesa.getId()));
+        this.panelInfoJugador1.setModelo(new ModeloInfoJugador (
+                jugador.getNombreCompleto(),
+                jugador.getSaldoInicial(),
+                mesa.getId(),
+                mesa.getRondaActual().getId()
+        )); 
+        this.panelInfoJugador1.actualizar();
     }
     
-    public void salir (){
+    public void abandonar (){
         this.dispose();
     }
 

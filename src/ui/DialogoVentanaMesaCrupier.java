@@ -1,14 +1,11 @@
 package ui;
 
-
-import Logica.Fachada;
  
 import componentes.PanelRuleta;
 import controladores.ControladorVistaMesaCrupier;
-
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloMesaJugador;
+import dominio.modelosVista.ModeloInfoJugadores;
 import java.util.ArrayList;
 import vistas.IVistaMesaCrupier;
  
@@ -179,7 +176,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
      }
 
     @Override
-    public void cargarListaJugadores(ArrayList<ModeloMesaJugador> jugadoresSaldo) {
+    public void cargarListaJugadores(ArrayList<ModeloInfoJugadores> jugadoresSaldo) {
         this.panelTableroRuleta1.setJugadoresSaldo(jugadoresSaldo);
 
     }

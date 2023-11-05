@@ -29,7 +29,7 @@ public class ControladorVistaMesaJugador implements Observador {
     public void actualizar(Observable origen, Object evento) {
         EnumEventos e = (EnumEventos) evento;
         if (e == EnumEventos.ABANDONAR_MESA) {
-            this.vista.salir();
+            this.vista.abandonar();
         }
     }
 }

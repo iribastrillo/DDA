@@ -10,7 +10,7 @@ import Logica.Fachada;
 import dominio.EnumEventos;
 import vistas.IVistaMesaCrupier;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloMesaJugador;
+import dominio.modelosVista.ModeloInfoJugadores;
 import java.util.ArrayList;
 
 /**
@@ -54,7 +54,7 @@ public class ControladorVistaMesaCrupier implements Observador {
     }
     
     private void cargarJugadoresYSaldoEnMesa(Mesa m){
-           ArrayList<ModeloMesaJugador> jugadoresSaldo= this.fachada.cargarJugadoresSaldo(m);
+           ArrayList<ModeloInfoJugadores> jugadoresSaldo= this.fachada.cargarJugadoresSaldo(m);
              
               this.vista.cargarListaJugadores(jugadoresSaldo);
     }

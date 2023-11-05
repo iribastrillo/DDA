@@ -4,19 +4,30 @@
  */
 package componentes;
 
+import Exceptions.NoTieneSaldoDisponibleException;
+import controladores.ControladorInfoJugador;
+import dominio.modelosVista.ModeloInfoJugador;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
-import javax.swing.JSeparator;
 
 /**
  *
  * @author nacho
  */
 public class PanelInfoJugador extends javax.swing.JPanel {
+    
+    private ControladorInfoJugador controlador;
+    private ArrayList<Integer> fichas;
+    private ModeloInfoJugador modelo;
     /**
      * Creates new form PanelInfoJugador
      */
     public PanelInfoJugador() {
         initComponents();
+        this.controlador = new ControladorInfoJugador ();
+        this.fichas = new ArrayList ();
     }
 
     /**
@@ -42,6 +53,10 @@ public class PanelInfoJugador extends javax.swing.JPanel {
         this.ronda.setText("Ronda #" + String.valueOf(ronda));
     }
     
+    public void setMontoApostado () {
+        this.montoApostado.setText(String.valueOf(this.modelo.getTotal()));
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -53,11 +68,12 @@ public class PanelInfoJugador extends javax.swing.JPanel {
         numeroSorteado = new javax.swing.JLabel();
         saldoInicial = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        chip1 = new javax.swing.JButton();
+        chip5 = new javax.swing.JButton();
+        chip10 = new javax.swing.JButton();
+        chip50 = new javax.swing.JButton();
+        chip100 = new javax.swing.JButton();
+        montoApostado = new javax.swing.JLabel();
 
         ruleta.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ruleta.setText("Ruleta #3");
@@ -79,47 +95,49 @@ public class PanelInfoJugador extends javax.swing.JPanel {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/money.png"))); // NOI18N
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
-        jButton1.setText("1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        chip1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip1.setText("1");
+        chip1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                chip1ActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
-        jButton2.setText("5");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        chip5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip5.setText("5");
+        chip5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                chip5ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
-        jButton3.setText("10");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        chip10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip10.setText("10");
+        chip10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                chip10ActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
-        jButton4.setText("50");
-        jButton4.setToolTipText("");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        chip50.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip50.setText("50");
+        chip50.setToolTipText("");
+        chip50.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                chip50ActionPerformed(evt);
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
-        jButton5.setText("100");
-        jButton5.setToolTipText("");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        chip100.setIcon(new javax.swing.ImageIcon(getClass().getResource("/componentes/chip.png"))); // NOI18N
+        chip100.setText("100");
+        chip100.setToolTipText("");
+        chip100.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                chip100ActionPerformed(evt);
             }
         });
+
+        montoApostado.setText("MontoApostado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -142,15 +160,18 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                         .addGap(57, 57, 57)
                         .addComponent(userIcon))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(montoApostado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chip1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chip5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chip10, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chip50, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jButton5)
+                        .addComponent(chip100)
                         .addGap(66, 66, 66)
                         .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -165,55 +186,79 @@ public class PanelInfoJugador extends javax.swing.JPanel {
                         .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ruleta)
-                            .addComponent(ronda)
-                            .addComponent(saldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(playerName)
-                            .addComponent(userIcon))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(ruleta)
+                                .addComponent(ronda)
+                                .addComponent(saldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(playerName)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chip1)
+                        .addComponent(chip5)
+                        .addComponent(chip10)
+                        .addComponent(chip50)
+                        .addComponent(chip100))
+                    .addComponent(montoApostado))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void chip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip1ActionPerformed
+        try {
+            this.tomarFicha(1);
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chip1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void chip5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip5ActionPerformed
+        try {
+            this.tomarFicha(5);
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chip5ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void chip10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip10ActionPerformed
+        try {
+            this.tomarFicha(10);
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chip10ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void chip50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip50ActionPerformed
+        try {
+            this.tomarFicha(50);
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chip50ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void chip100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip100ActionPerformed
+        try {
+            this.tomarFicha(100);
+        } catch (NoTieneSaldoDisponibleException ex) {
+            Logger.getLogger(PanelInfoJugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chip100ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton chip1;
+    private javax.swing.JButton chip10;
+    private javax.swing.JButton chip100;
+    private javax.swing.JButton chip5;
+    private javax.swing.JButton chip50;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel montoApostado;
     private javax.swing.JLabel numeroSorteado;
     private javax.swing.JLabel playerName;
     private javax.swing.JLabel ronda;
@@ -221,4 +266,27 @@ public class PanelInfoJugador extends javax.swing.JPanel {
     private javax.swing.JLabel saldoInicial;
     private javax.swing.JLabel userIcon;
     // End of variables declaration//GEN-END:variables
+    
+    private void tomarFicha(int i) throws NoTieneSaldoDisponibleException {
+        this.controlador.tomarFicha (i, this.modelo.getTotal(), this.modelo.getSaldoJugador());
+        int monto = 1 + this.modelo.getTotal();
+        this.modelo.agregarFicha (i);
+        this.actualizar();
+    }
+    
+    public ModeloInfoJugador getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(ModeloInfoJugador modelo) {
+        this.modelo = modelo;
+    }
+    
+    public void actualizar () {
+        this.setNombreJugador(this.modelo.getNombreJugador());
+        this.setSaldoInicial(this.modelo.getSaldoJugador());
+        this.setNumeroMesa(this.modelo.getMesa());
+        this.setNumeroRonda(this.modelo.getRonda());
+        this.setMontoApostado();
+    }
 }

@@ -8,20 +8,28 @@ package dominio.modelosVista;
  *
  * @author nacho
  */
-public class ModeloPanelJugador {
+public class ModeloInfoJugadores {
     private String jugador;
-    private int mesa;
+    private float saldo;
     
-    public ModeloPanelJugador (String jugador, int mesa) {
+    public ModeloInfoJugadores (String jugador, float saldo) {
         this.jugador = jugador;
-        this.mesa = mesa;
+        this.saldo = saldo;
     }
 
     public String getJugador() {
         return jugador;
     }
 
-    public int getMesa() {
-        return mesa;
+    public void setJugador(String jugador) {
+        this.jugador = jugador;
+    }
+
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
     }
 }

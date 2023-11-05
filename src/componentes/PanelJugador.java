@@ -5,7 +5,7 @@
 package componentes;
 
 import controladores.ControladorPanelJugador;
-import dominio.modelosVista.ModeloPanelJugador;
+import dominio.modelosVista.ModeloJugador;
 /**
  *
  * @author nacho
@@ -13,7 +13,7 @@ import dominio.modelosVista.ModeloPanelJugador;
 public class PanelJugador extends javax.swing.JPanel {
     
     private final ControladorPanelJugador controlador;
-    private ModeloPanelJugador modelo;
+    private ModeloJugador modelo;
     /**
      * Creates new form PanelJugador
      */
@@ -111,11 +111,11 @@ public class PanelJugador extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
-    public ModeloPanelJugador getModelo() {
+    public ModeloJugador getModelo() {
         return modelo;
     }
 
-    public void setModelo(ModeloPanelJugador modelo) {
+    public void setModelo(ModeloJugador modelo) {
         this.modelo = modelo;
     }   
 }

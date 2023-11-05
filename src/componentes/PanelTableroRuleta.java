@@ -4,7 +4,8 @@
  */
 package componentes;
 
-import dominio.modelosVista.ModeloMesaJugador;
+import dominio.modelosVista.ModeloInfoJugador;
+import dominio.modelosVista.ModeloInfoJugadores;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,16 +22,16 @@ public class PanelTableroRuleta extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void setJugadoresSaldo(ArrayList<ModeloMesaJugador> jugadoresSaldo) {
+    public void setJugadoresSaldo(ArrayList<ModeloInfoJugadores> jugadoresSaldo) {
        
         if (jugadoresSaldo != null) {
             // Limpiando la tabla para cargar datos actualizados
             this.tbl_JugadorSaldo.setModel(new DefaultTableModel(null,new String[]{"Jugador","Saldo"}));
             DefaultTableModel model = (DefaultTableModel) this.tbl_JugadorSaldo.getModel();
             Object rowData[] = new Object[2];
-            for (ModeloMesaJugador mjs : jugadoresSaldo) {
-                rowData[0] = mjs.getNombreJugador();
-                rowData[1] = mjs.getSaldoJugador();
+            for (ModeloInfoJugadores mjs : jugadoresSaldo) {
+                rowData[0] = mjs.getJugador();
+                rowData[1] = mjs.getSaldo();
                 model.addRow(rowData);
 
             }

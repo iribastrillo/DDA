@@ -20,7 +20,8 @@ import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Usuario;
-import dominio.modelosVista.ModeloMesaJugador;
+import dominio.modelosVista.ModeloInfoJugador;
+import dominio.modelosVista.ModeloInfoJugadores;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -111,7 +112,7 @@ public class Fachada extends Observable {
 
     }
 
-    public ArrayList<ModeloMesaJugador> cargarJugadoresSaldo(Mesa m) {
+    public ArrayList<ModeloInfoJugadores> cargarJugadoresSaldo(Mesa m) {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
 

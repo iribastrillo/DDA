@@ -10,6 +10,6 @@ package vistas;
  */
 public interface IVistaMesaJugador {
 
-    public void salir();
+    public void abandonar();
     
 }

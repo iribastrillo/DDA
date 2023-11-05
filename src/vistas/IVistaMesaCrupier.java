@@ -6,7 +6,7 @@ package vistas;
 
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloMesaJugador;
+import dominio.modelosVista.ModeloInfoJugadores;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +25,6 @@ public interface IVistaMesaCrupier {
 
     public void cargarNumeroDeApuestasEnPanel(int cantidadApuestas);
 
-    public void cargarListaJugadores(ArrayList<ModeloMesaJugador> jugadoresSaldo);
+    public void cargarListaJugadores(ArrayList<ModeloInfoJugadores> jugadoresSaldo);
     
 }

@@ -11,8 +11,6 @@ import Exceptions.UsuarioNoEncontradoException;
 import Logica.Fachada;
 import vistas.IVistaLogin;
 import dominio.Usuario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
