@@ -4,7 +4,7 @@
  */
 package componentes;
 
-import dominio.modelosVista.ModeloInfoJugador;
+import dominio.modelosVista.ModeloMesaJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;

@@ -4,9 +4,7 @@
  */
 package vistas;
 
-import Exceptions.UsuarioYaEstaEnLaMesaException;
-import dominio.Jugador;
-import dominio.Mesa;
+import dominio.modelosVista.ModeloMesaJugador;
 
 /**
  *
@@ -14,7 +12,7 @@ import dominio.Mesa;
  */
 public interface IVistaUnirse {
     public void cargarMesasActivas ();
-    public void mostrarMesaJugador (Mesa mesa, Jugador jugador);
+    public void mostrarMesaJugador (ModeloMesaJugador modelo);
     public void logout ();
     public void mostrarDialogoDeError(String mensaje);
 }

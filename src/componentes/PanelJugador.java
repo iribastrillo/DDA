@@ -4,8 +4,12 @@
  */
 package componentes;
 
+import Exceptions.NoPuedeAbandonarMesaException;
 import controladores.ControladorPanelJugador;
-import dominio.modelosVista.ModeloJugador;
+import dominio.modelosVista.ModeloMesaJugador;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import vistas.IVistaMesaJugador;
 /**
  *
  * @author nacho
@@ -13,13 +17,15 @@ import dominio.modelosVista.ModeloJugador;
 public class PanelJugador extends javax.swing.JPanel {
     
     private final ControladorPanelJugador controlador;
-    private ModeloJugador modelo;
+    private ModeloMesaJugador modelo;
+    private IVistaMesaJugador vista;
     /**
      * Creates new form PanelJugador
      */
     public PanelJugador() {
         initComponents();
         this.controlador = new ControladorPanelJugador ();
+        this.vista = null;
     }
 
     /**
@@ -98,7 +104,12 @@ public class PanelJugador extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void abandonarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abandonarButtonActionPerformed
-        controlador.abandonar (modelo.getMesa(), modelo.getJugador());
+        try {
+            controlador.abandonar (modelo.getMesa(), modelo.getIdJugador());
+            vista.abandonar();
+        } catch (NoPuedeAbandonarMesaException ex) {
+            vista.mostrarDialogoDeError ("No puedes abandonar la mesa si pusiste apuestas.");
+        }
     }//GEN-LAST:event_abandonarButtonActionPerformed
 
 
@@ -111,11 +122,15 @@ public class PanelJugador extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
-    public ModeloJugador getModelo() {
+    public ModeloMesaJugador getModelo() {
         return modelo;
     }
 
-    public void setModelo(ModeloJugador modelo) {
+    public void setModelo(ModeloMesaJugador modelo) {
         this.modelo = modelo;
     }   
+
+    public void setVista(IVistaMesaJugador vista) {
+        this.vista = vista;
+    }
 }

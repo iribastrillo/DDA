@@ -10,16 +10,18 @@ import java.util.ArrayList;
  *
  * @author Usuario
  */
-public class ModeloInfoJugador {
+public class ModeloMesaJugador {
     private String nombreJugador;
-    private Float saldoJugador;
+    private String idJugador;
+    private float saldoJugador;
     private int mesa;
     private int ronda;
     private ArrayList<Integer> fichasApostadas;
 
-    public ModeloInfoJugador(String nombreJugador, Float saldoJugador, int mesa, int ronda) {
+    public ModeloMesaJugador(String nombreJugador, String idJugador, float saldo, int mesa, int ronda) {
         this.nombreJugador = nombreJugador;
-        this.saldoJugador = saldoJugador;
+        this.idJugador = idJugador;
+        this.saldoJugador = saldo;
         this.mesa = mesa;
         this.ronda = ronda;
         this.fichasApostadas = new ArrayList ();
@@ -33,11 +35,11 @@ public class ModeloInfoJugador {
         this.nombreJugador = nombreJugador;
     }
 
-    public Float getSaldoJugador() {
+    public float getSaldoJugador() {
         return saldoJugador;
     }
 
-    public void setSaldoJugador(Float saldoJugador) {
+    public void setSaldoJugador(float saldoJugador) {
         this.saldoJugador = saldoJugador;
     }
 
@@ -63,6 +65,14 @@ public class ModeloInfoJugador {
 
     public void setMontoApostado(ArrayList<Integer> montoApostado) {
         this.fichasApostadas = montoApostado;
+    }
+
+    public String getIdJugador() {
+        return idJugador;
+    }
+
+    public void setIdJugador(String idJugador) {
+        this.idJugador = idJugador;
     }
     
     public int getTotal () {

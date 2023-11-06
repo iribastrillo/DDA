@@ -4,10 +4,11 @@
  */
 package servicios;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.NoPuedeAbandonarMesaException;
+import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import dominio.Jugador;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloInfoJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 
@@ -68,14 +69,40 @@ public class ServicioMesas {
         ArrayList<ModeloInfoCrupier> jugadoresSaldo=new ArrayList<>();
         ArrayList<Jugador> jugadores =m.getJugadores();
         for(Jugador j :jugadores){
-            ModeloInfoCrupier jugadorSaldo= new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldoInicial());
+            ModeloInfoCrupier jugadorSaldo= new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldo());
             jugadoresSaldo.add(jugadorSaldo);
         }
         return jugadoresSaldo;
     }
 
-    public void abandonar(int idMesa, String cedula) {
+    public void abandonar(int idMesa, String idJugador) throws NoPuedeAbandonarMesaException {
         Mesa mesa = this.getMesa(idMesa);
-        mesa.removerJugador (cedula);
+        if (!mesa.puedeAbandonar (idJugador)) {
+            throw new NoPuedeAbandonarMesaException ("No puedes abandonar si ya apostaste.");
+        }
+        mesa.removerJugador (idJugador);
+    }
+    
+    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException {
+        Mesa mesa = this.getMesa (idMesa);
+        Jugador jugador = mesa.getJugador(idJugador);
+        if (jugador.getSaldo() < monto) {
+            throw new NoTieneSaldoDisponibleException ("Saldo insuficiente.");
+        }
+        mesa.apostar (idJugador, monto, uccode);
+        jugador.descontar (monto);
+    }
+    
+    public void quitarApuesta(int uccode, int monto, int idMesa, String idJugador) {
+        Mesa mesa = this.getMesa(idMesa);
+        Jugador jugador = mesa.getJugador (idJugador);
+        mesa.quitarApuesta (idJugador, uccode);
+        jugador.acreditar (monto);
+    }
+    
+    public void reembolsarTodo (int idMesa, String idJugador) {
+        Mesa mesa = this.getMesa(idMesa);
+        Jugador jugador = mesa.getJugador(idJugador);
+        jugador.acreditar(mesa.getRondaActual().reembolsarTodo(idMesa, idJugador));
     }
 }

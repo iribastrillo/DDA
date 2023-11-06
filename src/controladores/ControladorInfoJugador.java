@@ -6,7 +6,7 @@ package controladores;
 
 import Exceptions.NoTieneSaldoDisponibleException;
 import Logica.Fachada;
-import dominio.modelosVista.ModeloInfoJugador;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
 import vistas.IPanelInfoJugador;
 
@@ -22,13 +22,13 @@ public class ControladorInfoJugador {
         this.fachada = Fachada.getInstancia();
     }
 
-    public void tomarFicha(int ficha, ModeloInfoJugador modelo, IPanelInfoJugador vista) throws NoTieneSaldoDisponibleException {
+    public void tomarFicha(int ficha, ModeloMesaJugador modelo, IPanelInfoJugador vista) throws NoTieneSaldoDisponibleException {
         if (ficha + modelo.getTotal() > modelo.getSaldoJugador()) {
             throw new NoTieneSaldoDisponibleException ("No tiene saldo suficiente.");
         }
     }
 
-    public void undo(ModeloInfoJugador modelo) {
+    public void undo(ModeloMesaJugador modelo) {
         ArrayList<Integer> fichas = modelo.getMontoApostado();
         if (!fichas.isEmpty()) {
             fichas.remove(fichas.size() - 1);

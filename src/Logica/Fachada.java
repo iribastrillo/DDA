@@ -9,6 +9,7 @@ import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.NoPuedeAbandonarMesaException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
@@ -127,17 +128,19 @@ public class Fachada extends Observable {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
 
-    public void abandonar(int mesa, String jugador) {
+    public void abandonar(int mesa, String jugador) throws NoPuedeAbandonarMesaException {
         this.servicioMesas.abandonar (mesa, jugador);
         avisar (EnumEventos.ABANDONAR_MESA);
     }
 
-    public void apostar(int n, int monto, String idJugador) throws NoTieneSaldoDisponibleException {
-        servicioUsuarios.apostar (n, monto, idJugador);
+    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException {
+        servicioMesas.apostar (n, monto, mesa,  idJugador);
+        avisar (EnumEventos.APUESTA_CREADA);
     }
     
-    public void quitarApuesta(int uucod, int monto, String idJugador) {
-        servicioUsuarios.quitarApuesta (uucod, monto, idJugador);
+    public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
+        servicioMesas.quitarApuesta (uucod, monto, mesa, idJugador);
+        avisar (EnumEventos.APUESTA_ELIMINADA);
     }
 
     public Jugador getJugadorById(String cedula) {
