@@ -118,8 +118,17 @@ public class Ronda {
         return apuesta;
     }
 
-    void quitarApuesta(String idJugador, int uccode) {
+    public void quitarApuesta(String idJugador, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
         apuesta.quitarApuesta (uccode);
+    }
+    
+    public int reembolsarTodo (int idMesa, String idJugador) {
+        int reembolso = 0;
+        Apuesta apuesta = this.getApuesta(idJugador);
+        if (apuesta != null) {
+            reembolso = apuesta.getTotalApostadoByJugador(idJugador);
+        }
+        return reembolso;
     }
 }

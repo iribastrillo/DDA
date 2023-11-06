@@ -38,11 +38,17 @@ public class Apuesta {
     
     public void apostar (int monto, int uccode) {
         this.casilleros.put(String.valueOf(uccode), new Casillero (monto, uccode));
-        System.out.println (casilleros.size());
     }
 
     public void quitarApuesta(int uccode) {
         this.casilleros.remove(String.valueOf(uccode));
-        System.out.println ("APUESTA ELIMINADA");
+    }
+    
+    public int getTotalApostadoByJugador (String idJugador) {
+        int total = 0;
+        for (Casillero c: casilleros.values()) {
+            total += c.getMonto();
+        }
+        return total;
     }
 }

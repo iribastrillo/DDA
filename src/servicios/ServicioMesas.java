@@ -74,9 +74,10 @@ public class ServicioMesas {
         return jugadoresSaldo;
     }
 
-    public void abandonar(int idMesa, String cedula) {
+    public void abandonar(int idMesa, String idJugador) {
         Mesa mesa = this.getMesa(idMesa);
-        mesa.removerJugador (cedula);
+        this.reembolsarTodo(idMesa, idJugador);
+        mesa.removerJugador (idJugador);
     }
     
     public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException {
@@ -94,5 +95,11 @@ public class ServicioMesas {
         Jugador jugador = mesa.getJugador (idJugador);
         mesa.quitarApuesta (idJugador, uccode);
         jugador.acreditar (monto);
+    }
+    
+    public void reembolsarTodo (int idMesa, String idJugador) {
+        Mesa mesa = this.getMesa(idMesa);
+        Jugador jugador = mesa.getJugador(idJugador);
+        jugador.acreditar(mesa.getRondaActual().reembolsarTodo(idMesa, idJugador));
     }
 }
