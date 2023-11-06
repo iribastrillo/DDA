@@ -6,6 +6,7 @@ package controladores;
 
 import Common.Observable;
 import Common.Observador;
+import Exceptions.MontoIgualACeroException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Logica.Fachada;
 import dominio.EnumEventos;
@@ -51,6 +52,8 @@ public class ControladorVistaMesaJugador implements Observador {
             vista.refrescar();
         } catch (NoTieneSaldoDisponibleException ex) {
             Logger.getLogger(ControladorVistaMesaJugador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MontoIgualACeroException ex) {
+            vista.mostrarDialogoDeError("El monto no puede ser igual a cero.");
         }
     }
 

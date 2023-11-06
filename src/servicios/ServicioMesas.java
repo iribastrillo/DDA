@@ -4,6 +4,7 @@
  */
 package servicios;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
@@ -83,12 +84,17 @@ public class ServicioMesas {
         mesa.removerJugador (idJugador);
     }
     
-    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException {
+    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException {
         Mesa mesa = this.getMesa (idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
         if (jugador.getSaldo() < monto) {
             throw new NoTieneSaldoDisponibleException ("Saldo insuficiente.");
         }
+        
+        if (monto == 0) {
+            throw new MontoIgualACeroException ("El monto no puede ser cero.");
+        }
+        
         mesa.apostar (idJugador, monto, uccode);
         jugador.descontar (monto);
     }

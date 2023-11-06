@@ -28,7 +28,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     public DialogoVentanaMesaJugador(ModeloMesaJugador modelo) {
         initComponents();
         this.selector = new Selector ();
-        this.ficha = null;
+        this.ficha = 1;
         this.modelo = modelo;
         this.controlador = new ControladorVistaMesaJugador (this);
         this.setup();

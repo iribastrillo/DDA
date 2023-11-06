@@ -9,6 +9,7 @@ import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
@@ -133,7 +134,7 @@ public class Fachada extends Observable {
         avisar (EnumEventos.ABANDONAR_MESA);
     }
 
-    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException {
+    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException {
         servicioMesas.apostar (n, monto, mesa,  idJugador);
         avisar (EnumEventos.APUESTA_CREADA);
     }
