@@ -13,10 +13,8 @@ import dominio.EnumEventos;
 import dominio.Jugador;
 import vistas.IVistaUnirse;
 import dominio.Mesa;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Usuario
@@ -31,10 +29,16 @@ public class ControladorUnirse implements Observador{
         this.fachada.agregar(this);
         this.vista = vista;
     }
-    public void unirse (int id, Jugador jugador) {   
+    public void unirse (int idMesa, Jugador jugador) {   
             try {
-                Mesa mesa=fachada.agregar(id,jugador);
-                this.vista.mostrarMesaJugador(mesa, jugador);
+                Mesa mesa=fachada.agregar(idMesa,jugador);
+                ModeloMesaJugador modelo = new ModeloMesaJugador (
+                jugador.getNombreCompleto(),
+                jugador.getCedula(),
+                jugador.getSaldo(),
+                mesa.getId(),
+                mesa.getRondaActual().getId());
+                this.vista.mostrarMesaJugador(modelo);
             } catch (MesaNoEncontradaException   |UsuarioYaEstaEnLaMesaException ex) {
                 vista.mostrarDialogoDeError(ex.getMessage());
              } 

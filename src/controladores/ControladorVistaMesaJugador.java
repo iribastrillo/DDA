@@ -9,7 +9,9 @@ import Common.Observador;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Logica.Fachada;
 import dominio.EnumEventos;
+import dominio.Jugador;
 import dominio.Mesa;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vistas.IVistaMesaJugador;
@@ -35,9 +37,14 @@ public class ControladorVistaMesaJugador implements Observador {
         if (e == EnumEventos.ABANDONAR_MESA) {
             this.vista.abandonar();
         }
+        if (e == EnumEventos.LANZAR_PAGAR) {
+            this.vista.refrescar();
+            // y algo más ... Como notificar qué número salió y si ganaste o perdiste.
+        }
     }
 
-    public void mostrarTiposDeApuesta(Mesa mesa) {
+    public void mostrarTiposDeApuesta(int idMesa) {
+        Mesa mesa = fachada.getMesa(idMesa);
         vista.mostrarTiposDeApuesta (mesa.listarTiposApuestaSeleccionados());
     }
 
@@ -53,5 +60,17 @@ public class ControladorVistaMesaJugador implements Observador {
     public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
         fachada.quitarApuesta (uucod, monto, mesa, idJugador);
         vista.refrescar ();
+    }
+
+    public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
+        Jugador jugador = fachada.getJugadorById(modelo.getIdJugador());
+        Mesa mesa = fachada.getMesa(modelo.getMesa());
+        
+        return new ModeloMesaJugador (
+        jugador.getNombreCompleto(),
+        jugador.getCedula(),
+        jugador.getSaldo(),
+        mesa.getId(),
+        mesa.getRondaActual().getId());
     }
 }

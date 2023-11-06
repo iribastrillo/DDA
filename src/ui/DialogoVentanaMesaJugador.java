@@ -7,10 +7,7 @@ import controladores.ControladorVistaMesaJugador;
 import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
 import dominio.EnumTipoApuesta;
-import dominio.Jugador;
-import dominio.Mesa;
-import dominio.modelosVista.ModeloInfoJugador;
-import dominio.modelosVista.ModeloJugador;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
 /**
  *
@@ -18,42 +15,22 @@ import java.util.ArrayList;
  */
 public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVistaMesaJugador {
 
-    int apuestaRojo = 0;
-    private Jugador jugador;
     private final ControladorVistaMesaJugador controlador;
-    private final Mesa mesa;
     private final Selector selector;
-    private final Fachada fachada;
+    private ModeloMesaJugador modelo;
     private final IDisplayerStrategy displayer = new DisplayerStrategy ();
 
     /**
      * Creates new form NewJFrame
      */
-    public DialogoVentanaMesaJugador(Mesa mesa, Jugador jugador) {
+    public DialogoVentanaMesaJugador(ModeloMesaJugador modelo) {
         initComponents();
-        this.mesa = mesa;
-        this.jugador = jugador;
-        
         this.selector = new Selector ();
-        this.fachada = Fachada.getInstancia();
+        this.modelo = modelo;
         this.controlador = new ControladorVistaMesaJugador (this);
-        this.panelEstadisticasJugador.setModelo(new ModeloJugador (jugador.getCedula(), mesa.getId()));
-        this.panelInfoJugador1.setModelo(new ModeloInfoJugador (
-                jugador.getNombreCompleto(),
-                jugador.getSaldoInicial(),
-                mesa.getId(),
-                mesa.getRondaActual().getId()
-        )); 
-        this.displayer.ocultarTodo(r);
-        this.controlador.mostrarTiposDeApuesta (mesa);
-        this.panelInfoJugador1.actualizar();
         this.setup();
     }
     
-    public void abandonar (){
-        this.dispose();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +78,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             }
         });
 
-        jButton3.setText("Borrar apuesta del 23");
+        jButton3.setText("Borrar apuesta al 0");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -192,21 +169,23 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int n = selector.universalCellCode;
         int monto = panelInfoJugador1.getModelo().getTotal();
-        String idJugador = jugador.getCedula();
+        String idJugador = modelo.getIdJugador();
         r.setApuesta(n, monto);
-        controlador.apostar (n, monto, mesa.getId(), idJugador);
+        controlador.apostar (n, monto, modelo.getMesa(), idJugador);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int uucod = selector.universalCellCode;
-        int monto = r.getApuesta(uucod);
-        r.setApuesta(selector.universalCellCode, 0);
-        controlador.quitarApuesta (uucod, monto, mesa.getId(), jugador.getCedula());
+        int uccode = selector.universalCellCode;
+        int monto = r.getApuesta(uccode);
+        if (r.getApuesta(uccode) != 0) {
+            r.setApuesta(selector.universalCellCode, 0);
+            controlador.quitarApuesta (uccode, monto, modelo.getMesa(), modelo.getIdJugador());
+        } 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        apuestaRojo += 10;
-        r.setApuesta(PanelRuleta.ROJO, apuestaRojo);
+        //apuestaRojo += 10;
+        //r.setApuesta(PanelRuleta.ROJO, apuestaRojo);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
@@ -257,17 +236,17 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     
     private void setup () {
         r.agregar(selector);
+        this.panelEstadisticasJugador.setModelo(modelo);
+        this.panelInfoJugador1.setModelo(modelo);
+        this.displayer.ocultarTodo(r);
+        this.controlador.mostrarTiposDeApuesta (modelo.getMesa());
+        this.panelInfoJugador1.actualizar();
     }
 
     @Override
     public void refrescar() {
-        this.jugador = fachada.getJugadorById(jugador.getCedula());
-        this.panelInfoJugador1.setModelo(new ModeloInfoJugador (
-                jugador.getNombreCompleto(),
-                jugador.getSaldoInicial(),
-                mesa.getId(),
-                mesa.getRondaActual().getId()
-        )); 
+        this.modelo = controlador.refrescarModelo (modelo);
+        this.panelInfoJugador1.setModelo(modelo);
         this.panelInfoJugador1.actualizar();
     }
 
@@ -278,9 +257,16 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         @Override
         public void celdaSeleccionada(int universalCellCode) {
             this.universalCellCode = universalCellCode;
-            String label = "Apostar al " + String.valueOf(universalCellCode);
-            jButton2.setText(label);
+            String labelApuesta = "Apostar al " + String.valueOf(universalCellCode);
+            String labelBorrar = "Borrar apuesta al " + String.valueOf(universalCellCode);
+            jButton2.setText(labelApuesta);
+            jButton3.setText(labelBorrar);
         }
         
     }
+    
+    public void abandonar (){
+        this.dispose();
+    }
+
 }

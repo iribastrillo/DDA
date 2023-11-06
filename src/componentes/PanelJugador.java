@@ -5,7 +5,7 @@
 package componentes;
 
 import controladores.ControladorPanelJugador;
-import dominio.modelosVista.ModeloJugador;
+import dominio.modelosVista.ModeloMesaJugador;
 /**
  *
  * @author nacho
@@ -13,7 +13,7 @@ import dominio.modelosVista.ModeloJugador;
 public class PanelJugador extends javax.swing.JPanel {
     
     private final ControladorPanelJugador controlador;
-    private ModeloJugador modelo;
+    private ModeloMesaJugador modelo;
     /**
      * Creates new form PanelJugador
      */
@@ -98,7 +98,7 @@ public class PanelJugador extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void abandonarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abandonarButtonActionPerformed
-        controlador.abandonar (modelo.getMesa(), modelo.getJugador());
+        controlador.abandonar (modelo.getMesa(), modelo.getIdJugador());
     }//GEN-LAST:event_abandonarButtonActionPerformed
 
 
@@ -111,11 +111,11 @@ public class PanelJugador extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
-    public ModeloJugador getModelo() {
+    public ModeloMesaJugador getModelo() {
         return modelo;
     }
 
-    public void setModelo(ModeloJugador modelo) {
+    public void setModelo(ModeloMesaJugador modelo) {
         this.modelo = modelo;
     }   
 }

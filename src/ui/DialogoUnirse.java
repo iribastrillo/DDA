@@ -4,15 +4,13 @@
  */
 package ui;
 
-import Exceptions.UsuarioYaEstaEnLaMesaException;
 import controladores.ControladorUnirse;
 import Logica.Fachada;
 import dominio.Jugador;
 import vistas.IVistaUnirse;
 import dominio.Mesa;
+import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -162,8 +160,8 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse{
     }
 
     @Override
-    public void mostrarMesaJugador(Mesa mesa, Jugador jugador) {
-        new DialogoVentanaMesaJugador (mesa, jugador).setVisible(true);
+    public void mostrarMesaJugador(ModeloMesaJugador modelo) {
+        new DialogoVentanaMesaJugador (modelo).setVisible(true);
     }
 
     @Override

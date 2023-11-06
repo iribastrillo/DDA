@@ -68,7 +68,7 @@ public class ServicioMesas {
         ArrayList<ModeloInfoCrupier> jugadoresSaldo=new ArrayList<>();
         ArrayList<Jugador> jugadores =m.getJugadores();
         for(Jugador j :jugadores){
-            ModeloInfoCrupier jugadorSaldo= new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldoInicial());
+            ModeloInfoCrupier jugadorSaldo= new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldo());
             jugadoresSaldo.add(jugadorSaldo);
         }
         return jugadoresSaldo;
@@ -83,7 +83,7 @@ public class ServicioMesas {
     public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException {
         Mesa mesa = this.getMesa (idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
-        if (jugador.getSaldoInicial() < monto) {
+        if (jugador.getSaldo() < monto) {
             throw new NoTieneSaldoDisponibleException ("Saldo insuficiente.");
         }
         mesa.apostar (idJugador, monto, uccode);
