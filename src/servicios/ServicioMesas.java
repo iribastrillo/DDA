@@ -4,6 +4,7 @@
  */
 package servicios;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.NoPuedeAbandonarMesaException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import dominio.Jugador;
@@ -74,9 +75,11 @@ public class ServicioMesas {
         return jugadoresSaldo;
     }
 
-    public void abandonar(int idMesa, String idJugador) {
+    public void abandonar(int idMesa, String idJugador) throws NoPuedeAbandonarMesaException {
         Mesa mesa = this.getMesa(idMesa);
-        this.reembolsarTodo(idMesa, idJugador);
+        if (!mesa.puedeAbandonar (idJugador)) {
+            throw new NoPuedeAbandonarMesaException ("No puedes abandonar si ya apostaste.");
+        }
         mesa.removerJugador (idJugador);
     }
     

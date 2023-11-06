@@ -9,6 +9,7 @@ import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.NoPuedeAbandonarMesaException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
@@ -127,7 +128,7 @@ public class Fachada extends Observable {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
 
-    public void abandonar(int mesa, String jugador) {
+    public void abandonar(int mesa, String jugador) throws NoPuedeAbandonarMesaException {
         this.servicioMesas.abandonar (mesa, jugador);
         avisar (EnumEventos.ABANDONAR_MESA);
     }

@@ -4,7 +4,9 @@
  */
 package controladores;
 
+import Exceptions.NoPuedeAbandonarMesaException;
 import Logica.Fachada;
+import vistas.IVistaMesaJugador;
 
 /**
  *
@@ -18,7 +20,7 @@ public class ControladorPanelJugador {
         this.fachada = Fachada.getInstancia();
     }
     
-    public void abandonar (int mesa, String jugador) {
+    public void abandonar (int mesa, String jugador) throws NoPuedeAbandonarMesaException {
         fachada.abandonar(mesa, jugador);
     }
 }

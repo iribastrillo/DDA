@@ -121,4 +121,8 @@ public class Mesa {
         Ronda ronda = this.getRondaActual();
         ronda.quitarApuesta (idJugador, uccode);
     }
+
+    public boolean puedeAbandonar(String idJugador) {
+        return this.getRondaActual().puedeAbandonar (idJugador);
+    }
 }

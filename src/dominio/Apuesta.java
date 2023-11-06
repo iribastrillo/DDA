@@ -44,6 +44,10 @@ public class Apuesta {
         this.casilleros.remove(String.valueOf(uccode));
     }
     
+    public boolean isEmpty () {
+        return casilleros.isEmpty();
+    }
+    
     public int getTotalApostadoByJugador (String idJugador) {
         int total = 0;
         for (Casillero c: casilleros.values()) {

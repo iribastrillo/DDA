@@ -2,13 +2,13 @@ package ui;
 
 import Common.DisplayerStrategy;
 import Common.IDisplayerStrategy;
-import Logica.Fachada;
 import controladores.ControladorVistaMesaJugador;
 import vistas.IVistaMesaJugador;
 import componentes.PanelRuleta;
 import dominio.EnumTipoApuesta;
 import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author digregor
@@ -237,6 +237,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private void setup () {
         r.agregar(selector);
         this.panelEstadisticasJugador.setModelo(modelo);
+        this.panelEstadisticasJugador.setVista(this);
         this.panelInfoJugador1.setModelo(modelo);
         this.displayer.ocultarTodo(r);
         this.controlador.mostrarTiposDeApuesta (modelo.getMesa());
@@ -248,6 +249,12 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.modelo = controlador.refrescarModelo (modelo);
         this.panelInfoJugador1.setModelo(modelo);
         this.panelInfoJugador1.actualizar();
+    }
+
+    @Override
+    public void mostrarDialogoDeError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Hubo un problema...", JOptionPane.ERROR_MESSAGE);
+
     }
 
     private class Selector implements PanelRuleta.Escuchador {

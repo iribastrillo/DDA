@@ -121,6 +121,9 @@ public class Ronda {
     public void quitarApuesta(String idJugador, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
         apuesta.quitarApuesta (uccode);
+        if (apuesta.isEmpty()) {
+            apuestas.remove(idJugador);
+        }
     }
     
     public int reembolsarTodo (int idMesa, String idJugador) {
@@ -130,5 +133,9 @@ public class Ronda {
             reembolso = apuesta.getTotalApostadoByJugador(idJugador);
         }
         return reembolso;
+    }
+
+    public boolean puedeAbandonar(String idJugador) {
+        return !apuestas.containsKey(idJugador);
     }
 }
