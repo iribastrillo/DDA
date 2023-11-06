@@ -6,7 +6,6 @@ package controladores;
 
 import Exceptions.NoPuedeAbandonarMesaException;
 import Logica.Fachada;
-import vistas.IVistaMesaJugador;
 
 /**
  *

@@ -106,6 +106,7 @@ public class PanelJugador extends javax.swing.JPanel {
     private void abandonarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abandonarButtonActionPerformed
         try {
             controlador.abandonar (modelo.getMesa(), modelo.getIdJugador());
+            vista.abandonar();
         } catch (NoPuedeAbandonarMesaException ex) {
             vista.mostrarDialogoDeError ("No puedes abandonar la mesa si pusiste apuestas.");
         }

@@ -18,15 +18,15 @@ import vistas.IPanelInfoJugador;
 public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJugador{
     
     private final ControladorInfoJugador controlador;
-    private final ArrayList<Integer> fichas;
     private ModeloMesaJugador modelo;
+    private ArrayList<Escuchador> escuchadores;
     /**
      * Creates new form PanelInfoJugador
      */
     public PanelInfoJugador() {
         initComponents();
         this.controlador = new ControladorInfoJugador ();
-        this.fichas = new ArrayList ();
+        this.escuchadores = new ArrayList <> ();
     }
 
     /**
@@ -199,22 +199,27 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
 
     private void chip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip1ActionPerformed
         this.tomarFicha(1);
+        this.triggerEventSelectedChip(1);
     }//GEN-LAST:event_chip1ActionPerformed
 
     private void chip5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip5ActionPerformed
         this.tomarFicha(5);
+        this.triggerEventSelectedChip(5);
     }//GEN-LAST:event_chip5ActionPerformed
 
     private void chip10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip10ActionPerformed
         this.tomarFicha(10);
+        this.triggerEventSelectedChip(10);
     }//GEN-LAST:event_chip10ActionPerformed
 
     private void chip50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip50ActionPerformed
         this.tomarFicha(50);
+        this.triggerEventSelectedChip(50);
     }//GEN-LAST:event_chip50ActionPerformed
 
     private void chip100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chip100ActionPerformed
         this.tomarFicha(100);
+        this.triggerEventSelectedChip(100);
     }//GEN-LAST:event_chip100ActionPerformed
 
     private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
@@ -256,14 +261,6 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
         }
     }
     
-    public ModeloMesaJugador getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(ModeloMesaJugador modelo) {
-        this.modelo = modelo;
-    }
-    
     public void actualizar () {
         this.setNombreJugador();
         this.setSaldoInicial();
@@ -277,7 +274,7 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
         JOptionPane.showMessageDialog(this, message, "Saldo insuficiente", JOptionPane.ERROR_MESSAGE);
     }
     
-        public void setSaldoInicial () {
+    public void setSaldoInicial () {
         this.saldoInicial.setText("$" + String.valueOf(this.modelo.getSaldoJugador()));
     }
     
@@ -295,6 +292,30 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
     
     public void setMontoApostado () {
         this.montoApostado.setText("Apuesta: $" + String.valueOf(this.modelo.getTotal()));
+    }
+    
+     public ModeloMesaJugador getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(ModeloMesaJugador modelo) {
+        this.modelo = modelo;
+    }
+    
+    public void addEventListener (Escuchador listener) {
+        this.escuchadores.add(listener);
+    }
+    
+    public void removeEventLitener (Escuchador listener) {
+        this.escuchadores.remove(listener);
+    }
+    
+    public void triggerEventSelectedChip (int chip) {
+        this.escuchadores.forEach(listener -> listener.fichaSeleccionada(chip));
+    }
+    
+    public interface Escuchador {
+        public void fichaSeleccionada (int ficha);
     }
     
 }

@@ -28,7 +28,7 @@ public class DatosPrueba {
         };
 
         Crupier[] crupieres = new Crupier[]{
-            new Crupier( "Croupier_1", "101", "aaa"),
+            new Crupier( "Alfonso Paredes", "AParedes", "aparedes"),
             new Crupier( "Croupier_2", "102", "bbb"),
             new Crupier( "Croupier_3", "103", "ccc")
         };

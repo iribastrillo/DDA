@@ -34,9 +34,6 @@ public class ControladorVistaMesaJugador implements Observador {
     @Override
     public void actualizar(Observable origen, Object evento) {
         EnumEventos e = (EnumEventos) evento;
-        if (e == EnumEventos.ABANDONAR_MESA) {
-            this.vista.abandonar();
-        }
         if (e == EnumEventos.LANZAR_PAGAR) {
             this.vista.refrescar();
             // y algo más ... Como notificar qué número salió y si ganaste o perdiste.
@@ -60,6 +57,10 @@ public class ControladorVistaMesaJugador implements Observador {
     public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
         fachada.quitarApuesta (uucod, monto, mesa, idJugador);
         vista.refrescar ();
+    }
+    
+    public void modificarApuesta(int uccode, int monto, int mesa, String idJugador) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
