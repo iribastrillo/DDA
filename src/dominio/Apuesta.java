@@ -4,7 +4,7 @@
 */
 package dominio;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class Apuesta {
 
     private String jugador;
-    private ArrayList<Casillero> casilleros;
+    private HashMap <Integer, Casillero> casilleros;
     
     public Apuesta (String idJugador) {
         this.jugador = idJugador;
-        this.casilleros = new ArrayList<> ();
+        this.casilleros = new HashMap<> ();
     }
 
     public String getIdJugador() {
@@ -28,16 +28,19 @@ public class Apuesta {
         this.jugador = idJugador;
     }
 
-    public ArrayList<Casillero> getCasilleros() {
+    public HashMap<Integer, Casillero> getCasilleros() {
         return casilleros;
     }
 
-    public void setCasilleros(ArrayList<Casillero> casilleros) {
+    public void setCasilleros(HashMap<Integer, Casillero> casilleros) {
         this.casilleros = casilleros;
     }
     
     public void apostar (int monto, int uccode) {
-        this.casilleros.add(new Casillero (monto, uccode));
-        System.out.println ("Apuesta creada");
+        this.casilleros.put(uccode, new Casillero (monto, uccode));
+    }
+
+    public void quitarApuesta(int uccode) {
+        this.casilleros.remove(uccode);
     }
 }

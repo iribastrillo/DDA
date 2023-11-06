@@ -117,4 +117,9 @@ public class Ronda {
         }
         return apuesta;
     }
+
+    void quitarApuesta(String idJugador, int uccode) {
+        Apuesta apuesta = this.getApuesta(idJugador);
+        apuesta.quitarApuesta (uccode);
+    }
 }

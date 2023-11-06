@@ -50,8 +50,8 @@ public class ControladorVistaMesaJugador implements Observador {
         }
     }
 
-    public void quitarApuesta(int uucod, int monto, String idJugador) {
-        fachada.quitarApuesta (uucod, monto, idJugador);
+    public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
+        fachada.quitarApuesta (uucod, monto, mesa, idJugador);
         vista.refrescar ();
     }
 }

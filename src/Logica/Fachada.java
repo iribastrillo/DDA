@@ -136,8 +136,8 @@ public class Fachada extends Observable {
         servicioMesas.apostar (n, monto, mesa,  idJugador);
     }
     
-    public void quitarApuesta(int uucod, int monto, String idJugador) {
-        //servicioUsuarios.quitarApuesta (uucod, monto, idJugador);
+    public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
+        servicioMesas.quitarApuesta (uucod, monto, mesa, idJugador);
     }
 
     public Jugador getJugadorById(String cedula) {

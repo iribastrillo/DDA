@@ -89,9 +89,10 @@ public class ServicioMesas {
         jugador.descontar (monto);
     }
     
-    public void quitarApuesta(int uucod, int monto, int idMesa, String idJugador) {
+    public void quitarApuesta(int uccode, int monto, int idMesa, String idJugador) {
         Mesa mesa = this.getMesa(idMesa);
         Jugador jugador = mesa.getJugador (idJugador);
+        mesa.quitarApuesta (idJugador, uccode);
         jugador.acreditar (monto);
     }
 }

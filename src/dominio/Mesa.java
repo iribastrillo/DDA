@@ -116,4 +116,9 @@ public class Mesa {
         Ronda ronda = this.getRondaActual();
         ronda.apostar (idJugador, monto, uccode);
     }
+
+    public void quitarApuesta(String idJugador, int uccode) {
+        Ronda ronda = this.getRondaActual();
+        ronda.quitarApuesta (idJugador, uccode);
+    }
 }

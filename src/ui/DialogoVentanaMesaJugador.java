@@ -201,7 +201,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         int uucod = selector.universalCellCode;
         int monto = r.getApuesta(uucod);
         r.setApuesta(selector.universalCellCode, 0);
-        controlador.quitarApuesta (uucod, monto, jugador.getCedula());
+        controlador.quitarApuesta (uucod, monto, mesa.getId(), jugador.getCedula());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
