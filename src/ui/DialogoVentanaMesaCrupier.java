@@ -6,6 +6,21 @@ import controladores.ControladorVistaMesaCrupier;
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloInfoCrupier;
+
+import Logica.Fachada;
+import componentes.PanelInfoCrupier.EscuchadorEfectos;
+ 
+import componentes.PanelRuleta;
+import controladores.ControladorVistaMesaCrupier;
+import dominio.EnumEfectos;
+
+import dominio.EnumTipoApuesta;
+import dominio.Mesa;
+import dominio.efectos.CompletoEfecto;
+import dominio.efectos.ParcialEfecto;
+import dominio.efectos.SimuladorEfecto;
+import dominio.efectos.StrategyEfecto;
+import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 import vistas.IVistaMesaCrupier;
  
@@ -14,7 +29,7 @@ import vistas.IVistaMesaCrupier;
  *
  * @author digregor
  */
-public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier {
+public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier, EscuchadorEfectos  {
 
     int apuestaRojo = 0;
     protected final ControladorVistaMesaCrupier controlador;
@@ -36,8 +51,10 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         controlador.cargarTotalApostadoEnPanel(m);
         controlador.cargarNumeroDeRondaEnPanel(m);
         controlador.cargarNumeroDeApuestasEnPanel(m);
+        controlador.cargarDropdownEfectos();
         
         this.panelInfoCrupier1.setNumeroMesa(m.getId());
+        this.panelInfoCrupier1.agregar(this);
         
     }
 
@@ -77,8 +94,8 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(lbl_ultimosLanzamientos))
-                            .addComponent(panelInfoCrupier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 70, Short.MAX_VALUE)))
+                            .addComponent(panelInfoCrupier1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -179,5 +196,26 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo) {
         this.panelTableroRuleta1.setJugadoresSaldo(jugadoresSaldo);
 
+    }
+    @Override
+    public void cargarDropdownEfectos(String[]efectos){
+        this.panelInfoCrupier1.setDropdownEfectos(efectos);
+    }
+
+    @Override
+    public void efectoSeleccionado(String efecto) {
+        StrategyEfecto strategyEfecto=null;
+         switch(efecto){
+                case  "COMPLETO":
+                    strategyEfecto=new CompletoEfecto();
+                break;
+                case "PARCIAL":
+                    strategyEfecto=new ParcialEfecto();
+                 break;
+                case "SIMULADOR" :
+                    strategyEfecto=new SimuladorEfecto();
+        }
+        this.m.getRondaActual().setEfecto(strategyEfecto);
+        System.out.printf("Efecto seleccionado %s ",efecto);  
     }
 }

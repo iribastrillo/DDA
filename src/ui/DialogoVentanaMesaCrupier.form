@@ -35,9 +35,9 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="lbl_ultimosLanzamientos" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="panelInfoCrupier1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="panelInfoCrupier1" alignment="0" min="-2" pref="873" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="70" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>

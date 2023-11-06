@@ -22,6 +22,7 @@ public class Mesa {
     private boolean bloqueada;
     private ArrayList<EnumTipoApuesta> tiposApuesta;
     private Crupier crupier;
+    private Ronda rondaActual;
 
     public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier crupier) {
         this.id = autoId;
@@ -32,9 +33,9 @@ public class Mesa {
         this.bloqueada = false;
         this.tiposApuesta = tiposApuesta;
         this.crupier = crupier;
-        
+        this.rondaActual=new Ronda(this);
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
-        this.rondas.add(new Ronda());
+        this.rondas=new ArrayList<Ronda>();
         autoId ++;
     }
     
@@ -83,7 +84,8 @@ public class Mesa {
     }
     
     public Ronda getRondaActual () {
-        return this.rondas.get(this.rondas.size() - 1);
+        return this.rondaActual;
+        //return this.rondas.get(this.rondas.size() - 1);
     }
     
     public Ronda getRondaAnterior () {

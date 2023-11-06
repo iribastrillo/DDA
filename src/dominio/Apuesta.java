@@ -1,7 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+*/
 package dominio;
 
 import java.util.ArrayList;
@@ -11,8 +11,7 @@ import java.util.ArrayList;
  * @author nacho
  */
 public class Apuesta {
-<<<<<<< Updated upstream
-=======
+
     private String jugador;
     private ArrayList<Casillero> casilleros;
     
@@ -41,6 +40,4 @@ public class Apuesta {
         this.casilleros.add(new Casillero (monto, uccode));
         System.out.println ("Apuesta creada");
     }
->>>>>>> Stashed changes
-    
 }

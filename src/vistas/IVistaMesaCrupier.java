@@ -25,6 +25,8 @@ public interface IVistaMesaCrupier {
 
     public void cargarNumeroDeApuestasEnPanel(int cantidadApuestas);
 
+
+    public void cargarDropdownEfectos(String[] valoresEnumStrings);
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo);
     
 }
