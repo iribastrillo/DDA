@@ -4,10 +4,10 @@
  */
 package servicios;
 import Exceptions.MesaNoEncontradaException;
+import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import dominio.Jugador;
 import dominio.Mesa;
-import dominio.modelosVista.ModeloInfoJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 
@@ -77,5 +77,21 @@ public class ServicioMesas {
     public void abandonar(int idMesa, String cedula) {
         Mesa mesa = this.getMesa(idMesa);
         mesa.removerJugador (cedula);
+    }
+    
+    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException {
+        Mesa mesa = this.getMesa (idMesa);
+        Jugador jugador = mesa.getJugador(idJugador);
+        if (jugador.getSaldoInicial() < monto) {
+            throw new NoTieneSaldoDisponibleException ("Saldo insuficiente.");
+        }
+        mesa.apostar (idJugador, monto, uccode);
+        jugador.descontar (monto);
+    }
+    
+    public void quitarApuesta(int uucod, int monto, int idMesa, String idJugador) {
+        Mesa mesa = this.getMesa(idMesa);
+        Jugador jugador = mesa.getJugador (idJugador);
+        jugador.acreditar (monto);
     }
 }

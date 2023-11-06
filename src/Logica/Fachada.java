@@ -132,12 +132,12 @@ public class Fachada extends Observable {
         avisar (EnumEventos.ABANDONAR_MESA);
     }
 
-    public void apostar(int n, int monto, String idJugador) throws NoTieneSaldoDisponibleException {
-        servicioUsuarios.apostar (n, monto, idJugador);
+    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException {
+        servicioMesas.apostar (n, monto, mesa,  idJugador);
     }
     
     public void quitarApuesta(int uucod, int monto, String idJugador) {
-        servicioUsuarios.quitarApuesta (uucod, monto, idJugador);
+        //servicioUsuarios.quitarApuesta (uucod, monto, idJugador);
     }
 
     public Jugador getJugadorById(String cedula) {

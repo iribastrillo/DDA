@@ -41,9 +41,9 @@ public class ControladorVistaMesaJugador implements Observador {
         vista.mostrarTiposDeApuesta (mesa.listarTiposApuestaSeleccionados());
     }
 
-    public void apostar(int n, int monto, String idJugador) {
+    public void apostar(int n, int monto, int mesa, String idJugador) {
         try {
-            fachada.apostar (n, monto, idJugador);
+            fachada.apostar (n, monto, mesa, idJugador);
             vista.refrescar();
         } catch (NoTieneSaldoDisponibleException ex) {
             Logger.getLogger(ControladorVistaMesaJugador.class.getName()).log(Level.SEVERE, null, ex);

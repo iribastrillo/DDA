@@ -18,7 +18,13 @@ public class Ronda {
     private float recoleccion;
     private float liquidacion;
     private int numeroSorteado;
+<<<<<<< Updated upstream
     private ArrayList<Apuesta>apuestas;
+=======
+    private ArrayList<Apuesta> apuestas;
+    private StrategyEfecto efecto;
+    private Mesa mesa;
+>>>>>>> Stashed changes
     
     public Ronda () {
         this.id = autoId;
@@ -74,5 +80,25 @@ public class Ronda {
     }
     public int getCantidadApuestas(){
         return apuestas.size();
+    }
+
+    public void apostar(String idJugador, int monto, int uccode) {
+        Apuesta apuesta = this.getApuesta(idJugador);
+        if (apuesta != null) {
+            apuesta.apostar(monto, uccode);
+        } else {
+            apuesta = new Apuesta (idJugador);
+            apuesta.apostar(monto, uccode);
+        }
+    }
+
+    private Apuesta getApuesta(String idJugador) {
+        Apuesta apuesta = null;
+        for (Apuesta a: apuestas) {
+            if (a.getIdJugador() == idJugador) {
+                apuesta = a;
+            }
+        }
+        return apuesta;
     }
 }

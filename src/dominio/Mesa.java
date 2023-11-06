@@ -90,16 +90,28 @@ public class Mesa {
         return this.rondas.get(this.rondas.size() - 2);
     }
 
-    public void removerJugador(String cedula) {
+    public void removerJugador(String idJugador) {
         Jugador j = null;
         for (Jugador jugador: jugadores) {
-            if (jugador.getCedula() == cedula) {
+            if (jugador.getCedula() == idJugador) {
                 j = jugador;
             }
         }
         jugadores.remove(j);
     }
-    
-    
 
+    public Jugador getJugador(String idJugador) {
+        Jugador j = null;
+        for (Jugador jugador: jugadores) {
+            if (jugador.getCedula() == idJugador) {
+                j = jugador;
+            }
+        }
+        return j;
+    }
+
+    public void apostar(String idJugador, int monto, int uccode) {
+        Ronda ronda = this.getRondaActual();
+        ronda.apostar (idJugador, monto, uccode);
+    }
 }

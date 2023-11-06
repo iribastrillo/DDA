@@ -194,7 +194,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         int monto = panelInfoJugador1.getModelo().getTotal();
         String idJugador = jugador.getCedula();
         r.setApuesta(n, monto);
-        controlador.apostar (n, monto, idJugador);
+        controlador.apostar (n, monto, mesa.getId(), idJugador);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
