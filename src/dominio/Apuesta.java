@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Apuesta {
 
     private String jugador;
-    private HashMap <Integer, Casillero> casilleros;
+    private HashMap <String, Casillero> casilleros;
     
     public Apuesta (String idJugador) {
         this.jugador = idJugador;
@@ -28,19 +28,21 @@ public class Apuesta {
         this.jugador = idJugador;
     }
 
-    public HashMap<Integer, Casillero> getCasilleros() {
+    public HashMap<String, Casillero> getCasilleros() {
         return casilleros;
     }
 
-    public void setCasilleros(HashMap<Integer, Casillero> casilleros) {
+    public void setCasilleros(HashMap<String, Casillero> casilleros) {
         this.casilleros = casilleros;
     }
     
     public void apostar (int monto, int uccode) {
-        this.casilleros.put(uccode, new Casillero (monto, uccode));
+        this.casilleros.put(String.valueOf(uccode), new Casillero (monto, uccode));
+        System.out.println (casilleros.size());
     }
 
     public void quitarApuesta(int uccode) {
-        this.casilleros.remove(uccode);
+        this.casilleros.remove(String.valueOf(uccode));
+        System.out.println ("APUESTA ELIMINADA");
     }
 }

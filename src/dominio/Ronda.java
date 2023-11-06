@@ -7,6 +7,7 @@ package dominio;
 import dominio.efectos.CompletoEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Ronda {
     private float recoleccion;
     private float liquidacion;
     private int numeroSorteado;
-    private ArrayList<Apuesta> apuestas;
+    private HashMap<String, Apuesta> apuestas;
     private StrategyEfecto efecto;
     private Mesa mesa;
     
@@ -30,7 +31,7 @@ public class Ronda {
         this.balancePosterior = 0;
         this.recoleccion = 0;
         this.liquidacion = 0;
-        this.apuestas=new ArrayList<>();
+        this.apuestas=new HashMap<>();
         this.efecto=new CompletoEfecto();
         this.mesa=mesa;
     }
@@ -43,11 +44,11 @@ public class Ronda {
         return balanceAnterior;
     }
 
-    public ArrayList<Apuesta> getApuestas() {
+    public HashMap<String, Apuesta> getApuestas() {
         return apuestas;
     }
 
-    public void setApuestas(ArrayList<Apuesta> apuestas) {
+    public void setApuestas(HashMap<String, Apuesta> apuestas) {
         this.apuestas = apuestas;
     }
 
@@ -105,16 +106,15 @@ public class Ronda {
         } else {
             apuesta = new Apuesta (idJugador);
             apuesta.apostar(monto, uccode);
+            apuestas.put(idJugador, apuesta);
         }
     }
 
     private Apuesta getApuesta(String idJugador) {
         Apuesta apuesta = null;
-        for (Apuesta a: apuestas) {
-            if (a.getIdJugador() == idJugador) {
-                apuesta = a;
+            if (apuestas.containsKey(idJugador)) {
+                apuesta = apuestas.get(idJugador);
             }
-        }
         return apuesta;
     }
 
