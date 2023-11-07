@@ -28,5 +28,7 @@ public interface IVistaMesaCrupier {
 
     public void cargarDropdownEfectos(String[] valoresEnumStrings);
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo);
+
+    public void mostrarMensajeError(String message);
     
 }

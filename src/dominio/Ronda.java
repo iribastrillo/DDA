@@ -4,7 +4,10 @@
  */
 package dominio;
 
+import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import dominio.efectos.CompletoEfecto;
+import dominio.efectos.ParcialEfecto;
+import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import java.util.HashMap;
  * @author nacho
  */
 public class Ronda {
+
     private static int autoId = 0;
     private int id;
     private float balanceAnterior;
@@ -24,16 +28,16 @@ public class Ronda {
     private HashMap<String, Apuesta> apuestas;
     private StrategyEfecto efecto;
     private Mesa mesa;
-    
-    public Ronda (Mesa mesa) {
+
+    public Ronda(Mesa mesa) {
         this.id = ++autoId;
         this.balanceAnterior = 0;
         this.balancePosterior = 0;
         this.recoleccion = 0;
         this.liquidacion = 0;
-        this.apuestas=new HashMap<>();
-        this.efecto=new CompletoEfecto();
-        this.mesa=mesa;
+        this.apuestas = new HashMap<>();
+        this.efecto = new CompletoEfecto();
+        this.mesa = mesa;
     }
 
     public int getId() {
@@ -95,7 +99,8 @@ public class Ronda {
     public void setNumeroSorteado(int numeroSorteado) {
         this.numeroSorteado = efecto.obtenerNumero(mesa);
     }
-    public int getCantidadApuestas(){
+
+    public int getCantidadApuestas() {
         return apuestas.size();
     }
 
@@ -104,7 +109,7 @@ public class Ronda {
         if (apuesta != null) {
             apuesta.apostar(monto, uccode);
         } else {
-            apuesta = new Apuesta (idJugador);
+            apuesta = new Apuesta(idJugador);
             apuesta.apostar(monto, uccode);
             apuestas.put(idJugador, apuesta);
         }
@@ -112,21 +117,21 @@ public class Ronda {
 
     private Apuesta getApuesta(String idJugador) {
         Apuesta apuesta = null;
-            if (apuestas.containsKey(idJugador)) {
-                apuesta = apuestas.get(idJugador);
-            }
+        if (apuestas.containsKey(idJugador)) {
+            apuesta = apuestas.get(idJugador);
+        }
         return apuesta;
     }
 
     public void quitarApuesta(String idJugador, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
-        apuesta.quitarApuesta (uccode);
+        apuesta.quitarApuesta(uccode);
         if (apuesta.isEmpty()) {
             apuestas.remove(idJugador);
         }
     }
-    
-    public int reembolsarTodo (int idMesa, String idJugador) {
+
+    public int reembolsarTodo(int idMesa, String idJugador) {
         int reembolso = 0;
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
@@ -137,5 +142,26 @@ public class Ronda {
 
     public boolean puedeAbandonar(String idJugador) {
         return !apuestas.containsKey(idJugador);
+    }
+
+    public void ActualizarEfecto(String efecto) throws NoSeHaSeleccionadoUnEfectoException {
+
+        if (!efecto.isEmpty() || !efecto.isBlank()) {
+            StrategyEfecto strategyEfecto = null;
+            switch (efecto) {
+                case "COMPLETO":
+                    strategyEfecto = new CompletoEfecto();
+                    break;
+                case "PARCIAL":
+                    strategyEfecto = new ParcialEfecto(mesa);
+                    break;
+                case "SIMULADOR":
+                    strategyEfecto = new SimuladorEfecto(mesa);
+            }
+            this.efecto = strategyEfecto;
+            System.out.printf("\nEfecto seleccionado %s  y configurado a la ronda actual ", efecto);
+        } else {
+            throw new NoSeHaSeleccionadoUnEfectoException("No se ha seleccionado un efecto");
+        }
     }
 }

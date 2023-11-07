@@ -10,6 +10,7 @@ import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.NoPuedeAbandonarMesaException;
+import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
@@ -21,6 +22,7 @@ import dominio.EnumEventos;
 import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
+import dominio.Ronda;
 import dominio.Usuario;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
@@ -145,5 +147,10 @@ public class Fachada extends Observable {
 
     public Jugador getJugadorById(String cedula) {
         return servicioUsuarios.getJugadorById(cedula);
+    }
+
+    public void ActualizarEfectoEnRonda(String efecto, Mesa m) throws NoSeHaSeleccionadoUnEfectoException {
+        Ronda ronda =m.getRondaActual();
+        ronda.ActualizarEfecto(efecto);
     }
 }
