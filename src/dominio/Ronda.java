@@ -145,8 +145,9 @@ public class Ronda {
     }
 
     public void ActualizarEfecto(String efecto) throws NoSeHaSeleccionadoUnEfectoException {
-
-        if (!efecto.isEmpty() || !efecto.isBlank()) {
+        
+        // Habra que checkear si la ronda esta activa o bloqueada?,  o es instantaneo, cuando se lanza se pasa la ronda activa a la lista de rondas completadas?
+        if (!efecto.isEmpty() || !efecto.isBlank() ) {
             StrategyEfecto strategyEfecto = null;
             switch (efecto) {
                 case "COMPLETO":
