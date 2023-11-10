@@ -58,7 +58,7 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
         this.ronda.setText("Ronda #" + String.valueOf(ronda));
     }
 
-    public void setTotalApostado(float totalApostado) {
+    public void setTotalApostado(int totalApostado) {
         this.lbl_totalApostado.setText(String.valueOf(totalApostado));
 
     }
@@ -220,6 +220,7 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
 
     private void cb_efectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_efectosActionPerformed
         // TODO add your handling code here:
+        // Si la ronda esta bloqueada deshabilitar esta op[cion
         String efecto = this.cb_efectos.getSelectedItem().toString();
         for(EscuchadorEfectos e: handlers){
             e.efectoSeleccionado(efecto);

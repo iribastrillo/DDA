@@ -6,7 +6,9 @@ package controladores;
 
 import Common.Observable;
 import Common.Observador;
+import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import Logica.Fachada;
+import componentes.PanelInfoCrupier.EscuchadorEfectos;
 import dominio.EnumEfectos;
 import dominio.EnumEventos;
 import dominio.EnumTipoApuesta;
@@ -14,12 +16,14 @@ import vistas.IVistaMesaCrupier;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Usuario
  */
-public class ControladorVistaMesaCrupier implements Observador {
+public class ControladorVistaMesaCrupier implements Observador, EscuchadorEfectos {
 
     private final Fachada fachada;
     private final IVistaMesaCrupier vista;
@@ -44,7 +48,8 @@ public class ControladorVistaMesaCrupier implements Observador {
     }
 
     public void cargarTotalApostadoEnPanel(Mesa m) {
-        vista.cargarTotalApostadoEnPanel(m);
+       
+        vista.cargarTotalApostadoEnPanel(m.getBalance());
     }
 
     public void cargarNumeroDeRondaEnPanel(Mesa m) {
@@ -67,8 +72,6 @@ public class ControladorVistaMesaCrupier implements Observador {
         EnumEfectos[] valoresEnum = EnumEfectos.values();
         String[] valoresEnumStrings = new String[valoresEnum.length];
         for (int i = 0; i < valoresEnum.length; i++) {
-            
-       
 
                 valoresEnumStrings[i] = valoresEnum[i].name();
           
@@ -86,7 +89,44 @@ public class ControladorVistaMesaCrupier implements Observador {
             
             //ArrayList<ModeloListarJugadoresSaldo> jugadoresSaldo
            
+        } 
+        if(EnumEventos.APUESTA_CREADA.equals(evento)){
+            actualizarPanelApuestasMesa();
         }
     }
+
+    @Override
+    public void efectoSeleccionado(String efecto) {
+        try {
+            fachada.ActualizarEfectoEnRonda(efecto,m);
+            
+//        StrategyEfecto strategyEfecto=null;
+//         switch(efecto){
+//                case  "COMPLETO":
+//                    strategyEfecto=new CompletoEfecto();
+//                break;
+//                case "PARCIAL":
+//                    strategyEfecto=new ParcialEfecto();
+//                 break;
+//                case "SIMULADOR" :
+//                    strategyEfecto=new SimuladorEfecto();
+//        }
+//        this.m.getRondaActual().setEfecto(strategyEfecto);
+//        System.out.printf("Efecto seleccionado %s ",efecto);  
+        } catch (NoSeHaSeleccionadoUnEfectoException ex) {
+            vista.mostrarMensajeError(ex.getMessage());
+        }
+     }
+
+    private void actualizarPanelApuestasMesa() {
+       int cantidadDeApuestas= m.getCantidadDeApuestas();
+       int totalApostado =m.getTotalApostado();
+       
+       vista.cargarTotalApostado(totalApostado);
+       vista.cargarCantidadDeApuestas(cantidadDeApuestas);
+       
+    }
+    
+         
  
 }

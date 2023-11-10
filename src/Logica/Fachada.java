@@ -11,6 +11,7 @@ import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
+import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
 import Exceptions.UsuarioCrupierTieneSesionActivaException;
@@ -22,6 +23,7 @@ import dominio.EnumEventos;
 import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
+import dominio.Ronda;
 import dominio.Usuario;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
@@ -91,7 +93,8 @@ public class Fachada extends Observable {
     public void agregar(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
     }
-
+    
+    // Este metodo se usa en cargar datos 
     public void agregar(Mesa mesa) throws UsuarioYaExisteException {
         servicioMesas.agregar(mesa);
         avisar(EnumEventos.FACHADA_NUEVA_MESA_AGREGADA);
@@ -99,7 +102,7 @@ public class Fachada extends Observable {
 
     public Mesa iniciarMesa(Crupier c, ArrayList< EnumTipoApuesta> tipoApuestas) throws UsuarioYaExisteException {
         Mesa mesa = new Mesa(tipoApuestas, c);
-        agregar(mesa);
+        agregar( mesa);
         return mesa;
     }
 
@@ -128,7 +131,6 @@ public class Fachada extends Observable {
     public ArrayList<ModeloInfoCrupier> cargarJugadoresSaldo(Mesa m) {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
-
     public void abandonar(int mesa, String jugador) throws NoPuedeAbandonarMesaException {
         this.servicioMesas.abandonar (mesa, jugador);
         avisar (EnumEventos.ABANDONAR_MESA);
@@ -146,5 +148,10 @@ public class Fachada extends Observable {
 
     public Jugador getJugadorById(String cedula) {
         return servicioUsuarios.getJugadorById(cedula);
+    }
+
+    public void ActualizarEfectoEnRonda(String efecto, Mesa m) throws NoSeHaSeleccionadoUnEfectoException {
+        Ronda ronda =m.getRondaActual();
+        ronda.ActualizarEfecto(efecto);
     }
 }

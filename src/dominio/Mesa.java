@@ -15,7 +15,7 @@ public class Mesa {
 
     private static int autoId = 0;
     private int id;
-    private float balance;
+    private int balance;
     private ArrayList<Integer> numerosSorteados;
     private ArrayList<Jugador> jugadores;
     private ArrayList<Ronda> rondas;
@@ -29,33 +29,32 @@ public class Mesa {
         this.balance = 0;
         this.numerosSorteados = new ArrayList<>();
         this.jugadores = new ArrayList<>();
-        this.rondas = new ArrayList <>();
+        this.rondas = new ArrayList<>();
         this.bloqueada = false;
         this.tiposApuesta = tiposApuesta;
         this.crupier = crupier;
-        this.rondaActual=new Ronda(this);
+        this.rondaActual = new Ronda(this);
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
-        this.rondas=new ArrayList<Ronda>();
-        autoId ++;
+        this.rondas = new ArrayList<Ronda>();
+        autoId++;
     }
-    
-    public ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados(){
+
+    public ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados() {
         return this.tiposApuesta;
     }
-    
-    
+
     public int getId() {
         return id;
     }
 
-    public float getBalance() {
+    public int getBalance() {
         return balance;
     }
 
     public ArrayList<Integer> getNumerosSorteados() {
         return numerosSorteados;
     }
-    
+
     public ArrayList<Jugador> getJugadores() {
         return jugadores;
     }
@@ -71,19 +70,19 @@ public class Mesa {
     public Crupier getCrupier() {
         return crupier;
     }
-    
-    public void agregarJugador (Jugador jugador) throws UsuarioYaEstaEnLaMesaException {
+
+    public void agregarJugador(Jugador jugador) throws UsuarioYaEstaEnLaMesaException {
         if (jugadores.contains(jugador)) {
-            throw new UsuarioYaEstaEnLaMesaException ("El usuario ya está en la mesa.");
+            throw new UsuarioYaEstaEnLaMesaException("El usuario ya está en la mesa.");
         }
-        jugadores.add (jugador);
+        jugadores.add(jugador);
     }
 
     public ArrayList<Ronda> getRondas() {
         return rondas;
     }
-    
-    public Ronda getRondaActual () {
+
+    public Ronda getRondaActual() {
         return this.rondaActual;
         //return this.rondas.get(this.rondas.size() - 1);
     }
@@ -98,7 +97,7 @@ public class Mesa {
 
     public void removerJugador(String idJugador) {
         Jugador j = null;
-        for (Jugador jugador: jugadores) {
+        for (Jugador jugador : jugadores) {
             if (jugador.getCedula() == idJugador) {
                 j = jugador;
             }
@@ -108,7 +107,7 @@ public class Mesa {
 
     public Jugador getJugador(String idJugador) {
         Jugador j = null;
-        for (Jugador jugador: jugadores) {
+        for (Jugador jugador : jugadores) {
             if (jugador.getCedula() == idJugador) {
                 j = jugador;
             }
@@ -118,16 +117,17 @@ public class Mesa {
 
     public void apostar(String idJugador, int monto, int uccode) {
         Ronda ronda = this.getRondaActual();
-        ronda.apostar (idJugador, monto, uccode);
+        ronda.apostar(idJugador, monto, uccode);
+         
     }
 
     public void quitarApuesta(String idJugador, int uccode) {
         Ronda ronda = this.getRondaActual();
-        ronda.quitarApuesta (idJugador, uccode);
+        ronda.quitarApuesta(idJugador, uccode);
     }
 
     public boolean puedeAbandonar(String idJugador) {
-        return this.getRondaActual().puedeAbandonar (idJugador);
+        return this.getRondaActual().puedeAbandonar(idJugador);
     }
 
     public String getUltimoSorteado() {
@@ -138,4 +138,16 @@ public class Mesa {
         }
         return ultimoSorteado;
     }
+    int getUltimaIdRonda() {
+        return rondas.size() + 1;
+    }
+
+    public int getCantidadDeApuestas() {
+        return rondaActual.getCantidadApuestas();
+    }
+
+    public int getTotalApostado() {
+        return rondaActual.getTotalApostado();
+    }
+
 }

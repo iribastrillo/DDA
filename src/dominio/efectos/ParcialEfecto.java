@@ -14,12 +14,17 @@ import java.util.Objects;
 public class ParcialEfecto implements StrategyEfecto {
 
     private String nombreEfecto = "Parcial";
+    private Mesa mesa= null;
+  
 
-    @Override
+    public ParcialEfecto(Mesa m) {
+        this.mesa=m;
+    }
+      @Override
     public int obtenerNumero(Mesa m) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+ 
     @Override
     public String getNombreEfecto() {
         return this.nombreEfecto;

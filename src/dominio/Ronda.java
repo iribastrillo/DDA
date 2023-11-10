@@ -4,36 +4,46 @@
  */
 package dominio;
 
+import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import dominio.efectos.CompletoEfecto;
+import dominio.efectos.ParcialEfecto;
+import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
  * @author nacho
  */
 public class Ronda {
-    private static int autoId = 0;
+
+
     private int id;
     private float balanceAnterior;
     private float balancePosterior;
     private float recoleccion;
     private float liquidacion;
+    private int totalApostado;
     private int numeroSorteado;
     private HashMap<String, Apuesta> apuestas;
     private StrategyEfecto efecto;
     private Mesa mesa;
-    
-    public Ronda (Mesa mesa) {
-        this.id = ++autoId;
+
+
+    public Ronda(Mesa mesa) {
+        this.id = mesa.getUltimaIdRonda();
+        this.totalApostado=0;
         this.balanceAnterior = 0;
         this.balancePosterior = 0;
         this.recoleccion = 0;
         this.liquidacion = 0;
-        this.apuestas=new HashMap<>();
-        this.efecto=new CompletoEfecto();
-        this.mesa=mesa;
+        this.apuestas = new HashMap<>();
+        this.efecto = new CompletoEfecto();
+        this.mesa = mesa;
+        
     }
 
     public int getId() {
@@ -42,6 +52,21 @@ public class Ronda {
 
     public float getBalanceAnterior() {
         return balanceAnterior;
+    }
+    
+    
+    public int getTotalApostado() {
+        return totalApostado;
+    }
+
+    public void setTotalApostado() {
+        
+        int totalApostado=0;
+        for (Apuesta apu:apuestas.values()){
+            totalApostado+= apu.getTotalApostado();
+        }        
+        this.totalApostado=totalApostado;
+ 
     }
 
     public HashMap<String, Apuesta> getApuestas() {
@@ -95,38 +120,47 @@ public class Ronda {
     public void setNumeroSorteado(int numeroSorteado) {
         this.numeroSorteado = efecto.obtenerNumero(mesa);
     }
-    public int getCantidadApuestas(){
-        return apuestas.size();
+
+    public int getCantidadApuestas() {
+        int cantidadApuestas=0;
+        for(Apuesta apu: apuestas.values()){
+            cantidadApuestas+= apu.getCantidadApuestas();
+    }
+        return cantidadApuestas;
     }
 
     public void apostar(String idJugador, int monto, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
             apuesta.apostar(monto, uccode);
+            // ver de cambiar esto a un parametro que se va sumando
+            setTotalApostado();
         } else {
-            apuesta = new Apuesta (idJugador);
+            apuesta = new Apuesta(idJugador);
             apuesta.apostar(monto, uccode);
             apuestas.put(idJugador, apuesta);
+            // ver de cambiar esto a un parametro que se va sumando
+            setTotalApostado();
         }
     }
 
     private Apuesta getApuesta(String idJugador) {
         Apuesta apuesta = null;
-            if (apuestas.containsKey(idJugador)) {
-                apuesta = apuestas.get(idJugador);
-            }
+        if (apuestas.containsKey(idJugador)) {
+            apuesta = apuestas.get(idJugador);
+        }
         return apuesta;
     }
 
     public void quitarApuesta(String idJugador, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
-        apuesta.quitarApuesta (uccode);
+        apuesta.quitarApuesta(uccode);
         if (apuesta.isEmpty()) {
             apuestas.remove(idJugador);
         }
     }
-    
-    public int reembolsarTodo (int idMesa, String idJugador) {
+
+    public int reembolsarTodo(int idMesa, String idJugador) {
         int reembolso = 0;
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
@@ -137,5 +171,31 @@ public class Ronda {
 
     public boolean puedeAbandonar(String idJugador) {
         return !apuestas.containsKey(idJugador);
-    }    
+    }
+
+    public void ActualizarEfecto(String efecto) throws NoSeHaSeleccionadoUnEfectoException {
+        
+        // Habra que checkear si la ronda esta activa o bloqueada?,  o es instantaneo, cuando se lanza se pasa la ronda activa a la lista de rondas completadas?
+        if (!efecto.isEmpty() || !efecto.isBlank() ) {
+            StrategyEfecto strategyEfecto = null;
+            switch (efecto) {
+                case "COMPLETO":
+                    strategyEfecto = new CompletoEfecto();
+                    break;
+                case "PARCIAL":
+                    strategyEfecto = new ParcialEfecto(mesa);
+                    break;
+                case "SIMULADOR":
+                    strategyEfecto = new SimuladorEfecto(mesa);
+            }
+            this.efecto = strategyEfecto;
+            System.out.printf("\nEfecto seleccionado %s  y configurado a la ronda actual ", efecto);
+        } else {
+            throw new NoSeHaSeleccionadoUnEfectoException("No se ha seleccionado un efecto");
+        }
+    }
+
+    
+
+   
 }

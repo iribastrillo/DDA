@@ -22,6 +22,7 @@ import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import vistas.IVistaMesaCrupier;
  
 
@@ -29,7 +30,7 @@ import vistas.IVistaMesaCrupier;
  *
  * @author digregor
  */
-public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier, EscuchadorEfectos  {
+public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVistaMesaCrupier {
 
     int apuestaRojo = 0;
     protected final ControladorVistaMesaCrupier controlador;
@@ -54,7 +55,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         controlador.cargarDropdownEfectos();
         
         this.panelInfoCrupier1.setNumeroMesa(m.getId());
-        this.panelInfoCrupier1.agregar(this);
+        this.panelInfoCrupier1.agregar(this.controlador);
         
     }
 
@@ -178,8 +179,8 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         }
 
     @Override
-    public void cargarTotalApostadoEnPanel(Mesa m) {
-         this.panelInfoCrupier1.setTotalApostado(m.getBalance());
+    public void cargarTotalApostadoEnPanel(int balance) {
+         this.panelInfoCrupier1.setTotalApostado(balance);
      }
 
     @Override
@@ -202,20 +203,35 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         this.panelInfoCrupier1.setDropdownEfectos(efectos);
     }
 
+//    @Override
+//    public void efectoSeleccionado(String efecto) {
+//        StrategyEfecto strategyEfecto=null;
+//         switch(efecto){
+//                case  "COMPLETO":
+//                    strategyEfecto=new CompletoEfecto();
+//                break;
+//                case "PARCIAL":
+//                    strategyEfecto=new ParcialEfecto();
+//                 break;
+//                case "SIMULADOR" :
+//                    strategyEfecto=new SimuladorEfecto();
+//        }
+//        this.m.getRondaActual().setEfecto(strategyEfecto);
+//        System.out.printf("Efecto seleccionado %s ",efecto);  
+//    }
+
     @Override
-    public void efectoSeleccionado(String efecto) {
-        StrategyEfecto strategyEfecto=null;
-         switch(efecto){
-                case  "COMPLETO":
-                    strategyEfecto=new CompletoEfecto();
-                break;
-                case "PARCIAL":
-                    strategyEfecto=new ParcialEfecto();
-                 break;
-                case "SIMULADOR" :
-                    strategyEfecto=new SimuladorEfecto();
-        }
-        this.m.getRondaActual().setEfecto(strategyEfecto);
-        System.out.printf("Efecto seleccionado %s ",efecto);  
+    public void mostrarMensajeError(String mensaje) {
+            JOptionPane.showMessageDialog(this, mensaje, "Login incorrecto", JOptionPane.ERROR_MESSAGE);
     }
+
+    @Override
+    public void cargarTotalApostado(int totalApostado) {       
+       this.panelInfoCrupier1.setTotalApostado(totalApostado);
+    }
+    @Override
+    public void cargarCantidadDeApuestas(int cantidadDeApuestas) {
+       this.panelInfoCrupier1.setCantidadApuestas(cantidadDeApuestas);
+    }
+
 }
