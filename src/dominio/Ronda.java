@@ -11,6 +11,8 @@ import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -18,19 +20,22 @@ import java.util.HashMap;
  */
 public class Ronda {
 
-    private static int autoId = 0;
+
     private int id;
     private float balanceAnterior;
     private float balancePosterior;
     private float recoleccion;
     private float liquidacion;
+    private int totalApostado;
     private int numeroSorteado;
     private HashMap<String, Apuesta> apuestas;
     private StrategyEfecto efecto;
     private Mesa mesa;
 
+
     public Ronda(Mesa mesa) {
-        this.id = ++autoId;
+        this.id = mesa.getUltimaIdRonda();
+        this.totalApostado=0;
         this.balanceAnterior = 0;
         this.balancePosterior = 0;
         this.recoleccion = 0;
@@ -38,6 +43,7 @@ public class Ronda {
         this.apuestas = new HashMap<>();
         this.efecto = new CompletoEfecto();
         this.mesa = mesa;
+        
     }
 
     public int getId() {
@@ -46,6 +52,21 @@ public class Ronda {
 
     public float getBalanceAnterior() {
         return balanceAnterior;
+    }
+    
+    
+    public int getTotalApostado() {
+        return totalApostado;
+    }
+
+    public void setTotalApostado() {
+        
+        int totalApostado=0;
+        for (Apuesta apu:apuestas.values()){
+            totalApostado+= apu.getTotalApostado();
+        }        
+        this.totalApostado=totalApostado;
+ 
     }
 
     public HashMap<String, Apuesta> getApuestas() {
@@ -101,17 +122,25 @@ public class Ronda {
     }
 
     public int getCantidadApuestas() {
-        return apuestas.size();
+        int cantidadApuestas=0;
+        for(Apuesta apu: apuestas.values()){
+            cantidadApuestas+= apu.getCantidadApuestas();
+    }
+        return cantidadApuestas;
     }
 
     public void apostar(String idJugador, int monto, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
             apuesta.apostar(monto, uccode);
+            // ver de cambiar esto a un parametro que se va sumando
+            setTotalApostado();
         } else {
             apuesta = new Apuesta(idJugador);
             apuesta.apostar(monto, uccode);
             apuestas.put(idJugador, apuesta);
+            // ver de cambiar esto a un parametro que se va sumando
+            setTotalApostado();
         }
     }
 
@@ -165,4 +194,8 @@ public class Ronda {
             throw new NoSeHaSeleccionadoUnEfectoException("No se ha seleccionado un efecto");
         }
     }
+
+    
+
+   
 }

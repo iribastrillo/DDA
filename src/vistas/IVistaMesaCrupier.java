@@ -19,7 +19,7 @@ public interface IVistaMesaCrupier {
 
     public void cargarNumeroDeMesaEnPanel(int id);
 
-    public void cargarTotalApostadoEnPanel(Mesa m);
+    public void cargarTotalApostadoEnPanel(int balance);
 
     public void cargarNumeroDeRondaEnPanel(int id);
 
@@ -30,5 +30,9 @@ public interface IVistaMesaCrupier {
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo);
 
     public void mostrarMensajeError(String message);
+
+    public void cargarTotalApostado(int totalApostado);
+    
+    public void cargarCantidadDeApuestas(int cantidadDeApuestas);
     
 }

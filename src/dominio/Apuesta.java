@@ -55,4 +55,20 @@ public class Apuesta {
         }
         return total;
     }
+    
+       public int getTotalApostado() {
+        int total = 0;
+        for (Casillero c: casilleros.values()) {
+            total += c.getMonto();
+        }
+        return total;
+    }
+       
+    public int getCantidadApuestas(){
+        int cantidadApuestas=0;
+        for (Casillero c :casilleros.values()){
+            cantidadApuestas+=1;
+        }
+        return cantidadApuestas;
+    }
 }

@@ -92,7 +92,8 @@ public class Fachada extends Observable {
     public void agregar(Crupier croupier) throws UsuarioYaExisteException {
         servicioUsuarios.agregar(croupier);
     }
-
+    
+    // Este metodo se usa en cargar datos 
     public void agregar(Mesa mesa) throws UsuarioYaExisteException {
         servicioMesas.agregar(mesa);
         avisar(EnumEventos.FACHADA_NUEVA_MESA_AGREGADA);
@@ -100,7 +101,7 @@ public class Fachada extends Observable {
 
     public Mesa iniciarMesa(Crupier c, ArrayList< EnumTipoApuesta> tipoApuestas) throws UsuarioYaExisteException {
         Mesa mesa = new Mesa(tipoApuestas, c);
-        agregar(mesa);
+        agregar( mesa);
         return mesa;
     }
 
@@ -129,7 +130,6 @@ public class Fachada extends Observable {
     public ArrayList<ModeloInfoCrupier> cargarJugadoresSaldo(Mesa m) {
         return getServicioMesa().obtenerJugadoresSaldoParaMesa(m);
     }
-
     public void abandonar(int mesa, String jugador) throws NoPuedeAbandonarMesaException {
         this.servicioMesas.abandonar (mesa, jugador);
         avisar (EnumEventos.ABANDONAR_MESA);

@@ -48,7 +48,8 @@ public class ControladorVistaMesaCrupier implements Observador, EscuchadorEfecto
     }
 
     public void cargarTotalApostadoEnPanel(Mesa m) {
-        vista.cargarTotalApostadoEnPanel(m);
+       
+        vista.cargarTotalApostadoEnPanel(m.getBalance());
     }
 
     public void cargarNumeroDeRondaEnPanel(Mesa m) {
@@ -71,8 +72,6 @@ public class ControladorVistaMesaCrupier implements Observador, EscuchadorEfecto
         EnumEfectos[] valoresEnum = EnumEfectos.values();
         String[] valoresEnumStrings = new String[valoresEnum.length];
         for (int i = 0; i < valoresEnum.length; i++) {
-            
-       
 
                 valoresEnumStrings[i] = valoresEnum[i].name();
           
@@ -91,6 +90,9 @@ public class ControladorVistaMesaCrupier implements Observador, EscuchadorEfecto
             //ArrayList<ModeloListarJugadoresSaldo> jugadoresSaldo
            
         } 
+        if(EnumEventos.APUESTA_CREADA.equals(evento)){
+            actualizarPanelApuestasMesa();
+        }
     }
 
     @Override
@@ -115,5 +117,16 @@ public class ControladorVistaMesaCrupier implements Observador, EscuchadorEfecto
             vista.mostrarMensajeError(ex.getMessage());
         }
      }
+
+    private void actualizarPanelApuestasMesa() {
+       int cantidadDeApuestas= m.getCantidadDeApuestas();
+       int totalApostado =m.getTotalApostado();
+       
+       vista.cargarTotalApostado(totalApostado);
+       vista.cargarCantidadDeApuestas(cantidadDeApuestas);
+       
+    }
+    
+         
  
 }

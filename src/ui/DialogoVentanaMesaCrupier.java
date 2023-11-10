@@ -179,8 +179,8 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         }
 
     @Override
-    public void cargarTotalApostadoEnPanel(Mesa m) {
-         this.panelInfoCrupier1.setTotalApostado(m.getBalance());
+    public void cargarTotalApostadoEnPanel(int balance) {
+         this.panelInfoCrupier1.setTotalApostado(balance);
      }
 
     @Override
@@ -224,4 +224,14 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     public void mostrarMensajeError(String mensaje) {
             JOptionPane.showMessageDialog(this, mensaje, "Login incorrecto", JOptionPane.ERROR_MESSAGE);
     }
+
+    @Override
+    public void cargarTotalApostado(int totalApostado) {       
+       this.panelInfoCrupier1.setTotalApostado(totalApostado);
+    }
+    @Override
+    public void cargarCantidadDeApuestas(int cantidadDeApuestas) {
+       this.panelInfoCrupier1.setCantidadApuestas(cantidadDeApuestas);
+    }
+
 }
