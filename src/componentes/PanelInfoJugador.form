@@ -24,7 +24,7 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="saldoInicial" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="233" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="ruleta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="ronda" min="-2" max="-2" attributes="0"/>
@@ -47,8 +47,8 @@
                       <Component id="chip100" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="undoButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="numeroSorteado" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="ultimoSorteado" pref="115" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -82,7 +82,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="numeroSorteado" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="chip1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="chip5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="chip10" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -91,6 +90,7 @@
                       <Component id="montoApostado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="undoButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="ultimoSorteado" alignment="0" min="-2" pref="38" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -131,7 +131,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JLabel" name="numeroSorteado">
+    <Component class="javax.swing.JLabel" name="ultimoSorteado">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="66" red="ff" type="rgb"/>

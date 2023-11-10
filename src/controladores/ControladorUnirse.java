@@ -37,7 +37,8 @@ public class ControladorUnirse implements Observador{
                 jugador.getCedula(),
                 jugador.getSaldo(),
                 mesa.getId(),
-                mesa.getRondaActual().getId());
+                mesa.getRondaActual().getId(),
+                mesa.getUltimoSorteado());
                 this.vista.mostrarMesaJugador(modelo);
             } catch (MesaNoEncontradaException   |UsuarioYaEstaEnLaMesaException ex) {
                 vista.mostrarDialogoDeError(ex.getMessage());

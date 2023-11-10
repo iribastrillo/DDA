@@ -75,6 +75,7 @@ public class ControladorVistaMesaJugador implements Observador {
         jugador.getCedula(),
         jugador.getSaldo(),
         mesa.getId(),
-        mesa.getRondaActual().getId());
+        mesa.getRondaActual().getId(),
+    mesa.getUltimoSorteado());
     }
 }

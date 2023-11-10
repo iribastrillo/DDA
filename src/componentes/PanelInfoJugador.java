@@ -43,7 +43,7 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
         userIcon = new javax.swing.JLabel();
         playerName = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        numeroSorteado = new javax.swing.JLabel();
+        ultimoSorteado = new javax.swing.JLabel();
         saldoInicial = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         chip1 = new javax.swing.JButton();
@@ -65,9 +65,9 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
         playerName.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         playerName.setText("Montgomery Burns");
 
-        numeroSorteado.setBackground(new java.awt.Color(255, 102, 102));
-        numeroSorteado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        numeroSorteado.setText("12");
+        ultimoSorteado.setBackground(new java.awt.Color(255, 102, 102));
+        ultimoSorteado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ultimoSorteado.setText("12");
 
         saldoInicial.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         saldoInicial.setText("$ 153");
@@ -137,7 +137,7 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saldoInicial)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ruleta)
                         .addGap(18, 18, 18)
                         .addComponent(ronda)
@@ -159,8 +159,8 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
                         .addComponent(chip100)
                         .addGap(18, 18, 18)
                         .addComponent(undoButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(ultimoSorteado, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -185,14 +185,14 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(chip1)
                         .addComponent(chip5)
                         .addComponent(chip10)
                         .addComponent(chip50)
                         .addComponent(chip100)
                         .addComponent(montoApostado))
-                    .addComponent(undoButton))
+                    .addComponent(undoButton)
+                    .addComponent(ultimoSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -236,11 +236,11 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel montoApostado;
-    private javax.swing.JLabel numeroSorteado;
     private javax.swing.JLabel playerName;
     private javax.swing.JLabel ronda;
     private javax.swing.JLabel ruleta;
     private javax.swing.JLabel saldoInicial;
+    private javax.swing.JLabel ultimoSorteado;
     private javax.swing.JButton undoButton;
     private javax.swing.JLabel userIcon;
     // End of variables declaration//GEN-END:variables
@@ -267,6 +267,7 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
         this.setNumeroMesa();
         this.setNumeroRonda();
         this.setMontoApostado();
+        this.setUltimoSorteado();
     }
 
     @Override
@@ -294,6 +295,10 @@ public class PanelInfoJugador extends javax.swing.JPanel implements IPanelInfoJu
         this.montoApostado.setText("Apuesta: $" + String.valueOf(this.modelo.getTotal()));
     }
     
+    public void setUltimoSorteado () {
+        this.ultimoSorteado.setText (modelo.getUltimoSorteado());
+    }
+         
      public ModeloMesaJugador getModelo() {
         return modelo;
     }

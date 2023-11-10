@@ -16,14 +16,16 @@ public class ModeloMesaJugador {
     private float saldoJugador;
     private int mesa;
     private int ronda;
+    private String ultimoSorteado;
     private ArrayList<Integer> fichasApostadas;
 
-    public ModeloMesaJugador(String nombreJugador, String idJugador, float saldo, int mesa, int ronda) {
+    public ModeloMesaJugador(String nombreJugador, String idJugador, float saldo, int mesa, int ronda, String ultimoSorteado) {
         this.nombreJugador = nombreJugador;
         this.idJugador = idJugador;
         this.saldoJugador = saldo;
         this.mesa = mesa;
         this.ronda = ronda;
+        this.ultimoSorteado = ultimoSorteado;
         this.fichasApostadas = new ArrayList ();
     }
 
@@ -73,6 +75,14 @@ public class ModeloMesaJugador {
 
     public void setIdJugador(String idJugador) {
         this.idJugador = idJugador;
+    }
+
+    public String getUltimoSorteado() {
+        return ultimoSorteado;
+    }
+
+    public void setUltimoSorteado(String ultimoSorteado) {
+        this.ultimoSorteado = ultimoSorteado;
     }
     
     public int getTotal () {

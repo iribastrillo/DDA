@@ -89,7 +89,11 @@ public class Mesa {
     }
     
     public Ronda getRondaAnterior () {
-        return this.rondas.get(this.rondas.size() - 2);
+        Ronda ronda = null;
+        if (this.rondas.size () > 1) {
+            ronda = this.rondas.get(this.rondas.size() - 2);
+        }
+        return ronda;
     }
 
     public void removerJugador(String idJugador) {
@@ -124,5 +128,14 @@ public class Mesa {
 
     public boolean puedeAbandonar(String idJugador) {
         return this.getRondaActual().puedeAbandonar (idJugador);
+    }
+
+    public String getUltimoSorteado() {
+        String ultimoSorteado = "1ra ronda.";
+        Ronda ronda = this.getRondaAnterior();
+        if (ronda != null) {
+            ultimoSorteado = String.valueOf(ronda.getNumeroSorteado());
+        }
+        return ultimoSorteado;
     }
 }
