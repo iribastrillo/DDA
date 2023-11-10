@@ -45,10 +45,6 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
 
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox2 = new javax.swing.JCheckBox();
         r = new componentes.PanelRuleta();
         panelEstadisticasJugador = new componentes.PanelJugador();
         panelInfoJugador1 = new componentes.PanelInfoJugador();
@@ -73,29 +69,6 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             }
         });
 
-        jButton3.setText("Borrar apuesta al 0");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Agregar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jTextField1.setText("50");
-
-        jCheckBox2.setText("Apostar en seleccion");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,26 +79,14 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
                         .addGap(10, 10, 10)
                         .addComponent(panelEstadisticasJugador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
-                                    .addComponent(panelInfoJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(213, 213, 213)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(r, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
+                            .addComponent(panelInfoJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -135,16 +96,8 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
                 .addComponent(panelInfoJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(r, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelEstadisticasJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -160,45 +113,9 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         controlador.apostar (n, monto, modelo.getMesa(), idJugador);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int uccode = selector.universalCellCode;
-        int monto = r.getApuesta(uccode);
-        if (r.getApuesta(uccode) != 0) {
-            r.setApuesta(selector.universalCellCode, 0);
-            controlador.quitarApuesta (uccode, monto, modelo.getMesa(), modelo.getIdJugador());
-        } 
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        int uccode = selector.universalCellCode;
-        int monto = r.getApuesta(uccode);
-        int agregado = this.ficha;
-        r.setApuesta(uccode, monto + agregado);
-        controlador.modificarApuesta (uccode, monto, modelo.getMesa(), modelo.getIdJugador());
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        if (jCheckBox2.isSelected()) {
-            r.agregar(new PanelRuleta.Escuchador() {
-                @Override
-                public void celdaSeleccionada(int universalCellCode) {
-                    int apuesta = Integer.valueOf(jTextField1.getText());
-                    System.out.println("Id de celda seleccionada: " + universalCellCode + ". Apuesta anterior: " + r.getApuesta(universalCellCode) + ". Apuesta nueva:" + apuesta);
-                    r.setApuesta(universalCellCode, apuesta);
-                }
-            });
-        } else {
-            r.eliminarEscuchadores();
-        }
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private componentes.PanelJugador panelEstadisticasJugador;
     private componentes.PanelInfoJugador panelInfoJugador1;
     private componentes.PanelRuleta r;
@@ -249,7 +166,6 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     @Override
     public void fichaSeleccionada(int ficha) {
         this.ficha = ficha;
-        jButton5.setText("Agregar " + String.valueOf(ficha));
     }
 
     private class Selector implements PanelRuleta.Escuchador {
@@ -262,7 +178,6 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             String labelApuesta = "Apostar al " + String.valueOf(universalCellCode);
             String labelBorrar = "Borrar apuesta al " + String.valueOf(universalCellCode);
             jButton2.setText(labelApuesta);
-            jButton3.setText(labelBorrar);
         }
         
     }
