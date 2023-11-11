@@ -5,8 +5,7 @@
 package servicios;
 
 import Exceptions.NoTieneSaldoDisponibleException;
-import Exceptions.UsuarioCrupierTieneSesionActivaException;
-import Exceptions.UsuarioNoEncontradoException;
+import Exceptions.ServicioUsuariosException;
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
 import dominio.Jugador;
@@ -48,35 +47,46 @@ public class ServicioUsuarios {
         }
     }
 
-    public Usuario loginJugador(Usuario u)  {
+    public Usuario loginJugador(Usuario u) throws ServicioUsuariosException {
 
         Jugador j = jugadores.get(u.getCedula());
-        if (j != null) {
-            if (j.getPassword().equals(u.getPassword())) {
+        if (j == null) {
+
+            throw new ServicioUsuariosException("No se ha encontrado usuario en el sistema");
+
+        } else {
+            if (j.getPassword().equals(u.getPassword()) && j.getCedula().equals(u.getCedula())) {
 
                 if (!usuariosConectados.containsKey(j.getCedula())) {
                     usuariosConectados.put(j.getCedula(), j);
-                }  
+                }
+            } else {
+                throw new ServicioUsuariosException("No se ha encontrado usuario para los datos ingresados");
             }
-        } 
+        }
         return j;
-        
-     
+
     }
 
-    public Crupier loginCroupier(Usuario u) throws UsuarioCrupierTieneSesionActivaException{
+    public Crupier loginCroupier(Usuario u) throws ServicioUsuariosException {
 
         Crupier c = croupieres.get(u.getCedula());
-        if (c != null) {
+        if (c == null) {
+            //Si el crupier ya se encuentra como conectado se tiramos exepcion
+            throw new ServicioUsuariosException("No se ha encontrado usuario en el sistema");
+
+        } else {
             if (c.getPassword().equals(u.getPassword())) {
 
                 if (!usuariosConectados.containsKey(c.getCedula())) {
                     usuariosConectados.put(c.getCedula(), c);
-                    
+
                 } else {
                     //Si el crupier ya se encuentra como conectado se tiramos exepcion
-                    throw new UsuarioCrupierTieneSesionActivaException("El usuario ya tiene una sesion activa en el sistema");
+                    throw new ServicioUsuariosException("El usuario ya tiene una sesion activa en el sistema");
                 }
+            } else {
+                throw new ServicioUsuariosException("No se ha encontrado usuario para los datos ingresados");
             }
         }
         return c;
@@ -86,12 +96,24 @@ public class ServicioUsuarios {
 
         return null;
     }
-    
-    public Jugador getJugadorById (String idJugador) {
+
+    public Jugador getJugadorById(String idJugador) {
         return this.jugadores.get(idJugador);
     }
 
     public HashMap<String, Crupier> getCrupieres() {
         return this.croupieres;
+    }
+
+    public void logoutCrupier(Crupier c) throws ServicioUsuariosException {
+        if (c == null) {
+            throw new ServicioUsuariosException("Ingrese usuario al que hacer logout");
+        } else {
+            if (!usuariosConectados.containsKey(c.getCedula())) {
+                throw new ServicioUsuariosException("No Se encontro Usuario al que hacer logout");
+            } else {
+                usuariosConectados.remove(c.getCedula());
+            }
+        }
     }
 }

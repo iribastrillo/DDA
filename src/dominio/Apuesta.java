@@ -1,9 +1,10 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-*/
+ */
 package dominio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,15 +14,23 @@ import java.util.HashMap;
 public class Apuesta {
 
     private String jugador;
-    private HashMap <String, Casillero> casilleros;
-    
-    public Apuesta (String idJugador) {
+    private HashMap<String, Casillero> casilleros;
+
+    public Apuesta(String idJugador) {
         this.jugador = idJugador;
-        this.casilleros = new HashMap<> ();
+        this.casilleros = new HashMap<>();
     }
 
     public String getIdJugador() {
         return jugador;
+    }
+
+    public ArrayList<Integer> getNumerosApostados() {
+          ArrayList<Integer>  numerosApostados = new ArrayList<>();
+        for (Casillero c : casilleros.values()) {
+            numerosApostados.add(c.getUccode());
+        }
+        return numerosApostados;
     }
 
     public void setIdJugador(String idJugador) {
@@ -35,39 +44,39 @@ public class Apuesta {
     public void setCasilleros(HashMap<String, Casillero> casilleros) {
         this.casilleros = casilleros;
     }
-    
-    public void apostar (int monto, int uccode) {
-        this.casilleros.put(String.valueOf(uccode), new Casillero (monto, uccode));
+
+    public void apostar(int monto, int uccode) {
+        this.casilleros.put(String.valueOf(uccode), new Casillero(monto, uccode));
     }
 
     public void quitarApuesta(int uccode) {
         this.casilleros.remove(String.valueOf(uccode));
     }
-    
-    public boolean isEmpty () {
+
+    public boolean isEmpty() {
         return casilleros.isEmpty();
     }
-    
-    public int getTotalApostadoByJugador (String idJugador) {
+
+    public int getTotalApostadoByJugador(String idJugador) {
         int total = 0;
-        for (Casillero c: casilleros.values()) {
+        for (Casillero c : casilleros.values()) {
             total += c.getMonto();
         }
         return total;
     }
-    
-       public int getTotalApostado() {
+
+    public int getTotalApostado() {
         int total = 0;
-        for (Casillero c: casilleros.values()) {
+        for (Casillero c : casilleros.values()) {
             total += c.getMonto();
         }
         return total;
     }
-       
-    public int getCantidadApuestas(){
-        int cantidadApuestas=0;
-        for (Casillero c :casilleros.values()){
-            cantidadApuestas+=1;
+
+    public int getCantidadApuestas() {
+        int cantidadApuestas = 0;
+        for (Casillero c : casilleros.values()) {
+            cantidadApuestas += 1;
         }
         return cantidadApuestas;
     }

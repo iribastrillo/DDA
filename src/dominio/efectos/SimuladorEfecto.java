@@ -4,33 +4,51 @@
  */
 package dominio.efectos;
 
+import Exceptions.EfectoException;
 import dominio.Mesa;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  *
  * @author nacho
  */
 public class SimuladorEfecto implements StrategyEfecto {
-    private String nombreEfecto="Simulador";
-     private Mesa mesa= null;
 
+    private String nombreEfecto = "Simulador";
+    private Mesa mesa = null;
 
     public SimuladorEfecto(Mesa m) {
-        this.mesa=m;
+        this.mesa = m;
     }
-    
-       @Override
-    public int obtenerNumero(Mesa m) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+    //• Modo simulador: la bola sortea únicamente entre
+    //los números que tienen Apuesta Directa, más el cero.
+    @Override
+    public int obtenerNumero(Mesa m) throws EfectoException {
+
+        ArrayList<Integer> numerosConApuestaDirecta = m.getNumerosConApuestaDirecta();
+        if (numerosConApuestaDirecta.size() == 0) {
+            //ver si hay que tirar esta excepcion o realizar el sorteo igualmente
+            throw new EfectoException("no hay apuestas en numeros para realizar el efecto simulador");
+        } else {
+            //agregar el cero si no esta
+            if(!numerosConApuestaDirecta.contains(0)){
+                numerosConApuestaDirecta.add(0);
+            }
+            int rnd = new Random().nextInt(numerosConApuestaDirecta.size() - 1);
+            return numerosConApuestaDirecta.get(rnd);
+        }
+
     }
 
     @Override
     public String getNombreEfecto() {
         return this.nombreEfecto;
     }
-    
-        @Override
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -44,7 +62,8 @@ public class SimuladorEfecto implements StrategyEfecto {
         final CompletoEfecto other = (CompletoEfecto) obj;
         return Objects.equals(this.nombreEfecto, other.getNombreEfecto());
     }
-     @Override
+
+    @Override
     public String toString() {
         return "CompletoEfecto{" + "nombreEfecto=" + nombreEfecto + '}';
     }

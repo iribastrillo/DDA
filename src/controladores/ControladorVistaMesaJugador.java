@@ -25,11 +25,16 @@ public class ControladorVistaMesaJugador implements Observador {
     
     private final IVistaMesaJugador vista;
     private final Fachada fachada;
+    private ModeloMesaJugador modelo;
+    private Mesa m;
     
-    public ControladorVistaMesaJugador (IVistaMesaJugador vista) {
+    public ControladorVistaMesaJugador (IVistaMesaJugador vista, ModeloMesaJugador modelo) {
         this.vista = vista;
         this.fachada = Fachada.getInstancia();
-        this.fachada.agregar(this);
+       // this.fachada.agregar(this);
+        this.modelo=modelo;
+        this.m=fachada.getMesa(modelo.getMesa());
+        m.agregar(this);
     }
 
     @Override

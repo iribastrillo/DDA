@@ -20,15 +20,15 @@ public class DatosPrueba {
     public static void iniciar(Fachada fachada) throws UsuarioYaExisteException 
     {
         Jugador[] jugadores = new Jugador[]{
-            new Jugador(1000, "Ignacio Ribas", "IRibas", "iribas"),
-            new Jugador(500, "Agustín Miller", "AMiller", "amiller"),
+            new Jugador(1000, "Ignacio Ribas", "201", "iribas"),
+            new Jugador(500, "Agustín Miller", "202", "amiller"),
             new Jugador(203, "Jugador_3", "203", "ccc"),
             new Jugador(204, "Jugador_4", "204", "ddd"),
             new Jugador(205, "Jugador_5", "205", "eee")
         };
 
         Crupier[] crupieres = new Crupier[]{
-            new Crupier( "Alfonso Paredes", "AParedes", "aparedes"),
+            new Crupier( "Alfonso Paredes", "101", "aparedes"),
             new Crupier( "Croupier_2", "102", "bbb"),
             new Crupier( "Croupier_3", "103", "ccc")
         };

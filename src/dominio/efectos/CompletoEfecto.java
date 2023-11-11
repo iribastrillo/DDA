@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author nacho
  */
-public class CompletoEfecto implements StrategyEfecto {
+public class CompletoEfecto implements StrategyEfecto   {
 
     private String nombreEfecto = "Completo";
 

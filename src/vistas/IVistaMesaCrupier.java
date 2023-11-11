@@ -34,5 +34,11 @@ public interface IVistaMesaCrupier {
     public void cargarTotalApostado(int totalApostado);
     
     public void cargarCantidadDeApuestas(int cantidadDeApuestas);
+
+    public void cerrarVentana();
+
+    public void actualizar();
+
+    public void cargarUltimoNumeroSorteado(String ultimoSorteado);
     
 }

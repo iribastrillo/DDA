@@ -4,6 +4,7 @@
  */
 package dominio.efectos;
 
+import Exceptions.EfectoException;
 import dominio.Mesa;
 
 /**
@@ -11,7 +12,7 @@ import dominio.Mesa;
  * @author nacho
  */
 public interface StrategyEfecto {
-    public int obtenerNumero( Mesa m);
+    public int obtenerNumero( Mesa m) throws EfectoException;
     
     public String getNombreEfecto();
     

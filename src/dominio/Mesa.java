@@ -4,14 +4,17 @@
  */
 package dominio;
 
+import Common.Observable;
+import Exceptions.EfectoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
+import Exceptions.HayApuestasEnRondaActualException;
 import java.util.ArrayList;
 
 /**
  *
  * @author Usuario
  */
-public class Mesa {
+public class Mesa extends Observable {
 
     private static int autoId = 0;
     private int id;
@@ -23,11 +26,14 @@ public class Mesa {
     private ArrayList<EnumTipoApuesta> tiposApuesta;
     private Crupier crupier;
     private Ronda rondaActual;
+    private EnumEstados estado;
+    private int numeroSorteado;
 
     public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier crupier) {
         this.id = autoId;
         this.balance = 0;
         this.numerosSorteados = new ArrayList<>();
+        this.numeroSorteado = -1;//este es a su vez el ultimo numero sorteado
         this.jugadores = new ArrayList<>();
         this.rondas = new ArrayList<>();
         this.bloqueada = false;
@@ -36,7 +42,13 @@ public class Mesa {
         this.rondaActual = new Ronda(this);
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
         this.rondas = new ArrayList<Ronda>();
+        this.estado = EnumEstados.ACTIVA;
         autoId++;
+    }
+
+    public ArrayList<Integer> getNumerosConApuestaDirecta() {
+        return rondaActual.getNumerosConApuestaDirecta();
+
     }
 
     public ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados() {
@@ -86,10 +98,10 @@ public class Mesa {
         return this.rondaActual;
         //return this.rondas.get(this.rondas.size() - 1);
     }
-    
-    public Ronda getRondaAnterior () {
+
+    public Ronda getRondaAnterior() {
         Ronda ronda = null;
-        if (this.rondas.size () > 1) {
+        if (this.rondas.size() > 1) {
             ronda = this.rondas.get(this.rondas.size() - 2);
         }
         return ronda;
@@ -118,7 +130,7 @@ public class Mesa {
     public void apostar(String idJugador, int monto, int uccode) {
         Ronda ronda = this.getRondaActual();
         ronda.apostar(idJugador, monto, uccode);
-         
+
     }
 
     public void quitarApuesta(String idJugador, int uccode) {
@@ -131,13 +143,22 @@ public class Mesa {
     }
 
     public String getUltimoSorteado() {
-        String ultimoSorteado = "1ra ronda.";
-        Ronda ronda = this.getRondaAnterior();
-        if (ronda != null) {
-            ultimoSorteado = String.valueOf(ronda.getNumeroSorteado());
+        String ultimoSorteado = "N/A";
+
+        if (numeroSorteado != -1) {
+            ultimoSorteado = String.valueOf(numeroSorteado);
         }
         return ultimoSorteado;
     }
+//    public String getUltimoSorteado() {
+//        String ultimoSorteado = "1ra ronda.";
+//        Ronda ronda = this.getRondaAnterior();
+//        if (ronda != null) {
+//            ultimoSorteado = String.valueOf(ronda.getNumeroSorteado());
+//        }
+//        return ultimoSorteado;
+//    }
+
     int getUltimaIdRonda() {
         return rondas.size() + 1;
     }
@@ -148,6 +169,50 @@ public class Mesa {
 
     public int getTotalApostado() {
         return rondaActual.getTotalApostado();
+    }
+
+    public void cerrarYPagar() throws HayApuestasEnRondaActualException {
+        //checkear si no hay rondas activas, si hay tirar excepcion
+        if (rondaActual.getCantidadApuestas() > 0) {
+            throw new HayApuestasEnRondaActualException("No se puede cerrar la mesa, necesita ejecutar sorteo");
+        }
+
+        //pagar a jugadores 
+        //cerrar mesas
+    }
+
+    public void lanzarYPagar() throws EfectoException {
+        // generar el numero random desde la ronda
+        switch (estado) {
+            case ACTIVA:
+                // si la mesa esta activa se sortea el numero
+                numeroSorteado = lanzar();
+                avisar(EnumEventos.LANZAR_PAGAR);
+                estado = EnumEstados.BLOQUEADA;
+
+                break;
+            case BLOQUEADA:
+                //Si la mesa esta bloqueada se procede a pagar
+                pagar(numeroSorteado);
+                 avisar(EnumEventos.LANZAR_PAGAR);
+                //mesa queda activa
+                estado = EnumEstados.ACTIVA;
+                break;
+
+        }
+
+    }
+
+    private int lanzar() throws EfectoException {
+        this.numeroSorteado = rondaActual.getNumeroSorteado();
+        return numeroSorteado;
+
+    }
+
+    private void pagar(int numeroSortedo) {
+        this.rondaActual.pagarApuestas(numeroSorteado);
+
+        System.out.println("To be Implemented");
     }
 
 }

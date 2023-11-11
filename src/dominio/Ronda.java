@@ -4,6 +4,7 @@
  */
 package dominio;
 
+import Exceptions.EfectoException;
 import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import dominio.efectos.CompletoEfecto;
 import dominio.efectos.ParcialEfecto;
@@ -20,7 +21,6 @@ import java.util.Map;
  */
 public class Ronda {
 
-
     private int id;
     private float balanceAnterior;
     private float balancePosterior;
@@ -32,10 +32,9 @@ public class Ronda {
     private StrategyEfecto efecto;
     private Mesa mesa;
 
-
     public Ronda(Mesa mesa) {
         this.id = mesa.getUltimaIdRonda();
-        this.totalApostado=0;
+        this.totalApostado = 0;
         this.balanceAnterior = 0;
         this.balancePosterior = 0;
         this.recoleccion = 0;
@@ -43,7 +42,7 @@ public class Ronda {
         this.apuestas = new HashMap<>();
         this.efecto = new CompletoEfecto();
         this.mesa = mesa;
-        
+
     }
 
     public int getId() {
@@ -53,20 +52,19 @@ public class Ronda {
     public float getBalanceAnterior() {
         return balanceAnterior;
     }
-    
-    
+
     public int getTotalApostado() {
         return totalApostado;
     }
 
     public void setTotalApostado() {
-        
-        int totalApostado=0;
-        for (Apuesta apu:apuestas.values()){
-            totalApostado+= apu.getTotalApostado();
-        }        
-        this.totalApostado=totalApostado;
- 
+
+        int totalApostado = 0;
+        for (Apuesta apu : apuestas.values()) {
+            totalApostado += apu.getTotalApostado();
+        }
+        this.totalApostado = totalApostado;
+
     }
 
     public HashMap<String, Apuesta> getApuestas() {
@@ -113,19 +111,16 @@ public class Ronda {
         this.liquidacion = liquidacion;
     }
 
-    public int getNumeroSorteado() {
+    public int getNumeroSorteado() throws EfectoException{
+         this.numeroSorteado= efecto.obtenerNumero(mesa);
         return numeroSorteado;
     }
 
-    public void setNumeroSorteado(int numeroSorteado) {
-        this.numeroSorteado = efecto.obtenerNumero(mesa);
-    }
-
-    public int getCantidadApuestas() {
-        int cantidadApuestas=0;
-        for(Apuesta apu: apuestas.values()){
-            cantidadApuestas+= apu.getCantidadApuestas();
-    }
+      public int getCantidadApuestas() {
+        int cantidadApuestas = 0;
+        for (Apuesta apu : apuestas.values()) {
+            cantidadApuestas += apu.getCantidadApuestas();
+        }
         return cantidadApuestas;
     }
 
@@ -174,9 +169,9 @@ public class Ronda {
     }
 
     public void ActualizarEfecto(String efecto) throws NoSeHaSeleccionadoUnEfectoException {
-        
+
         // Habra que checkear si la ronda esta activa o bloqueada?,  o es instantaneo, cuando se lanza se pasa la ronda activa a la lista de rondas completadas?
-        if (!efecto.isEmpty() || !efecto.isBlank() ) {
+        if (!efecto.isEmpty() || !efecto.isBlank()) {
             StrategyEfecto strategyEfecto = null;
             switch (efecto) {
                 case "COMPLETO":
@@ -195,7 +190,39 @@ public class Ronda {
         }
     }
 
-    
+    public ArrayList<Integer> getNumerosConApuestaDirecta() {
+        ArrayList<Integer> numerosConApuestaDirecta = new ArrayList<Integer>();
+        for (Apuesta apu : apuestas.values()) {
+            //por cada apuesta ir al los casilleros y obtener el numero
+            for (int numero : apu.getNumerosApostados()) {
+                if (numero < 37 && !numerosConApuestaDirecta.contains(numero)) {
+                    numerosConApuestaDirecta.add(numero);
+                }
+            }
 
+        }
+        return numerosConApuestaDirecta;
+    }
+
+    void pagarApuestas(int numeroSorteado) {
+        int factorPagoApuestaDirecta=36;  //36 a 1
+        int factorPagoColores =2; // 2 a 1  1. Restricciones: si un jugador pierde 
+                                  //una apuesta por valor N a los coloresun color, 
+                                  //no podrá volver a apostar un monto superior a N en la siguiente ronda
+        int factorPagoDocena=3; //factor de pago 3 a 1  Restricciones: no se puede 
+                                //apostar a más de una docena por ronda.
+                                
+        if(mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Colores)){
+            /// ver si el color del uuid que selecciono es rojo o negro
+            //ver el color del numero que salio
+            
+        }
+          // apuestas por los casilleros
+         // si la apuesta es directa y el numero sorteado es parte de la apuesta
+         // pagar apuesta directa
+         // si es al color fijarse si los pares o los impares es el color, si sale 0 no gana nadie
+         // agregar logica para las docenas
+         throw new UnsupportedOperationException("FALTA IMPLEMENTAR PAGAR APUESTAS"); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
    
 }

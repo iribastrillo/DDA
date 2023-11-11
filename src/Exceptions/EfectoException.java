@@ -8,11 +8,10 @@ package Exceptions;
  *
  * @author Usuario
  */
-public class UsuarioCrupierTieneSesionActivaException extends Exception{
+public class EfectoException extends Exception {
 
-    public UsuarioCrupierTieneSesionActivaException(String message) {
+    public EfectoException(String message) {
         super(message);
     }
-    
-    
+        
 }

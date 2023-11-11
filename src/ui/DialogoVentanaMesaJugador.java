@@ -30,7 +30,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.selector = new Selector ();
         this.ficha = 1;
         this.modelo = modelo;
-        this.controlador = new ControladorVistaMesaJugador (this);
+        this.controlador = new ControladorVistaMesaJugador (this,modelo);
         this.setup();
     }
     
@@ -121,9 +121,6 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     public void mostrarTiposDeApuesta(ArrayList<EnumTipoApuesta> tiposDeApuesta) {
         for (EnumTipoApuesta enumApuesta : tiposDeApuesta) {
             switch (enumApuesta) {
-                case Paridad: 
-                    displayer.mostrarParidad(r);
-                    break;
                 case Colores:
                     displayer.mostrarColor(r);
                     break;

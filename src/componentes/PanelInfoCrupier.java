@@ -20,23 +20,23 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
     /**
      * Creates new form PanelInfoJugador
      */
-    private List<EscuchadorEfectos> handlers;
+    private List<Escuchador> escuchadores;
 
     public PanelInfoCrupier() {
         initComponents();
-        handlers = new ArrayList();
+        escuchadores = new ArrayList();
     }
 
-    public void agregar(EscuchadorEfectos escuchador) {
-        this.handlers.add(escuchador);
+    public void agregar(Escuchador escuchador) {
+        this.escuchadores.add(escuchador);
     }
 
     public void eliminarEscuchadores() {
-        this.handlers.clear();
+        this.escuchadores.clear();
     }
 
-    public void eliminarEscuchador(EscuchadorEfectos escuchador) {
-        this.handlers.remove(escuchador);
+    public void eliminarEscuchador(Escuchador escuchador) {
+        this.escuchadores.remove(escuchador);
     }
 
     /**
@@ -52,6 +52,10 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
 
     public void setNumeroMesa(int mesa) {
         this.ruleta.setText("Ruleta #" + String.valueOf(mesa));
+    }
+
+    public void cargarUltimoNumeroSorteado(String ultimoNumero) {
+        this.jLbl_UltimoNumeroSorteado.setText(ultimoNumero); 
     }
 
     public void setNumeroRonda(int ronda) {
@@ -75,9 +79,10 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
 
     }
 
-    public interface EscuchadorEfectos {
-
+    public interface Escuchador {
         public void efectoSeleccionado(String efecto);
+        public void cerrarMesa();
+        public void lanzarYPagar();
 
     }
 
@@ -86,10 +91,11 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         ruleta = new javax.swing.JLabel();
         ronda = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        numeroSorteado = new javax.swing.JLabel();
+        jLbl_UltimoNumeroSorteado = new javax.swing.JLabel();
         lbl_totalApostado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLbl_Apuestas_titulo = new javax.swing.JLabel();
@@ -98,6 +104,9 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
         cb_efectos = new javax.swing.JComboBox<>();
         javax.swing.JButton jBtn_LanzarPagar = new javax.swing.JButton();
         jBtn_CerrarMesa = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
 
         ruleta.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ruleta.setText("Ruleta #3");
@@ -105,9 +114,9 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
         ronda.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ronda.setText("Ronda #3");
 
-        numeroSorteado.setBackground(new java.awt.Color(255, 102, 102));
-        numeroSorteado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        numeroSorteado.setText("12");
+        jLbl_UltimoNumeroSorteado.setBackground(new java.awt.Color(255, 102, 102));
+        jLbl_UltimoNumeroSorteado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLbl_UltimoNumeroSorteado.setText("12");
 
         lbl_totalApostado.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lbl_totalApostado.setText("$ 153");
@@ -140,26 +149,31 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setText("Ultimo Numero:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbl_totalApostado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
-                        .addComponent(ronda)
-                        .addGap(82, 82, 82)
-                        .addComponent(ruleta)
-                        .addGap(150, 150, 150)
-                        .addComponent(jBtn_CerrarMesa)
-                        .addGap(98, 98, 98))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbl_totalApostado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                                .addComponent(ronda)
+                                .addGap(82, 82, 82)
+                                .addComponent(ruleta)
+                                .addGap(150, 150, 150)
+                                .addComponent(jBtn_CerrarMesa)
+                                .addGap(98, 98, 98)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jLbl_Apuestas_titulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -171,8 +185,10 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
                         .addGap(36, 36, 36)
                         .addComponent(jBtn_LanzarPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jLabel4)
+                        .addGap(27, 27, 27)
+                        .addComponent(jLbl_UltimoNumeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,21 +205,18 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
                             .addComponent(ronda)
                             .addComponent(lbl_totalApostado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtn_CerrarMesa))
-                        .addGap(18, 18, 18)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(numeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLbl_Apuestas_titulo)
-                            .addComponent(jLbl_cantidadApuestas_Valor)
-                            .addComponent(jLabel3)
-                            .addComponent(cb_efectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtn_LanzarPagar))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLbl_Apuestas_titulo)
+                    .addComponent(jLbl_cantidadApuestas_Valor)
+                    .addComponent(jLabel3)
+                    .addComponent(cb_efectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtn_LanzarPagar)
+                    .addComponent(jLbl_UltimoNumeroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jLbl_Apuestas_titulo.getAccessibleContext().setAccessibleName("jLbl_Apuestas_titulo");
@@ -212,17 +225,23 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
 
     private void jBtn_LanzarPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_LanzarPagarActionPerformed
         // TODO add your handling code here:
+        for(Escuchador e:escuchadores){
+            e.lanzarYPagar();
+        }
     }//GEN-LAST:event_jBtn_LanzarPagarActionPerformed
 
     private void jBtn_CerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CerrarMesaActionPerformed
         // TODO add your handling code here:
+         for (Escuchador e : escuchadores) {
+            e.cerrarMesa();
+        }
     }//GEN-LAST:event_jBtn_CerrarMesaActionPerformed
 
     private void cb_efectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_efectosActionPerformed
         // TODO add your handling code here:
         // Si la ronda esta bloqueada deshabilitar esta op[cion
         String efecto = this.cb_efectos.getSelectedItem().toString();
-        for(EscuchadorEfectos e: handlers){
+        for (Escuchador e : escuchadores) {
             e.efectoSeleccionado(efecto);
         }
 
@@ -234,12 +253,14 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cb_efectos;
     private javax.swing.JButton jBtn_CerrarMesa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLbl_Apuestas_titulo;
+    private javax.swing.JLabel jLbl_UltimoNumeroSorteado;
     private javax.swing.JLabel jLbl_cantidadApuestas_Valor;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_totalApostado;
-    private javax.swing.JLabel numeroSorteado;
     private javax.swing.JLabel ronda;
     private javax.swing.JLabel ruleta;
     // End of variables declaration//GEN-END:variables

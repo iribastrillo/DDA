@@ -14,8 +14,7 @@ import Exceptions.NoPuedeAbandonarMesaException;
 import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.PasswordUsuarioInvalidoException;
-import Exceptions.UsuarioCrupierTieneSesionActivaException;
-import Exceptions.UsuarioNoEncontradoException;
+import Exceptions.ServicioUsuariosException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
@@ -59,30 +58,29 @@ public class Fachada extends Observable {
         return instancia;
     }
 
-    public Usuario loginCroupier(String cedula, String password) throws CedulaUsuarioInvalidaException, PasswordUsuarioInvalidoException, UsuarioCrupierTieneSesionActivaException, UsuarioNoEncontradoException {
+    public Usuario loginCroupier(String cedula, String password) throws CedulaUsuarioInvalidaException, PasswordUsuarioInvalidoException,   ServicioUsuariosException {
 
         Crupier u = new Crupier(cedula, password);
         u.validarUsuarioLogin();
 
         Usuario encontrado = servicioUsuarios.loginCroupier(u);
-        if (encontrado == null) {
-            throw new UsuarioNoEncontradoException("No se ha encontrado usuario para la combinacion de cedula y password");
-        } else {
+   
             return encontrado;
-        }
+    
 
     }
+    
+    public void logoutCrupier(Crupier c) throws ServicioUsuariosException{
+        servicioUsuarios.logoutCrupier(c);
+    }
 
-    public Usuario loginJugador(String cedula, String password) throws PasswordUsuarioInvalidoException, CedulaUsuarioInvalidaException, UsuarioNoEncontradoException {
+    public Usuario loginJugador(String cedula, String password) throws PasswordUsuarioInvalidoException, CedulaUsuarioInvalidaException, ServicioUsuariosException {
         Jugador j = new Jugador(cedula, password);
         j.validarUsuarioLogin();
         Usuario encontrado = servicioUsuarios.loginJugador(j);
-        if (encontrado == null) {
-            throw new UsuarioNoEncontradoException("No se ha encontrado usuario para la combinacion de cedula y password");
-        } else {
+       
             return encontrado;
-        }
-
+    
     }
 
     public void agregar(Jugador jugador) throws UsuarioYaExisteException {

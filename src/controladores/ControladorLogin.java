@@ -6,11 +6,12 @@ package controladores;
 
 import Exceptions.CedulaUsuarioInvalidaException;
 import Exceptions.PasswordUsuarioInvalidoException;
-import Exceptions.UsuarioCrupierTieneSesionActivaException;
-import Exceptions.UsuarioNoEncontradoException;
+import Exceptions.ServicioUsuariosException;
 import Logica.Fachada;
 import vistas.IVistaLogin;
 import dominio.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,10 +28,10 @@ public class ControladorLogin {
 
     }
 
-    public Usuario loginCroupier(String cedula, String password) {
+    public Usuario loginCroupier(String cedula, String password)    {
         try {
             return fachada.loginCroupier(cedula, password);
-        } catch (CedulaUsuarioInvalidaException | PasswordUsuarioInvalidoException | UsuarioCrupierTieneSesionActivaException  | UsuarioNoEncontradoException ex) {
+        } catch (CedulaUsuarioInvalidaException | PasswordUsuarioInvalidoException | ServicioUsuariosException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
         return null;
@@ -39,7 +40,7 @@ public class ControladorLogin {
     public Usuario loginJugador(String cedula, String password) {
         try {
             return fachada.loginJugador(cedula, password);
-        } catch (CedulaUsuarioInvalidaException |PasswordUsuarioInvalidoException |UsuarioNoEncontradoException ex) {
+        } catch (CedulaUsuarioInvalidaException |PasswordUsuarioInvalidoException |ServicioUsuariosException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         } 
         return null;

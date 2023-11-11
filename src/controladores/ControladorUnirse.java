@@ -6,6 +6,7 @@ package controladores;
 
 import Common.Observable;
 import Common.Observador;
+import Exceptions.EfectoException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Logica.Fachada;
@@ -29,7 +30,7 @@ public class ControladorUnirse implements Observador{
         this.fachada.agregar(this);
         this.vista = vista;
     }
-    public void unirse (int idMesa, Jugador jugador) {   
+    public void unirse (int idMesa, Jugador jugador){   
             try {
                 Mesa mesa=fachada.agregar(idMesa,jugador);
                 ModeloMesaJugador modelo = new ModeloMesaJugador (
