@@ -9,6 +9,7 @@ import Exceptions.EfectoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.HayApuestasEnRondaActualException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Mesa extends Observable {
     private Ronda rondaActual;
     private EnumEstados estado;
     private int numeroSorteado;
+    private ArrayList<Integer> numerosRojos;
 
     public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier crupier) {
         this.id = autoId;
@@ -43,6 +45,8 @@ public class Mesa extends Observable {
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
         this.rondas = new ArrayList<Ronda>();
         this.estado = EnumEstados.ACTIVA;
+         this.numerosRojos=new ArrayList<>(
+        Arrays.asList(1,3,5,7,9,12,14,16,18,21,23,25,27,30,32,34,36));
         autoId++;
     }
 
@@ -187,14 +191,14 @@ public class Mesa extends Observable {
             case ACTIVA:
                 // si la mesa esta activa se sortea el numero
                 numeroSorteado = lanzar();
-                avisar(EnumEventos.LANZAR_PAGAR);
+                avisar(EnumEventos.LANZAR);
                 estado = EnumEstados.BLOQUEADA;
 
                 break;
             case BLOQUEADA:
                 //Si la mesa esta bloqueada se procede a pagar
                 pagar(numeroSorteado);
-                 avisar(EnumEventos.LANZAR_PAGAR);
+                avisar(EnumEventos.PAGAR);
                 //mesa queda activa
                 estado = EnumEstados.ACTIVA;
                 break;

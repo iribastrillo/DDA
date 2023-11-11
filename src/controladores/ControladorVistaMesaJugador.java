@@ -40,7 +40,7 @@ public class ControladorVistaMesaJugador implements Observador {
     @Override
     public void actualizar(Observable origen, Object evento) {
         EnumEventos e = (EnumEventos) evento;
-        if (e == EnumEventos.LANZAR_PAGAR) {
+        if (e == EnumEventos.LANZAR) {
             this.vista.refrescar();
             // y algo más ... Como notificar qué número salió y si ganaste o perdiste.
         }
