@@ -6,9 +6,11 @@ package componentes;
 
 import Exceptions.NoPuedeAbandonarMesaException;
 import controladores.ControladorPanelJugador;
+import dominio.modelosVista.ModeloInfoCrupier;
 import dominio.modelosVista.ModeloMesaJugador;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 import vistas.IVistaMesaJugador;
 /**
  *
@@ -38,14 +40,14 @@ public class PanelJugador extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        estadisticas = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         abandonarButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 300));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        estadisticas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -56,7 +58,7 @@ public class PanelJugador extends javax.swing.JPanel {
                 "Ronda", "Total apostado", "Ganado", "Perdido", "Balance"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(estadisticas);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,9 +117,9 @@ public class PanelJugador extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abandonarButton;
+    private javax.swing.JTable estadisticas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 
@@ -132,5 +134,19 @@ public class PanelJugador extends javax.swing.JPanel {
 
     public void setVista(IVistaMesaJugador vista) {
         this.vista = vista;
+    }
+
+    public void actualizar() {
+        this.estadisticas.setModel(new DefaultTableModel(null,new String[]{"Ronda","Total apostado", "Ganado", "Perdido", "Balance"}));
+        DefaultTableModel model = (DefaultTableModel) this.estadisticas.getModel();
+        Object rowData[] = new Object[5];
+        for (ArrayList row : modelo.getEstadisticas().values()) {
+            rowData[0] = row.get(0);
+            rowData[1] = row.get(1);
+            rowData[2] = row.get(2);
+            rowData[3] = row.get(3);
+            rowData[4] = row.get(4);
+            model.addRow(rowData);
+        }
     }
 }

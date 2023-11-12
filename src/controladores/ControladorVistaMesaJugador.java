@@ -13,6 +13,8 @@ import dominio.EnumEventos;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloMesaJugador;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vistas.IVistaMesaJugador;
@@ -26,14 +28,13 @@ public class ControladorVistaMesaJugador implements Observador {
     private final IVistaMesaJugador vista;
     private final Fachada fachada;
     private ModeloMesaJugador modelo;
-    private Mesa mesa;
     
     public ControladorVistaMesaJugador (IVistaMesaJugador vista, ModeloMesaJugador modelo) {
         this.vista = vista;
         this.fachada = Fachada.getInstancia();
         this.modelo = modelo;
-        this.mesa = fachada.getMesa(modelo.getMesa());
-        mesa.agregar(this);
+        fachada.getMesa(modelo.getMesa()).agregar(this);
+        this.setup();
     }
 
     @Override
@@ -44,6 +45,9 @@ public class ControladorVistaMesaJugador implements Observador {
         }
         if (e == EnumEventos.LANZAR) {
             this.vista.bloquear ();
+        }
+        if (e == EnumEventos.PAGAR) {
+            this.vista.pagar ();
         }
     }
 
@@ -63,16 +67,33 @@ public class ControladorVistaMesaJugador implements Observador {
         }
     }
     
+    public void setup () {
+        this.refrescarModelo(modelo);
+    }
+    
     public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
         Jugador jugador = fachada.getJugadorById(modelo.getIdJugador());
         Mesa mesa = fachada.getMesa(modelo.getMesa());
+        HashMap<Integer, ArrayList> filas = new HashMap<>();
         
-        return new ModeloMesaJugador (
+        ArrayList<Integer> fila1 = new ArrayList<> ();
+        fila1.add(1);
+        fila1.add(1);
+        fila1.add(1);
+        fila1.add(1);
+        fila1.add(1);     
+        filas.put(1, fila1);
+   
+        ModeloMesaJugador nuevoModelo = new ModeloMesaJugador (
         jugador.getNombreCompleto(),
         jugador.getCedula(),
         jugador.getSaldo(),
         mesa.getId(),
         mesa.getRondaActual().getId(),
-    mesa.getUltimoSorteado());
+        mesa.getUltimoSorteado());
+        
+        nuevoModelo.setEstadisticas(filas);
+        
+        return nuevoModelo;
     }
 }

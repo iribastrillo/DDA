@@ -22,4 +22,6 @@ public interface IVistaMesaJugador {
     public void mostrarDialogoDeError(String message);
 
     public void bloquear();
+
+    public void pagar();
 }

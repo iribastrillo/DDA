@@ -6,7 +6,6 @@ package controladores;
 
 import Common.Observable;
 import Common.Observador;
-import Exceptions.EfectoException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Logica.Fachada;
@@ -34,12 +33,8 @@ public class ControladorUnirse implements Observador{
             try {
                 Mesa mesa=fachada.agregar(idMesa,jugador);
                 ModeloMesaJugador modelo = new ModeloMesaJugador (
-                jugador.getNombreCompleto(),
                 jugador.getCedula(),
-                jugador.getSaldo(),
-                mesa.getId(),
-                mesa.getRondaActual().getId(),
-                mesa.getUltimoSorteado());
+                mesa.getId());
                 this.vista.mostrarMesaJugador(modelo);
             } catch (MesaNoEncontradaException   |UsuarioYaEstaEnLaMesaException ex) {
                 vista.mostrarDialogoDeError(ex.getMessage());

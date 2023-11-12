@@ -5,6 +5,7 @@
 package dominio.modelosVista;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -18,15 +19,23 @@ public class ModeloMesaJugador {
     private int ronda;
     private String ultimoSorteado;
     private ArrayList<Integer> fichasApostadas;
+    private HashMap<Integer, ArrayList> estadisticas;
 
-    public ModeloMesaJugador(String nombreJugador, String idJugador, float saldo, int mesa, int ronda, String ultimoSorteado) {
+    public ModeloMesaJugador(String nombreJugador, String idJugador, float saldoJugador, int mesa, int ronda, String ultimoSorteado) {
         this.nombreJugador = nombreJugador;
         this.idJugador = idJugador;
-        this.saldoJugador = saldo;
+        this.saldoJugador = saldoJugador;
         this.mesa = mesa;
         this.ronda = ronda;
         this.ultimoSorteado = ultimoSorteado;
-        this.fichasApostadas = new ArrayList ();
+        this.fichasApostadas = new ArrayList <> ();
+        this.estadisticas = new HashMap <> ();
+    }
+    
+    public ModeloMesaJugador (String idJugador, int idMesa) {
+        this.idJugador = idJugador;
+        this.mesa = idMesa;
+        this.fichasApostadas = new ArrayList <> ();
     }
 
     public String getNombreJugador() {
@@ -83,6 +92,14 @@ public class ModeloMesaJugador {
 
     public void setUltimoSorteado(String ultimoSorteado) {
         this.ultimoSorteado = ultimoSorteado;
+    }
+
+    public HashMap<Integer, ArrayList> getEstadisticas() {
+        return estadisticas;
+    }
+
+    public void setEstadisticas(HashMap<Integer, ArrayList> estadisticas) {
+        this.estadisticas = estadisticas;
     }
     
     public int getTotal () {

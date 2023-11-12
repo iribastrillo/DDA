@@ -148,6 +148,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.displayer.ocultarTodo(r);
         this.controlador.mostrarTiposDeApuesta (modelo.getMesa());
         this.panelInfoJugador1.actualizar();
+        this.refrescar();
     }
 
     @Override
@@ -155,6 +156,8 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.modelo = controlador.refrescarModelo (modelo);
         this.panelInfoJugador1.setModelo(modelo);
         this.panelInfoJugador1.actualizar();
+        this.panelEstadisticasJugador.setModelo(modelo);
+        this.panelEstadisticasJugador.actualizar ();
     }
 
     @Override
@@ -173,6 +176,18 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.bloqueada = true;
         this.r.pausar();
     }
+
+    @Override
+    public void pagar() {
+        this.bloqueada = false;
+        this.r.limpiar();
+        this.r.reanudar();
+        this.refrescar();
+    }
+    
+        public void abandonar (){
+        this.dispose();
+    }
     
     private class Selector implements PanelRuleta.Escuchador {
         
@@ -185,9 +200,5 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             jButton2.setText(labelApuesta);
         }
         
-    }
-    
-    public void abandonar (){
-        this.dispose();
-    }
+    }  
 }
