@@ -54,6 +54,11 @@ public class Mesa extends Observable {
         return rondaActual.getNumerosConApuestaDirecta();
 
     }
+    
+      public ArrayList<Integer> getNumerosRojos() {
+        return  this.numerosRojos;
+
+    }
 
     public ArrayList<EnumTipoApuesta> listarTiposApuestaSeleccionados() {
         return this.tiposApuesta;

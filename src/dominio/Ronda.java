@@ -11,6 +11,7 @@ import dominio.efectos.ParcialEfecto;
 import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -111,12 +112,12 @@ public class Ronda {
         this.liquidacion = liquidacion;
     }
 
-    public int getNumeroSorteado() throws EfectoException{
-         this.numeroSorteado= efecto.obtenerNumero(mesa);
+    public int getNumeroSorteado() throws EfectoException {
+        this.numeroSorteado = efecto.obtenerNumero(mesa);
         return numeroSorteado;
     }
 
-      public int getCantidadApuestas() {
+    public int getCantidadApuestas() {
         int cantidadApuestas = 0;
         for (Apuesta apu : apuestas.values()) {
             cantidadApuestas += apu.getCantidadApuestas();
@@ -205,24 +206,96 @@ public class Ronda {
     }
 
     void pagarApuestas(int numeroSorteado) {
-        int factorPagoApuestaDirecta=36;  //36 a 1
-        int factorPagoColores =2; // 2 a 1  1. Restricciones: si un jugador pierde 
-                                  //una apuesta por valor N a los coloresun color, 
-                                  //no podrá volver a apostar un monto superior a N en la siguiente ronda
-        int factorPagoDocena=3; //factor de pago 3 a 1  Restricciones: no se puede 
-                                //apostar a más de una docena por ronda.
-                                
-        if(mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Colores)){
-            /// ver si el color del uuid que selecciono es rojo o negro
+        System.out.println("Ronda: numero sorteado " + String.valueOf(numeroSorteado));
+        int factorPagoApuestaDirecta = 36;  //36 a 1
+        int factorPagoColores = 2; // 2 a 1  1. Restricciones: si un jugador pierde 
+        //una apuesta por valor N a los coloresun color, 
+        //no podrá volver a apostar un monto superior a N en la siguiente ronda
+        int factorPagoDocena = 3; //factor de pago 3 a 1  Restricciones: no se puede 
+        //apostar a más de una docena por ronda.
+        
+        //Strategy TipoApuestaColores
+        if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Colores)) {
+            /// ver si el color del uuid que selecciono esta en la lista de los rojos
             //ver el color del numero que salio
-            
+            if (numeroSorteado != 0) {
+                if (mesa.getNumerosRojos().contains(numeroSorteado)) {
+                    for (Apuesta apu : apuestas.values()) {
+                        if (apu.getNumerosApostados().contains(43))// si aposto al rojo
+                        {
+                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoColores);
+                        }
+                    }
+
+                } else {
+                    // el numero es negro
+                    for (Apuesta apu : apuestas.values()) {
+                        if (apu.getNumerosApostados().contains(44))// si aposto al  negro
+                        {
+                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoColores);
+                        }
+                    }
+
+                }
+
+            }
+
         }
-          // apuestas por los casilleros
-         // si la apuesta es directa y el numero sorteado es parte de la apuesta
-         // pagar apuesta directa
-         // si es al color fijarse si los pares o los impares es el color, si sale 0 no gana nadie
-         // agregar logica para las docenas
-         throw new UnsupportedOperationException("FALTA IMPLEMENTAR PAGAR APUESTAS"); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //Strategy TipoApuestaDocenas
+        if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Docenas)) {
+
+            Collection<Apuesta> apus = apuestas.values();
+
+            ArrayList<Integer> numeros = new ArrayList();
+            for (Apuesta apu : apus) {
+                // Preguntarle a la apuesta si tiene el numero en su lista de numeros
+                numeros = apu.getNumerosApostados();
+                if (numeroSorteado / 12 <= 1) {
+                    //salio en la primera docena
+                    for (Integer n : numeros) {
+                        if (n / 12 <= 1) {
+                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoDocena);
+                        }
+                    }
+                } else if ((numeroSorteado / 12 > 1) && (numeroSorteado / 12 <= 2)) {
+                    //salio la segunda docena
+                    for (Integer n : numeros) {
+                        if ((n / 12 > 1) && (n / 12 <= 2)) {
+                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoDocena);
+                        }
+                    }
+                } else {
+                    //salio la tercera docena
+                    for (Integer n : numeros) {
+                        if (n / 12 > 2) {
+                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoDocena);
+                        }
+                    }
+                }
+            }
+        }
+        //siempre se checkea si el numero sorteado esta en los numeros apostados
+        //Strategy TipoApuestaDirecta
+        Collection<Apuesta> apus = apuestas.values();
+
+        ArrayList<Integer> numeros = new ArrayList();
+        for (Apuesta apu : apus) {
+            numeros = apu.getNumerosApostados();
+
+            for (Integer n : numeros) {
+                if (n == numeroSorteado) {
+                    mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoApuestaDirecta);
+                }
+
+            }
+        }
+
+        // apuestas por los casilleros
+        // si la apuesta es directa y el numero sorteado es parte de la apuesta
+        // pagar apuesta directa
+        // si es al color fijarse si los pares o los impares es el color, si sale 0 no gana nadie
+        // agregar logica para las docenas
+        System.out.println("TERMINO PAGAR A JUGADOR EN RONDA");
     }
-   
+
 }
