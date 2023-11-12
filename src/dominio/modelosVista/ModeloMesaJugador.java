@@ -20,6 +20,7 @@ public class ModeloMesaJugador {
     private String ultimoSorteado;
     private ArrayList<Integer> fichasApostadas;
     private HashMap<Integer, ArrayList> estadisticas;
+    private HashMap<Integer, ArrayList> ocurrencias;
 
     public ModeloMesaJugador(String nombreJugador, String idJugador, float saldoJugador, int mesa, int ronda, String ultimoSorteado) {
         this.nombreJugador = nombreJugador;
@@ -30,6 +31,7 @@ public class ModeloMesaJugador {
         this.ultimoSorteado = ultimoSorteado;
         this.fichasApostadas = new ArrayList <> ();
         this.estadisticas = new HashMap <> ();
+        this.ocurrencias = new HashMap <> ();
     }
     
     public ModeloMesaJugador (String idJugador, int idMesa) {
@@ -100,6 +102,14 @@ public class ModeloMesaJugador {
 
     public void setEstadisticas(HashMap<Integer, ArrayList> estadisticas) {
         this.estadisticas = estadisticas;
+    }
+
+    public HashMap<Integer, ArrayList> getOcurrencias() {
+        return ocurrencias;
+    }
+
+    public void setOcurrencias(HashMap<Integer, ArrayList> ocurrencias) {
+        this.ocurrencias = ocurrencias;
     }
     
     public int getTotal () {

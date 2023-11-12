@@ -146,4 +146,31 @@ public class Fachada extends Observable {
         Ronda ronda =m.getRondaActual();
         ronda.ActualizarEfecto(efecto);
     }
+
+    public HashMap<Integer, ArrayList> getEstadisticasById(String idJugador) {
+        // Funcionalidad limitada con un mock de datos para desarrollar.
+        // Luego el dato viene de algun servicio.
+        HashMap<Integer, ArrayList> filas = new HashMap <> ();
+        ArrayList<Integer> fila1 = new ArrayList<> ();
+        fila1.add(1);
+        fila1.add(300);
+        fila1.add(300);
+        fila1.add(0);
+        fila1.add(300);     
+        filas.put(1, fila1);
+        filas.put(2, fila1);
+        return filas;
+    }
+
+    public HashMap<Integer, ArrayList> getOcurrenciasById(int mesa) {
+        // Funcionalidad limitada con un mock de datos para desarrollar.
+        // Luego el dato viene de algun servicio.
+        HashMap<Integer, ArrayList> ocurrencias = new HashMap <> ();
+        ArrayList<Integer> fila1 = new ArrayList<> ();
+        fila1.add(21);
+        fila1.add(50);  
+        ocurrencias.put(1, fila1);
+        ocurrencias.put(2, fila1);
+        return ocurrencias;
+    }
 }
