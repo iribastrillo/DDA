@@ -162,7 +162,7 @@ public class Fachada extends Observable {
         return filas;
     }
 
-    public HashMap<Integer, ArrayList> getOcurrenciasById(int mesa) {
+    public HashMap<Integer, ArrayList> getOcurrenciasById(int idMesa) {
         // Funcionalidad limitada con un mock de datos para desarrollar.
         // Luego el dato viene de algun servicio.
         HashMap<Integer, ArrayList> ocurrencias = new HashMap <> ();

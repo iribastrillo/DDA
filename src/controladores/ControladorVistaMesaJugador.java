@@ -23,7 +23,7 @@ import vistas.IVistaMesaJugador;
  *
  * @author nacho
  */
-public class ControladorVistaMesaJugador implements Observador {
+public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchador {
     
     private final IVistaMesaJugador vista;
     private final Fachada fachada;
@@ -34,6 +34,7 @@ public class ControladorVistaMesaJugador implements Observador {
         this.fachada = Fachada.getInstancia();
         this.modelo = modelo;
         fachada.getMesa(modelo.getMesa()).agregar(this);
+        fachada.getJugadorById(modelo.getIdJugador()).addEventListener (this);
         this.setup();
     }
 
@@ -89,5 +90,10 @@ public class ControladorVistaMesaJugador implements Observador {
         nuevoModelo.setOcurrencias (ocurrencias);
         
         return nuevoModelo;
+    }
+
+    @Override
+    public void saldoDescontado() {
+        this.vista.refrescar();
     }
 }

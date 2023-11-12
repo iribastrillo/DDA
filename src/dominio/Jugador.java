@@ -4,11 +4,16 @@
  */
 package dominio;
 
+import controladores.ControladorVistaMesaJugador;
+import java.util.ArrayList;
+
 /**
  *
  * @author Usuario
  */
 public class Jugador extends Usuario {
+    
+    private ArrayList<Escuchador> escuchadores;
 
     public float getSaldo() {
         return saldo;
@@ -24,6 +29,7 @@ public class Jugador extends Usuario {
     public Jugador(float saldo, String nombreCompleto, String cedula, String password) {
         super(nombreCompleto, cedula, password);
         this.saldo = saldo;
+        this.escuchadores = new ArrayList <> ();
     }
      public Jugador(  String cedula, String password) {
         super(  cedula, password);
@@ -32,9 +38,24 @@ public class Jugador extends Usuario {
 
     public void descontar(int monto) {
         this.saldo -= monto;
+        this.triggerSaldoDescontado();
+    }
+    
+    public void triggerSaldoDescontado () {
+        for (Escuchador e: escuchadores) {
+            e.saldoDescontado();
+        }
     }
 
     public void acreditar(int monto) {
         this.saldo += monto;
+    }
+
+    public void addEventListener(Escuchador escuchador) {
+        escuchadores.add(escuchador);
+    }
+    
+    public interface Escuchador {
+        public void saldoDescontado ();
     }
 }
