@@ -39,8 +39,11 @@ public class ControladorVistaMesaJugador implements Observador {
     @Override
     public void actualizar(Observable origen, Object evento) {
         EnumEventos e = (EnumEventos) evento;
-        if (e == EnumEventos.LANZAR || e == EnumEventos.APUESTA_MODIFICADA) {
+        if (e == EnumEventos.APUESTA_MODIFICADA) {
             this.vista.refrescar();
+        }
+        if (e == EnumEventos.LANZAR) {
+            this.vista.bloquear ();
         }
     }
 
