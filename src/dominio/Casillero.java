@@ -4,9 +4,6 @@
  */
 package dominio;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  *
  * @author nacho
@@ -34,13 +31,6 @@ public abstract class Casillero {
         this.factorDePago = 36;
     }
     
-
-    
-//    public boolean Color(){
-//        //Falso: rojo, Verdadero: negro
-//        ret
-//    }
-  
     public int getMonto() {
         return monto;
     }
@@ -57,4 +47,7 @@ public abstract class Casillero {
         this.uccode = uccode;
     }
     
+    public void agregarMonto (int monto) {
+        this.monto += monto;
+    } 
 }

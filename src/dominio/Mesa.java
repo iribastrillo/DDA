@@ -140,13 +140,21 @@ public class Mesa extends Observable {
         Ronda ronda = this.getRondaActual();
         Casillero c = (uccode > 36) ? new CasilleroNoNumerico(monto, uccode) : new CasilleroNumerico(monto, uccode);
 
+        if (ronda.yaAposto(idJugador, uccode)) {
+            ronda.agregarFichas(idJugador, monto, uccode);
+        } else {
+            ronda.apostar(idJugador, c);
+            avisar(EnumEventos.APUESTA_CREADA);
+        }
+
         ronda.apostar(idJugador, c);
 
     }
 
-    public void quitarApuesta(String idJugador, int uccode) {
+    public void agregarFichas(String idJugador, int monto, int uccode) {
         Ronda ronda = this.getRondaActual();
-        ronda.quitarApuesta(idJugador, uccode);
+        ronda.agregarFichas(idJugador, monto, uccode);
+        avisar(EnumEventos.APUESTA_MODIFICADA);
     }
 
     public boolean puedeAbandonar(String idJugador) {
@@ -161,14 +169,6 @@ public class Mesa extends Observable {
         }
         return ultimoSorteado;
     }
-//    public String getUltimoSorteado() {
-//        String ultimoSorteado = "1ra ronda.";
-//        Ronda ronda = this.getRondaAnterior();
-//        if (ronda != null) {
-//            ultimoSorteado = String.valueOf(ronda.getNumeroSorteado());
-//        }
-//        return ultimoSorteado;
-//    }
 
     int getUltimaIdRonda() {
         return rondas.size() + 1;
@@ -182,14 +182,18 @@ public class Mesa extends Observable {
         return rondaActual.getTotalApostado();
     }
 
-    public void cerrarYPagar() throws HayApuestasEnRondaActualException {
+    public void cerrarYPagar() throws HayApuestasEnRondaActualException, EfectoException {
         //checkear si no hay rondas activas, si hay tirar excepcion
-        if (rondaActual.getCantidadApuestas() > 0) {
-            throw new HayApuestasEnRondaActualException("No se puede cerrar la mesa, necesita ejecutar sorteo");
+        if (estado.equals(EnumEstados.BLOQUEADA)) {
+            //pagar a jugadores 
+            lanzarYPagar();
+            avisar(EnumEventos.CERRAR_MESA);
+        } else {
+            throw new HayApuestasEnRondaActualException("No se puede cerrar la mesa, necesita lanzar y pagar");
+
         }
 
-        //pagar a jugadores 
-        //cerrar mesas
+        //cerrar mesas Y Ventanas, lanzar el evento cerrar mesa
     }
 
     public void lanzarYPagar() throws EfectoException {
@@ -229,6 +233,10 @@ public class Mesa extends Observable {
         this.rondas.add(this.rondaActual);
         this.rondaActual = new Ronda(this);
 
+    }
+
+    public boolean yaAposto(String idJugador, int uccode) {
+        return this.getRondaActual().yaAposto(idJugador, uccode);
     }
 
 }

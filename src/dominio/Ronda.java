@@ -13,9 +13,6 @@ import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
  *
  * @author nacho
@@ -59,13 +56,11 @@ public class Ronda {
     }
 
     public void setTotalApostado() {
-
         int totalApostado = 0;
-        for (Apuesta apu : apuestas.values()) {
-            totalApostado += apu.getTotalApostado();
+        for (Apuesta a : apuestas.values()) {
+            totalApostado += a.getTotalApostado();
         }
         this.totalApostado = totalApostado;
-
     }
 
     public HashMap<String, Apuesta> getApuestas() {
@@ -135,9 +130,13 @@ public class Ronda {
             apuesta = new Apuesta(idJugador);
             apuesta.apostar(casillero);
             apuestas.put(idJugador, apuesta);
-            // ver de cambiar esto a un parametro que se va sumando
-            setTotalApostado();
         }
+        setTotalApostado();
+    }
+    
+    public void agregarFichas (String idJugador, int monto, int uccode) {
+        Apuesta apuesta = this.getApuesta(idJugador);
+        apuesta.agregarFichas (monto, uccode);
     }
 
     private Apuesta getApuesta(String idJugador) {
@@ -146,14 +145,6 @@ public class Ronda {
             apuesta = apuestas.get(idJugador);
         }
         return apuesta;
-    }
-
-    public void quitarApuesta(String idJugador, int uccode) {
-        Apuesta apuesta = this.getApuesta(idJugador);
-        apuesta.quitarApuesta(uccode);
-        if (apuesta.isEmpty()) {
-            apuestas.remove(idJugador);
-        }
     }
 
     public int reembolsarTodo(int idMesa, String idJugador) {
@@ -228,7 +219,7 @@ public class Ronda {
                     //pago por si tambiensi  acierto al color 
                     Casillero casilleroColor = apu.getCasilleros().get((casilleroNumericoSorteado.getColor().equals("Rojo")) ? String.valueOf(43) : String.valueOf(44));
                     if (casilleroColor != null) {
-                        mesa.getJugador(apu.getIdJugador()).acreditar(casilleroColor.monto * casilleroColor.factorDePago);
+                        mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostadoEnCasillero(casilleroColor) * casilleroColor.factorDePago);
                         System.out.println("El jugador emboco al color, pagando...");
                     }
                 }
@@ -238,9 +229,9 @@ public class Ronda {
             // me fijo en las apuestas si apostaron a alguna docena perteneciente a la docena del numero que salio,
             // es decir si el numero que salio pertenece a la 1ra docena y hay una apuesta sobre el casillero 1ra docena ahi se paga
             if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Docenas)) {
-                CasilleroNoNumerico casilleroNoNumerico = (CasilleroNoNumerico) apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.getDocena()));
-                if (casilleroNoNumerico != null) {
-                    mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * casilleroNoNumerico.factorDePago);
+                Casillero casilleroDocena =   apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.getDocena()));
+                if (casilleroDocena != null) {
+                    mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostadoEnCasillero(casilleroDocena) * casilleroDocena.factorDePago);
                     System.out.println("El jugador emboco a la docena, pagando...");
                 }
             }
@@ -251,4 +242,16 @@ public class Ronda {
                 "TERMINO PAGAR A JUGADOR EN RONDA");
     }
 
+    public boolean yaAposto(String idJugador, int uccode) {
+        boolean yaAposto = false;
+        Apuesta apuesta = this.apuestas.get(id);
+        if (apuesta != null) {
+            if (apuesta.getCasillero(uccode) != null) {
+                yaAposto = true;
+            }
+        }
+
+        return yaAposto;
+    }
+   
 }

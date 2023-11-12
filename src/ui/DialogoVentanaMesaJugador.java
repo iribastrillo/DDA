@@ -20,6 +20,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private final Selector selector;
     private Integer ficha;
     private ModeloMesaJugador modelo;
+    private boolean bloqueada;
     private final IDisplayerStrategy displayer = new DisplayerStrategy ();
 
     /**
@@ -30,6 +31,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.selector = new Selector ();
         this.ficha = 1;
         this.modelo = modelo;
+        this.bloqueada = false;
         this.controlador = new ControladorVistaMesaJugador (this,modelo);
         this.setup();
     }
@@ -102,11 +104,16 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int n = selector.universalCellCode;
-        int monto = panelInfoJugador1.getModelo().getTotal();
-        String idJugador = modelo.getIdJugador();
-        r.setApuesta(n, monto);
-        controlador.apostar (n, monto, modelo.getMesa(), idJugador);
+        if (!this.bloqueada) {
+            int n = selector.universalCellCode;
+            int monto = panelInfoJugador1.getModelo().getTotal();
+            int montoAnterior = r.getApuesta(n);
+            String idJugador = modelo.getIdJugador();
+            r.setApuesta(n, montoAnterior + monto);
+            controlador.apostar (n, monto, modelo.getMesa(), idJugador);
+        } else {
+            this.mostrarDialogoDeError("La mesa está bloqueada para apuestas.");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -141,6 +148,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.displayer.ocultarTodo(r);
         this.controlador.mostrarTiposDeApuesta (modelo.getMesa());
         this.panelInfoJugador1.actualizar();
+        this.refrescar();
     }
 
     @Override
@@ -148,6 +156,8 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.modelo = controlador.refrescarModelo (modelo);
         this.panelInfoJugador1.setModelo(modelo);
         this.panelInfoJugador1.actualizar();
+        this.panelEstadisticasJugador.setModelo(modelo);
+        this.panelEstadisticasJugador.actualizar ();
     }
 
     @Override
@@ -161,6 +171,24 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         this.ficha = ficha;
     }
 
+    @Override
+    public void bloquear() {
+        this.bloqueada = true;
+        this.r.pausar();
+    }
+
+    @Override
+    public void pagar() {
+        this.bloqueada = false;
+        this.r.limpiar();
+        this.r.reanudar();
+        this.refrescar();
+    }
+    
+        public void abandonar (){
+        this.dispose();
+    }
+    
     private class Selector implements PanelRuleta.Escuchador {
         
         int universalCellCode = 0;
@@ -172,10 +200,5 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             jButton2.setText(labelApuesta);
         }
         
-    }
-    
-    public void abandonar (){
-        this.dispose();
-    }
-
+    }  
 }

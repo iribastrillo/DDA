@@ -6,9 +6,11 @@ package componentes;
 
 import Exceptions.NoPuedeAbandonarMesaException;
 import controladores.ControladorPanelJugador;
+import dominio.modelosVista.ModeloInfoCrupier;
 import dominio.modelosVista.ModeloMesaJugador;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 import vistas.IVistaMesaJugador;
 /**
  *
@@ -38,14 +40,14 @@ public class PanelJugador extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        estadisticas = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        ocurrencias = new javax.swing.JTable();
         abandonarButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 300));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        estadisticas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -56,9 +58,9 @@ public class PanelJugador extends javax.swing.JPanel {
                 "Ronda", "Total apostado", "Ganado", "Perdido", "Balance"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(estadisticas);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        ocurrencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -69,7 +71,7 @@ public class PanelJugador extends javax.swing.JPanel {
                 "Valor", "Ocurrencia"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(ocurrencias);
 
         abandonarButton.setText("Abandonar");
         abandonarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +101,7 @@ public class PanelJugador extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(abandonarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -115,10 +117,10 @@ public class PanelJugador extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abandonarButton;
+    private javax.swing.JTable estadisticas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable ocurrencias;
     // End of variables declaration//GEN-END:variables
 
 
@@ -132,5 +134,29 @@ public class PanelJugador extends javax.swing.JPanel {
 
     public void setVista(IVistaMesaJugador vista) {
         this.vista = vista;
+    }
+
+    public void actualizar() {
+        this.estadisticas.setModel(new DefaultTableModel(null,new String[]{"Ronda","Total apostado", "Ganado", "Perdido", "Balance"}));
+        DefaultTableModel model = (DefaultTableModel) this.estadisticas.getModel();
+        Object rowData[] = new Object[5];
+        for (ArrayList row1 : modelo.getEstadisticas().values()) {
+            rowData[0] = row1.get(0);
+            rowData[1] = row1.get(1);
+            rowData[2] = row1.get(2);
+            rowData[3] = row1.get(3);
+            rowData[4] = row1.get(4);
+            model.addRow(rowData);
+        }
+        
+        this.ocurrencias.setModel(new DefaultTableModel(null,new String[]{"Valor","Ocurrencia"}));
+        model = (DefaultTableModel) this.ocurrencias.getModel();
+        Object row[] = new Object[2];
+        for (ArrayList row2 : modelo.getOcurrencias().values()) {
+            row[0] = row2.get(0);
+            row[1] = row2.get(1);
+            model.addRow(row);
+        }
+        
     }
 }

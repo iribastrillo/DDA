@@ -136,12 +136,6 @@ public class Fachada extends Observable {
 
     public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException {
         servicioMesas.apostar (n, monto, mesa,  idJugador);
-        avisar (EnumEventos.APUESTA_CREADA);
-    }
-    
-    public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
-        servicioMesas.quitarApuesta (uucod, monto, mesa, idJugador);
-        avisar (EnumEventos.APUESTA_ELIMINADA);
     }
 
     public Jugador getJugadorById(String cedula) {
@@ -151,5 +145,32 @@ public class Fachada extends Observable {
     public void ActualizarEfectoEnRonda(String efecto, Mesa m) throws NoSeHaSeleccionadoUnEfectoException {
         Ronda ronda =m.getRondaActual();
         ronda.ActualizarEfecto(efecto);
+    }
+
+    public HashMap<Integer, ArrayList> getEstadisticasById(String idJugador) {
+        // Funcionalidad limitada con un mock de datos para desarrollar.
+        // Luego el dato viene de algun servicio.
+        HashMap<Integer, ArrayList> filas = new HashMap <> ();
+        ArrayList<Integer> fila1 = new ArrayList<> ();
+        fila1.add(1);
+        fila1.add(300);
+        fila1.add(300);
+        fila1.add(0);
+        fila1.add(300);     
+        filas.put(1, fila1);
+        filas.put(2, fila1);
+        return filas;
+    }
+
+    public HashMap<Integer, ArrayList> getOcurrenciasById(int idMesa) {
+        // Funcionalidad limitada con un mock de datos para desarrollar.
+        // Luego el dato viene de algun servicio.
+        HashMap<Integer, ArrayList> ocurrencias = new HashMap <> ();
+        ArrayList<Integer> fila1 = new ArrayList<> ();
+        fila1.add(21);
+        fila1.add(50);  
+        ocurrencias.put(1, fila1);
+        ocurrencias.put(2, fila1);
+        return ocurrencias;
     }
 }

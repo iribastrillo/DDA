@@ -12,17 +12,18 @@ public class CasilleroNoNumerico extends Casillero {
 
     public CasilleroNoNumerico(int monto, int uccode) {
         super(monto, uccode);
+        setFactorDePago();
     }
 
     @Override
     public void setFactorDePago() {
-        switch (uccode) {
-            case 43 | 44: // color rojo o negro
-                super.factorDePago = 2; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-                break;
-            case 40|41|42: //docenas
-                super.factorDePago=3;
 
+        if (uccode >= 40 && uccode <= 42) {
+            // Esto es docenas
+            super.factorDePago = 3;
+        } else if (uccode > 42 && uccode <= 44) {
+            // Esto es color
+            super.factorDePago = 2;
         }
     }
 

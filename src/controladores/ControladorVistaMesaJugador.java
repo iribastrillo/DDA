@@ -13,6 +13,8 @@ import dominio.EnumEventos;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloMesaJugador;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vistas.IVistaMesaJugador;
@@ -21,28 +23,32 @@ import vistas.IVistaMesaJugador;
  *
  * @author nacho
  */
-public class ControladorVistaMesaJugador implements Observador {
+public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchador {
     
     private final IVistaMesaJugador vista;
     private final Fachada fachada;
     private ModeloMesaJugador modelo;
-    private Mesa m;
     
     public ControladorVistaMesaJugador (IVistaMesaJugador vista, ModeloMesaJugador modelo) {
         this.vista = vista;
         this.fachada = Fachada.getInstancia();
-       // this.fachada.agregar(this);
-        this.modelo=modelo;
-        this.m=fachada.getMesa(modelo.getMesa());
-        m.agregar(this);
+        this.modelo = modelo;
+        fachada.getMesa(modelo.getMesa()).agregar(this);
+        fachada.getJugadorById(modelo.getIdJugador()).addEventListener (this);
+        this.setup();
     }
 
     @Override
     public void actualizar(Observable origen, Object evento) {
         EnumEventos e = (EnumEventos) evento;
-        if (e == EnumEventos.LANZAR) {
+        if (e == EnumEventos.APUESTA_MODIFICADA) {
             this.vista.refrescar();
-            // y algo más ... Como notificar qué número salió y si ganaste o perdiste.
+        }
+        if (e == EnumEventos.LANZAR) {
+            this.vista.bloquear ();
+        }
+        if (e == EnumEventos.PAGAR) {
+            this.vista.pagar ();
         }
     }
 
@@ -61,26 +67,33 @@ public class ControladorVistaMesaJugador implements Observador {
             vista.mostrarDialogoDeError("El monto no puede ser igual a cero.");
         }
     }
-
-    public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
-        fachada.quitarApuesta (uucod, monto, mesa, idJugador);
-        vista.refrescar ();
+    
+    public void setup () {
+        this.refrescarModelo(modelo);
     }
     
-    public void modificarApuesta(int uccode, int monto, int mesa, String idJugador) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
         Jugador jugador = fachada.getJugadorById(modelo.getIdJugador());
         Mesa mesa = fachada.getMesa(modelo.getMesa());
+        HashMap<Integer, ArrayList> filas = fachada.getEstadisticasById (modelo.getIdJugador());
+        HashMap<Integer, ArrayList> ocurrencias = fachada.getOcurrenciasById (modelo.getMesa());
         
-        return new ModeloMesaJugador (
+        ModeloMesaJugador nuevoModelo = new ModeloMesaJugador (
         jugador.getNombreCompleto(),
         jugador.getCedula(),
         jugador.getSaldo(),
         mesa.getId(),
         mesa.getRondaActual().getId(),
-    mesa.getUltimoSorteado());
+        mesa.getUltimoSorteado());
+        
+        nuevoModelo.setEstadisticas(filas);
+        nuevoModelo.setOcurrencias (ocurrencias);
+        
+        return nuevoModelo;
+    }
+
+    @Override
+    public void saldoDescontado() {
+        this.vista.refrescar();
     }
 }

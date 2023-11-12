@@ -26,9 +26,7 @@ public class ServicioMesas {
             String mensaje=String.format("Mesa con id: %s No encontrada", id);
             throw new MesaNoEncontradaException(mensaje);
         }        
-        mesa.agregarJugador(jugador);
-        
-        //Si no hay excepciones, retorno true.
+        mesa.agregarJugador(jugador);        
         return mesa;
      }
 
@@ -95,20 +93,22 @@ public class ServicioMesas {
             throw new MontoIgualACeroException ("El monto no puede ser cero.");
         }
         
-        mesa.apostar (idJugador, monto, uccode);
+        if (mesa.yaAposto (idJugador, uccode)) {
+            mesa.agregarFichas(idJugador, monto, uccode);
+        } else {
+            mesa.apostar (idJugador, monto, uccode);
+        }
         jugador.descontar (monto);
-    }
-    
-    public void quitarApuesta(int uccode, int monto, int idMesa, String idJugador) {
-        Mesa mesa = this.getMesa(idMesa);
-        Jugador jugador = mesa.getJugador (idJugador);
-        mesa.quitarApuesta (idJugador, uccode);
-        jugador.acreditar (monto);
     }
     
     public void reembolsarTodo (int idMesa, String idJugador) {
         Mesa mesa = this.getMesa(idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
         jugador.acreditar(mesa.getRondaActual().reembolsarTodo(idMesa, idJugador));
+    }
+
+    public void agregarFichas(String idJugador, int monto, int uccode, int idMesa) {
+        Mesa mesa = this.getMesa(idMesa);
+        mesa.agregarFichas(idJugador, monto, uccode);
     }
 }

@@ -142,10 +142,10 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
             m.cerrarYPagar();
             fachada.logoutCrupier(m.getCrupier());
             vista.cerrarVentana();
-        } catch (ServicioUsuariosException | HayApuestasEnRondaActualException ex) {
+        } catch (ServicioUsuariosException | HayApuestasEnRondaActualException |EfectoException ex) {
             Logger.getLogger(ControladorVistaMesaCrupier.class.getName()).log(Level.SEVERE, null, ex);
             vista.mostrarMensajeError(ex.getMessage());
-        }
+        } 
     }
 
     @Override
