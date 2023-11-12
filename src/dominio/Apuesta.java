@@ -45,8 +45,8 @@ public class Apuesta {
         this.casilleros = casilleros;
     }
 
-    public void apostar(int monto, int uccode) {
-        this.casilleros.put(String.valueOf(uccode), new Casillero(monto, uccode));
+    public void apostar(Casillero casillero) {       
+        this.casilleros.put(String.valueOf(casillero.uccode), casillero);
     }
 
     public void quitarApuesta(int uccode) {

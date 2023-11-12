@@ -125,15 +125,15 @@ public class Ronda {
         return cantidadApuestas;
     }
 
-    public void apostar(String idJugador, int monto, int uccode) {
+    public void apostar(String idJugador, Casillero casillero) {
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
-            apuesta.apostar(monto, uccode);
+            apuesta.apostar(casillero);
             // ver de cambiar esto a un parametro que se va sumando
             setTotalApostado();
         } else {
             apuesta = new Apuesta(idJugador);
-            apuesta.apostar(monto, uccode);
+            apuesta.apostar(casillero);
             apuestas.put(idJugador, apuesta);
             // ver de cambiar esto a un parametro que se va sumando
             setTotalApostado();
@@ -205,97 +205,50 @@ public class Ronda {
         return numerosConApuestaDirecta;
     }
 
-    void pagarApuestas(int numeroSorteado) {
-        System.out.println("Ronda: numero sorteado " + String.valueOf(numeroSorteado));
-        int factorPagoApuestaDirecta = 36;  //36 a 1
-        int factorPagoColores = 2; // 2 a 1  1. Restricciones: si un jugador pierde 
-        //una apuesta por valor N a los coloresun color, 
-        //no podrá volver a apostar un monto superior a N en la siguiente ronda
-        int factorPagoDocena = 3; //factor de pago 3 a 1  Restricciones: no se puede 
-        //apostar a más de una docena por ronda.
-        
-        //Strategy TipoApuestaColores
-        if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Colores)) {
-            /// ver si el color del uuid que selecciono esta en la lista de los rojos
-            //ver el color del numero que salio
-            if (numeroSorteado != 0) {
-                if (mesa.getNumerosRojos().contains(numeroSorteado)) {
-                    for (Apuesta apu : apuestas.values()) {
-                        if (apu.getNumerosApostados().contains(43))// si aposto al rojo
-                        {
-                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoColores);
-                        }
-                    }
+    void pagarApuestas(Casillero casilleroSorteado) {
 
-                } else {
-                    // el numero es negro
-                    for (Apuesta apu : apuestas.values()) {
-                        if (apu.getNumerosApostados().contains(44))// si aposto al  negro
-                        {
-                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoColores);
-                        }
-                    }
+        CasilleroNumerico casilleroNumericoSorteado = (CasilleroNumerico) casilleroSorteado;
+        for (Apuesta apu : apuestas.values()) {
+            // checkeo si el jugador le emboco al numero directo
+            Casillero casilleroGanador = apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.uccode));
+            if (casilleroGanador != null) {
+                // pago por acierto de numero
+                mesa.getJugador(apu.getIdJugador()).acreditar(casilleroGanador.monto * casilleroGanador.factorDePago);
+                System.out.println("El Jugador le emboco al numero, apuesta directa...");
+            }
 
+            // Si el casillero sorteado no es el 0, procedemos a checkear
+            // de que color o docena es, dependiendo de que tipos de apuestas estan activas en la mesa
+            if (casilleroNumericoSorteado.uccode != 0) {
+
+                //Si esta habilitado el tipo de apuesta por colores
+                /// ver si el color del uuid que selecciono esta en la lista de los rojos
+                //ver el color del numero que salio
+                if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Colores)) {
+                    //pago por si tambiensi  acierto al color 
+                    Casillero casilleroColor = apu.getCasilleros().get((casilleroNumericoSorteado.getColor().equals("Rojo")) ? String.valueOf(43) : String.valueOf(44));
+                    if (casilleroColor != null) {
+                        mesa.getJugador(apu.getIdJugador()).acreditar(casilleroColor.monto * casilleroColor.factorDePago);
+                        System.out.println("El jugador emboco al color, pagando...");
+                    }
                 }
 
             }
-
-        }
-        //Strategy TipoApuestaDocenas
-        if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Docenas)) {
-
-            Collection<Apuesta> apus = apuestas.values();
-
-            ArrayList<Integer> numeros = new ArrayList();
-            for (Apuesta apu : apus) {
-                // Preguntarle a la apuesta si tiene el numero en su lista de numeros
-                numeros = apu.getNumerosApostados();
-                if (numeroSorteado / 12 <= 1) {
-                    //salio en la primera docena
-                    for (Integer n : numeros) {
-                        if (n / 12 <= 1) {
-                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoDocena);
-                        }
-                    }
-                } else if ((numeroSorteado / 12 > 1) && (numeroSorteado / 12 <= 2)) {
-                    //salio la segunda docena
-                    for (Integer n : numeros) {
-                        if ((n / 12 > 1) && (n / 12 <= 2)) {
-                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoDocena);
-                        }
-                    }
-                } else {
-                    //salio la tercera docena
-                    for (Integer n : numeros) {
-                        if (n / 12 > 2) {
-                            mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoDocena);
-                        }
-                    }
+            //Si esta habilitado el tipo de apuesta por docenas
+            // me fijo en las apuestas si apostaron a alguna docena perteneciente a la docena del numero que salio,
+            // es decir si el numero que salio pertenece a la 1ra docena y hay una apuesta sobre el casillero 1ra docena ahi se paga
+            if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Docenas)) {
+                CasilleroNoNumerico casilleroNoNumerico = (CasilleroNoNumerico) apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.getDocena()));
+                if (casilleroNoNumerico != null) {
+                    mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * casilleroNoNumerico.factorDePago);
+                    System.out.println("El jugador emboco a la docena, pagando...");
                 }
             }
         }
-        //siempre se checkea si el numero sorteado esta en los numeros apostados
-        //Strategy TipoApuestaDirecta
-        Collection<Apuesta> apus = apuestas.values();
 
-        ArrayList<Integer> numeros = new ArrayList();
-        for (Apuesta apu : apus) {
-            numeros = apu.getNumerosApostados();
-
-            for (Integer n : numeros) {
-                if (n == numeroSorteado) {
-                    mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostado() * factorPagoApuestaDirecta);
-                }
-
-            }
-        }
-
-        // apuestas por los casilleros
-        // si la apuesta es directa y el numero sorteado es parte de la apuesta
-        // pagar apuesta directa
-        // si es al color fijarse si los pares o los impares es el color, si sale 0 no gana nadie
-        // agregar logica para las docenas
-        System.out.println("TERMINO PAGAR A JUGADOR EN RONDA");
+    
+        System.out.println(
+                "TERMINO PAGAR A JUGADOR EN RONDA");
     }
 
 }

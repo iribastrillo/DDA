@@ -45,8 +45,8 @@ public class Mesa extends Observable {
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
         this.rondas = new ArrayList<Ronda>();
         this.estado = EnumEstados.ACTIVA;
-         this.numerosRojos=new ArrayList<>(
-        Arrays.asList(1,3,5,7,9,12,14,16,18,21,23,25,27,30,32,34,36));
+        this.numerosRojos = new ArrayList<>(
+                Arrays.asList(1, 3, 5, 7, 9, 12, 14, 16, 18, 21, 23, 25, 27, 30, 32, 34, 36));
         autoId++;
     }
 
@@ -54,9 +54,9 @@ public class Mesa extends Observable {
         return rondaActual.getNumerosConApuestaDirecta();
 
     }
-    
-      public ArrayList<Integer> getNumerosRojos() {
-        return  this.numerosRojos;
+
+    public ArrayList<Integer> getNumerosRojos() {
+        return this.numerosRojos;
 
     }
 
@@ -138,7 +138,9 @@ public class Mesa extends Observable {
 
     public void apostar(String idJugador, int monto, int uccode) {
         Ronda ronda = this.getRondaActual();
-        ronda.apostar(idJugador, monto, uccode);
+        Casillero c = (uccode > 36) ? new CasilleroNoNumerico(monto, uccode) : new CasilleroNumerico(monto, uccode);
+
+        ronda.apostar(idJugador, c);
 
     }
 
@@ -219,9 +221,14 @@ public class Mesa extends Observable {
     }
 
     private void pagar(int numeroSortedo) {
-        this.rondaActual.pagarApuestas(numeroSorteado);
+        // se crea un casillero cascaron para ver de que color es en caso de apuestas a color
+        Casillero c = (numeroSortedo > 36) ? new CasilleroNoNumerico(-1, numeroSortedo) : new CasilleroNumerico(-1, numeroSortedo);
 
-        System.out.println("To be Implemented");
+        this.rondaActual.pagarApuestas(c);
+        //guardar ronda actual y crear ronda nueva
+        this.rondas.add(this.rondaActual);
+        this.rondaActual = new Ronda(this);
+
     }
 
 }
