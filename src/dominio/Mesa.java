@@ -133,13 +133,18 @@ public class Mesa extends Observable {
 
     public void apostar(String idJugador, int monto, int uccode) {
         Ronda ronda = this.getRondaActual();
-        ronda.apostar(idJugador, monto, uccode);
-
+        if (ronda.yaAposto(idJugador, uccode)) {
+            ronda.agregarFichas(idJugador, monto, uccode);
+        } else {
+            ronda.apostar(idJugador, monto, uccode);
+            avisar (EnumEventos.APUESTA_CREADA);
+        }   
     }
-
-    public void quitarApuesta(String idJugador, int uccode) {
+    
+    public void agregarFichas (String idJugador, int monto, int uccode) {
         Ronda ronda = this.getRondaActual();
-        ronda.quitarApuesta(idJugador, uccode);
+        ronda.agregarFichas(idJugador, monto, uccode);
+        avisar (EnumEventos.APUESTA_MODIFICADA);
     }
 
     public boolean puedeAbandonar(String idJugador) {
@@ -154,14 +159,6 @@ public class Mesa extends Observable {
         }
         return ultimoSorteado;
     }
-//    public String getUltimoSorteado() {
-//        String ultimoSorteado = "1ra ronda.";
-//        Ronda ronda = this.getRondaAnterior();
-//        if (ronda != null) {
-//            ultimoSorteado = String.valueOf(ronda.getNumeroSorteado());
-//        }
-//        return ultimoSorteado;
-//    }
 
     int getUltimaIdRonda() {
         return rondas.size() + 1;
@@ -217,6 +214,10 @@ public class Mesa extends Observable {
         this.rondaActual.pagarApuestas(numeroSorteado);
 
         System.out.println("To be Implemented");
+    }
+
+    public boolean yaAposto(String idJugador, int uccode) {
+        return this.getRondaActual().yaAposto (idJugador, uccode);
     }
 
 }

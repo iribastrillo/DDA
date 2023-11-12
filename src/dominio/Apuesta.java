@@ -49,10 +49,6 @@ public class Apuesta {
         this.casilleros.put(String.valueOf(uccode), new Casillero(monto, uccode));
     }
 
-    public void quitarApuesta(int uccode) {
-        this.casilleros.remove(String.valueOf(uccode));
-    }
-
     public boolean isEmpty() {
         return casilleros.isEmpty();
     }
@@ -79,5 +75,14 @@ public class Apuesta {
             cantidadApuestas += 1;
         }
         return cantidadApuestas;
+    }
+    
+    public Casillero getCasillero (int uccode) {
+        return this.casilleros.get(String.valueOf(uccode));
+    }
+
+    void agregarFichas(int monto, int uccode) {
+        Casillero casillero = this.getCasillero(uccode);
+        casillero.agregarMonto(monto);
     }
 }

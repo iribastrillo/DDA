@@ -17,5 +17,6 @@ public enum EnumEventos {
     APUESTA_ELIMINADA,
     CERRAR_MESA,    
     LANZAR,
-    PAGAR;
+    PAGAR, 
+    APUESTA_MODIFICADA;
 }

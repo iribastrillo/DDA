@@ -104,8 +104,9 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int n = selector.universalCellCode;
         int monto = panelInfoJugador1.getModelo().getTotal();
+        int montoAnterior = r.getApuesta(n);
         String idJugador = modelo.getIdJugador();
-        r.setApuesta(n, monto);
+        r.setApuesta(n, montoAnterior + monto);
         controlador.apostar (n, monto, modelo.getMesa(), idJugador);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -160,7 +161,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     public void fichaSeleccionada(int ficha) {
         this.ficha = ficha;
     }
-
+    
     private class Selector implements PanelRuleta.Escuchador {
         
         int universalCellCode = 0;
@@ -177,5 +178,4 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
     public void abandonar (){
         this.dispose();
     }
-
 }

@@ -26,23 +26,21 @@ public class ControladorVistaMesaJugador implements Observador {
     private final IVistaMesaJugador vista;
     private final Fachada fachada;
     private ModeloMesaJugador modelo;
-    private Mesa m;
+    private Mesa mesa;
     
     public ControladorVistaMesaJugador (IVistaMesaJugador vista, ModeloMesaJugador modelo) {
         this.vista = vista;
         this.fachada = Fachada.getInstancia();
-       // this.fachada.agregar(this);
-        this.modelo=modelo;
-        this.m=fachada.getMesa(modelo.getMesa());
-        m.agregar(this);
+        this.modelo = modelo;
+        this.mesa = fachada.getMesa(modelo.getMesa());
+        mesa.agregar(this);
     }
 
     @Override
     public void actualizar(Observable origen, Object evento) {
         EnumEventos e = (EnumEventos) evento;
-        if (e == EnumEventos.LANZAR) {
+        if (e == EnumEventos.LANZAR || e == EnumEventos.APUESTA_MODIFICADA) {
             this.vista.refrescar();
-            // y algo más ... Como notificar qué número salió y si ganaste o perdiste.
         }
     }
 
@@ -61,16 +59,7 @@ public class ControladorVistaMesaJugador implements Observador {
             vista.mostrarDialogoDeError("El monto no puede ser igual a cero.");
         }
     }
-
-    public void quitarApuesta(int uucod, int monto, int mesa, String idJugador) {
-        fachada.quitarApuesta (uucod, monto, mesa, idJugador);
-        vista.refrescar ();
-    }
     
-    public void modificarApuesta(int uccode, int monto, int mesa, String idJugador) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
         Jugador jugador = fachada.getJugadorById(modelo.getIdJugador());
         Mesa mesa = fachada.getMesa(modelo.getMesa());

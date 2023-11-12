@@ -20,5 +20,4 @@ public interface IVistaMesaJugador {
     public void refrescar ();
 
     public void mostrarDialogoDeError(String message);
-    
 }
