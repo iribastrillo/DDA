@@ -21,6 +21,7 @@ public class CasilleroNumerico extends Casillero {
     public CasilleroNumerico(int monto, int uccode) {
         super(monto, uccode);
         setearDocena();
+        setColor();
     }
 
     public String getColor() {

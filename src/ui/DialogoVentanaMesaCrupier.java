@@ -1,5 +1,7 @@
 package ui;
 
+import Common.DisplayerStrategy;
+import Common.IDisplayerStrategy;
 import componentes.PanelRuleta;
 import controladores.ControladorVistaMesaCrupier;
 import dominio.EnumTipoApuesta;
@@ -33,24 +35,21 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     int apuestaRojo = 0;
     protected final ControladorVistaMesaCrupier controlador;
     protected final Mesa m;
+    private final IDisplayerStrategy displayer = new DisplayerStrategy();
 
     /**
      * Creates new form NewJFrame
      */
     public DialogoVentanaMesaCrupier(Mesa m) {
         initComponents();
-        ocultarDocenas();
-        ocultarColor();
-        ocultarParidad();
+//        ocultarDocenas();
+//        ocultarColor();
+//        ocultarParidad();
+
         this.m = m;
-
         this.controlador = new ControladorVistaMesaCrupier(m, this);
-        controlador.cargarDropdownEfectos(); // evitar cargar los efectos
-
+        setup();        
         actualizar();
-
-        this.panelInfoCrupier1.setNumeroMesa(m.getId());
-        this.panelInfoCrupier1.agregar(this.controlador);
 
     }
 
@@ -112,39 +111,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void mostrarColor() {
-        r.setVisible(PanelRuleta.ROJO, true);
-        r.setVisible(PanelRuleta.NEGRO, true);
-    }
 
-    private void ocultarColor() {
-        r.setVisible(PanelRuleta.ROJO, false);
-        r.setVisible(PanelRuleta.NEGRO, false);
-    }
-
-    private void mostrarDocenas() {
-        r.setVisible(PanelRuleta.PRIMERA_DOCENA, true);
-        r.setVisible(PanelRuleta.SEGUNDA_DOCENA, true);
-        r.setVisible(PanelRuleta.TERCERA_DOCENA, true);
-
-    }
-
-    private void ocultarDocenas() {
-        r.setVisible(PanelRuleta.PRIMERA_DOCENA, false);
-        r.setVisible(PanelRuleta.SEGUNDA_DOCENA, false);
-        r.setVisible(PanelRuleta.TERCERA_DOCENA, false);
-
-    }
-
-    private void mostrarParidad() {
-        r.setVisible(PanelRuleta.PAR, true);
-        r.setVisible(PanelRuleta.IMPAR, true);
-    }
-
-    private void ocultarParidad() {
-        r.setVisible(PanelRuleta.PAR, false);
-        r.setVisible(PanelRuleta.IMPAR, false);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -159,10 +126,12 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         for (EnumTipoApuesta enumApuesta : listarTiposApuestaSeleccionados) {
             switch (enumApuesta) {
                 case Colores:
-                    mostrarColor();
+                    // mostrarColor();
+                    displayer.mostrarColor(r);
                     break;
                 case Docenas:
-                    mostrarDocenas();
+                    // mostrarDocenas();
+                    displayer.mostrarDocenas(r);
                     break;
             }
         }
@@ -191,7 +160,6 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     @Override
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo) {
         this.panelTableroRuleta1.setJugadoresSaldo(jugadoresSaldo);
-
     }
 
     @Override
@@ -199,22 +167,6 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         this.panelInfoCrupier1.setDropdownEfectos(efectos);
     }
 
-//    @Override
-//    public void efectoSeleccionado(String efecto) {
-//        StrategyEfecto strategyEfecto=null;
-//         switch(efecto){
-//                case  "COMPLETO":
-//                    strategyEfecto=new CompletoEfecto();
-//                break;
-//                case "PARCIAL":
-//                    strategyEfecto=new ParcialEfecto();
-//                 break;
-//                case "SIMULADOR" :
-//                    strategyEfecto=new SimuladorEfecto();
-//        }
-//        this.m.getRondaActual().setEfecto(strategyEfecto);
-//        System.out.printf("Efecto seleccionado %s ",efecto);  
-//    }
     @Override
     public void mostrarMensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Login incorrecto", JOptionPane.ERROR_MESSAGE);
@@ -251,6 +203,13 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     @Override
     public void cargarUltimoNumeroSorteado(String ultimoSorteado) {
         this.panelInfoCrupier1.cargarUltimoNumeroSorteado(ultimoSorteado);
+    }
+
+    private void setup() {
+        displayer.ocultarTodo(r);
+        controlador.cargarDropdownEfectos();
+        this.panelInfoCrupier1.setNumeroMesa(m.getId());
+        this.panelInfoCrupier1.agregar(this.controlador);
     }
 
 }
