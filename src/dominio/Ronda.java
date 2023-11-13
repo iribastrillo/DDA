@@ -11,7 +11,6 @@ import dominio.efectos.ParcialEfecto;
 import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 /**
  *
