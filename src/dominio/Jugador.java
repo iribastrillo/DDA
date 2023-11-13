@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dominio;
-
-import controladores.ControladorVistaMesaJugador;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +12,6 @@ import java.util.ArrayList;
 public class Jugador extends Usuario {
     
     private ArrayList<Escuchador> escuchadores;
-
-    
-
     private int saldo;
 
     public Jugador(int saldo, String nombreCompleto, String cedula, String password) {

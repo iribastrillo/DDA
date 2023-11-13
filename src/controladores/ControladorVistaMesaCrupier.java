@@ -13,7 +13,6 @@ import Exceptions.ServicioUsuariosException;
 import Logica.Fachada;
 import dominio.EnumEfectos;
 import dominio.EnumEventos;
-import dominio.EnumTipoApuesta;
 import vistas.IVistaMesaCrupier;
 import dominio.Mesa;
 import dominio.modelosVista.ModeloInfoCrupier;
