@@ -53,28 +53,29 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     }
 
-    public void mostrarTiposApuestaSeleccionados(Mesa m) {
+    public void mostrarTiposApuestaSeleccionados() {
         vista.mostrarTiposApuestaSeleccionados(m.listarTiposApuestaSeleccionados());
     }
 
-    public void cargarNumeroDeMesaEnPanel(Mesa m) {
+    public void cargarNumeroDeMesaEnPanel() {
         vista.cargarNumeroDeMesaEnPanel(m.getId());
     }
 
-    public void cargarTotalApostadoEnPanel(Mesa m) {
+    public void cargarTotalApostadoEnPanel() {
 
-        vista.cargarTotalApostadoEnPanel(m.getBalance());
+      //  vista.cargarTotalApostadoEnPanel(m.getBalance());
+        vista.cargarTotalApostadoEnPanel(m.getTotalApostado());
     }
 
-    public void cargarNumeroDeRondaEnPanel(Mesa m) {
+    public void cargarNumeroDeRondaEnPanel() {
         vista.cargarNumeroDeRondaEnPanel(m.getRondaActual().getId());
     }
 
-    public void cargarNumeroDeApuestasEnPanel(Mesa m) {
+    public void cargarNumeroDeApuestasEnPanel() {
         vista.cargarNumeroDeApuestasEnPanel(m.getRondaActual().getCantidadApuestas());
     }
 
-    private void cargarJugadoresYSaldoEnMesa(Mesa m) {
+    private void cargarJugadoresYSaldoEnMesa() {
         ArrayList<ModeloInfoCrupier> jugadoresSaldo = this.fachada.cargarJugadoresSaldo(m);
 
         this.vista.cargarListaJugadores(jugadoresSaldo);
@@ -104,23 +105,42 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     @Override
     public void actualizar(Observable origen, Object evento) {
-        if (EnumEventos.LOGIN_JUGADOR_MESA.equals(evento)) {
+        if (EnumEventos.LOGIN_JUGADOR_MESA.equals(evento)||EnumEventos.ABANDONAR_MESA.equals(evento)) {
             // Ccrear Modelo que pase el nombre del jugador y el saldo para mostrar en la vista (esto se tiene que cargar en searvicios mesa), previa llamada a fachada
 
-            cargarJugadoresYSaldoEnMesa(m);
+            cargarSaldoJugadores();
 
             //ArrayList<ModeloListarJugadoresSaldo> jugadoresSaldo
         }
         if (EnumEventos.APUESTA_CREADA.equals(evento) || EnumEventos.APUESTA_MODIFICADA.equals(evento)) {
             cargarFichasEnMesa();
             actualizarPanelApuestasMesa();
+            cargarTotalApostadoEnPanel();
+            cargarNumeroDeApuestasEnPanel();
         }
         if (EnumEventos.PAGAR.equals(evento)) {
               cargarFichasEnMesa();
               cargarEstadisticasMesa();
-        cargarSaldoJugadores();
+             cargarSaldoJugadores();
+             cargarNumerosSorteados();
+             cargarTotalApostadoEnPanel();
+             cargarNumeroDeApuestasEnPanel();
+             cargarNumeroDeRondaEnPanel();
         }
+         if (EnumEventos.LANZAR.equals(evento)) {
+            cargarUltimoNumeroSorteado();
+        }
+       
     }
+    
+    
+//            controlador.mostrarTiposApuestaSeleccionados();
+//        controlador.cargarNumeroDeMesaEnPanel();
+//        controlador.cargarTotalApostadoEnPanel();
+//        controlador.cargarNumeroDeRondaEnPanel();
+//        controlador.cargarNumeroDeApuestasEnPanel();
+//        controlador.cargarUltimoNumeroSorteado();
+//        controlador.cargarNumerosSorteados();
 
     @Override
     public void efectoSeleccionado(String efecto) {
@@ -163,7 +183,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
     public void lanzarYPagar() {
         try {
             m.lanzarYPagar();
-            vista.actualizar();
+         //   vista.actualizar();
 
         } catch (EfectoException ex) {
             vista.mostrarMensajeError(ex.getMessage());

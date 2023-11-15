@@ -196,11 +196,11 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
     @Override
     public void actualizar() {
-        controlador.mostrarTiposApuestaSeleccionados(m);
-        controlador.cargarNumeroDeMesaEnPanel(m);
-        controlador.cargarTotalApostadoEnPanel(m);
-        controlador.cargarNumeroDeRondaEnPanel(m);
-        controlador.cargarNumeroDeApuestasEnPanel(m);
+        controlador.mostrarTiposApuestaSeleccionados();
+        controlador.cargarNumeroDeMesaEnPanel();
+        controlador.cargarTotalApostadoEnPanel();
+        controlador.cargarNumeroDeRondaEnPanel();
+        controlador.cargarNumeroDeApuestasEnPanel();
         controlador.cargarUltimoNumeroSorteado();
         controlador.cargarNumerosSorteados();
     }

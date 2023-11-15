@@ -244,11 +244,13 @@ public class Mesa extends Observable {
         this.rondas.add(this.rondaActual);
 
         this.rondaActual = new Ronda(this,this.rondaActual.getBalancePosterior());
-        this.numerosSorteados.add(numeroSorteado);
+        //se agrega el ultimo numero al inicio del array
+        this.numerosSorteados.add(0,numeroSorteado);
 
     }
 
     private void guardarEstadisticasCrupier(Ronda ronda) {
+        //Se agrega la ultima estadistica de ronda al inicio del array
         estadisticasCrupier.add(0,new EstadisticaCrupier(ronda.getId(), ronda.getBalance(),ronda.getTotalApostado(),ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
     }
 
