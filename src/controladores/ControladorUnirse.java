@@ -43,7 +43,7 @@ public class ControladorUnirse implements Observador{
 
     @Override
     public void actualizar(Observable origen, Object evento) {
-         if (EnumEventos.FACHADA_NUEVA_MESA_AGREGADA.equals(evento)) {
+        if (EnumEventos.FACHADA_NUEVA_MESA_AGREGADA.equals(evento)) {
             this.vista.cargarMesasActivas();
         }
      }

@@ -138,14 +138,24 @@ public class PanelJugador extends javax.swing.JPanel {
     public void actualizar() {
         this.estadisticas.setModel(new DefaultTableModel(null,new String[]{"Ronda","Total apostado", "Ganado", "Perdido", "Balance"}));
         DefaultTableModel model = (DefaultTableModel) this.estadisticas.getModel();
-        Object rowData[] = new Object[5];
+        Object stats[] = new Object[5];
         for (EstadisticasJugador row1 : modelo.getEstadisticas()) {
-            rowData[0] = row1.getRonda();
-            rowData[1] = row1.getTotal();
-            rowData[2] = row1.getGanado();
-            rowData[3] = row1.getPerdido();
-            rowData[4] = row1.getBalance();
-            model.addRow(rowData);
+            stats[0] = row1.getRonda();
+            stats[1] = row1.getTotal();
+            stats[2] = row1.getGanado();
+            stats[3] = row1.getPerdido();
+            stats[4] = row1.getBalance();
+            model.addRow(stats);
+        }
+        
+        this.ocurrencias.setModel(new DefaultTableModel(null,new String[]{"Valor","Ocurrencia"}));
+        model = (DefaultTableModel) this.ocurrencias.getModel();
+        Object values[] = new Object[2];
+        for (String i : modelo.getOcurrencias().keySet()) {
+            Float f = modelo.getOcurrencias().get(i);
+            values[0] = i;
+            values[1] = f;
+            model.addRow(values);
         }
     }
 }

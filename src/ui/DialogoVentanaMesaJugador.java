@@ -196,7 +196,7 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
         @Override
         public void celdaSeleccionada(int universalCellCode) {
             this.universalCellCode = universalCellCode;
-            String labelApuesta = "Apostar al " + String.valueOf(universalCellCode);
+            String labelApuesta = "Apostar";
             jButton2.setText(labelApuesta);
         }
         

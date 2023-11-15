@@ -51,6 +51,10 @@ public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchad
         if (e == EnumEventos.PAGAR) {
             this.vista.pagar ();
         }
+        if (e == EnumEventos.CERRAR_MESA) {
+            this.vista.mostrarDialogoDeError("Va a cerrar la mesa...");
+            this.vista.abandonar();
+        }
     }
 
     public void mostrarTiposDeApuesta(int idMesa) {
@@ -76,7 +80,8 @@ public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchad
     public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
         Jugador jugador = fachada.getJugadorById(modelo.getIdJugador());
         Mesa mesa = fachada.getMesa(modelo.getMesa());
-        ArrayList<EstadisticasJugador> filas = fachada.getEstadisticasById (modelo.getIdJugador(), mesa.getId());
+        ArrayList<EstadisticasJugador> stats = fachada.getEstadisticasById (modelo.getIdJugador(), mesa.getId());
+        HashMap<String, Float> ocurrencias = fachada.getOcurrenciasById(mesa.getId());
         
         ModeloMesaJugador nuevoModelo = new ModeloMesaJugador (
         jugador.getNombreCompleto(),
@@ -86,7 +91,8 @@ public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchad
         mesa.getRondaActual().getId(),
         mesa.getUltimoSorteado());
         
-        nuevoModelo.setEstadisticas(filas);
+        nuevoModelo.setEstadisticas(stats);
+        nuevoModelo.setOcurrencias(ocurrencias);
         
         return nuevoModelo;
     }

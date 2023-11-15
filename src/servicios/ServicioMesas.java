@@ -14,6 +14,7 @@ import dominio.Mesa;
 import dominio.modelosVista.EstadisticasJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -118,5 +119,17 @@ public class ServicioMesas {
     public ArrayList<EstadisticasJugador> getEstadisticasDelJugador(String idJugador, int idMesa) {
         Mesa mesa = this.getMesa(idMesa);
         return mesa.getEstadisticasDelJugador(idJugador);
+    }
+
+    public void cerrarMesa(int idMesa) {
+        for (Mesa mesa: this.mesasActivas) {
+            if (mesa.getId() == idMesa) {
+                this.mesasActivas.remove(mesa);
+            }
+        }
+    }
+
+    public HashMap<String, Float> getOcurrenciasById(int idMesa) {
+        return this.getMesa(idMesa).getOcurrencias ();
     }
 }

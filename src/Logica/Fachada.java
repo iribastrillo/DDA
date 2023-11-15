@@ -28,7 +28,6 @@ import dominio.modelosVista.EstadisticasJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 /**
  *
  * @author Usuario
@@ -152,15 +151,7 @@ public class Fachada extends Observable {
         return this.servicioMesas.getEstadisticasDelJugador (idJugador, idMesa);        
     }
 
-    public HashMap<Integer, ArrayList> getOcurrenciasById(int idMesa) {
-        // Funcionalidad limitada con un mock de datos para desarrollar.
-        // Luego el dato viene de algun servicio.
-        HashMap<Integer, ArrayList> ocurrencias = new HashMap <> ();
-        ArrayList<Integer> fila1 = new ArrayList<> ();
-        fila1.add(21);
-        fila1.add(50);  
-        ocurrencias.put(1, fila1);
-        ocurrencias.put(2, fila1);
-        return ocurrencias;
+    public HashMap<String, Float> getOcurrenciasById(int idMesa) {
+        return this.servicioMesas.getOcurrenciasById (idMesa);
     }
 }

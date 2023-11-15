@@ -152,7 +152,6 @@ public class DialogoUnirse extends javax.swing.JDialog implements IVistaUnirse{
     @Override
     public void cargarMesasActivas() {
         ArrayList<Mesa> mesasActivas = this.controlador.getMesasActivas(); 
-        //Sacamos los items que ya hay por si actualizamos la lista no queden duplicados los que ya estaban
         this.mesasActivas.removeAllItems();
         for (Mesa mesa: mesasActivas) {
             this.mesasActivas.addItem(String.valueOf(mesa.getId()));

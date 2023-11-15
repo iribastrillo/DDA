@@ -5,6 +5,7 @@
 package dominio.modelosVista;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 /**
  *
  * @author Usuario
@@ -18,6 +19,7 @@ public class ModeloMesaJugador {
     private String ultimoSorteado;
     private ArrayList<Integer> fichasApostadas;
     private ArrayList<EstadisticasJugador> estadisticas;
+    private HashMap<String, Float> ocurrencias;
 
     public ModeloMesaJugador(String nombreJugador, String idJugador, float saldoJugador, int mesa, int ronda, String ultimoSorteado) {
         this.nombreJugador = nombreJugador;
@@ -98,6 +100,14 @@ public class ModeloMesaJugador {
 
     public void setUltimoSorteado(String ultimoSorteado) {
         this.ultimoSorteado = ultimoSorteado;
+    }
+
+    public HashMap<String, Float> getOcurrencias() {
+        return ocurrencias;
+    }
+
+    public void setOcurrencias(HashMap<String, Float> ocurrencias) {
+        this.ocurrencias = ocurrencias;
     }
     
     public int getTotal () {
