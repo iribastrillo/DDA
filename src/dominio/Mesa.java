@@ -249,7 +249,7 @@ public class Mesa extends Observable {
     }
 
     private void guardarEstadisticasCrupier(Ronda ronda) {
-        estadisticasCrupier.add(0,new EstadisticaCrupier(ronda.getId(), ronda.getTotalGanado(),ronda.getTotalApostado(),ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
+        estadisticasCrupier.add(0,new EstadisticaCrupier(ronda.getId(), ronda.getBalance(),ronda.getTotalApostado(),ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
     }
 
     public boolean yaAposto(String idJugador, int uccode) {

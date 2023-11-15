@@ -273,8 +273,9 @@ public class Ronda {
                 }
             }
         }
-        this.totalGanado=this.totalApostado-this.totalPerdido;  // total perdido  es recoleccion (apuestas perdidas por los jugadores)
-        this.balance=this.totalGanado-this.totalPerdido;         // total ganado, es apuestas pagas liquidacion
+        // lo que gana la casa (Balance)
+        //this.totalGanado=this.totalApostado-this.totalPerdido;  // total perdido  es recoleccion (apuestas perdidas por los jugadores)
+        this.balance=this.totalApostado-this.totalPerdido;     // total ganado, es apuestas pagas liquidacion
         this.balancePosterior=this.balanceAnterior+this.balance;
         System.out.println(
                 "TERMINO PAGAR A JUGADOR EN RONDA");
