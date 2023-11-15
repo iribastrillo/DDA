@@ -132,4 +132,8 @@ public class ServicioMesas {
     public HashMap<String, Float> getOcurrenciasById(int idMesa) {
         return this.getMesa(idMesa).getOcurrencias ();
     }
+
+    public void sacarMesaActiva(Mesa m) {
+        this.mesasActivas.remove(m);
+    }
 }

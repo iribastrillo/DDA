@@ -154,4 +154,9 @@ public class Fachada extends Observable {
     public HashMap<String, Float> getOcurrenciasById(int idMesa) {
         return this.servicioMesas.getOcurrenciasById (idMesa);
     }
+
+    public void sacarMesaActiva(Mesa m) {
+        this.servicioMesas.sacarMesaActiva (m);
+        avisar(EnumEventos.FACHADA_MESA_REMOVIDA);
+    }
 }

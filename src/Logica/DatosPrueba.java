@@ -31,11 +31,6 @@ public class DatosPrueba {
             new Crupier( "Croupier_2", "102", "bbb"),
             new Crupier( "Croupier_3", "103", "ccc")
         };
-        
-        Mesa [] mesas = new Mesa [] {
-            new Mesa(new ArrayList<> (), crupieres [0]),
-            new Mesa(new ArrayList<> (), crupieres [1]),
-        };
 
         for (Crupier c : crupieres) {
             fachada.agregar(c);
@@ -43,12 +38,7 @@ public class DatosPrueba {
 
         for (Jugador j : jugadores) {
             fachada.agregar(j);
-        }
-        
-        for (Mesa m : mesas) {
-            fachada.agregar(m);
-        }
-        
+        }   
     }
 
 }

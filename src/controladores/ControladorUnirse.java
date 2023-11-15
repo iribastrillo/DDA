@@ -23,11 +23,13 @@ public class ControladorUnirse implements Observador{
     
     private final Fachada fachada;
     private final IVistaUnirse vista;
+    private ArrayList<Mesa> mesasActivas;
 
     public ControladorUnirse(Fachada fachada, IVistaUnirse vista) {
         this.fachada = fachada;
         this.fachada.agregar(this);
         this.vista = vista;
+        this.mesasActivas = this.getMesasActivas();
     }
     public void unirse (int idMesa, Jugador jugador){   
             try {
@@ -40,15 +42,25 @@ public class ControladorUnirse implements Observador{
                 vista.mostrarDialogoDeError(ex.getMessage());
              } 
     }
+    
+    public void refrescar () {
+        for (Mesa mesa: mesasActivas) {
+            mesa.agregar(this);
+        }
+    }
 
     @Override
     public void actualizar(Observable origen, Object evento) {
         if (EnumEventos.FACHADA_NUEVA_MESA_AGREGADA.equals(evento)) {
             this.vista.cargarMesasActivas();
         }
+        if (EnumEventos.FACHADA_MESA_REMOVIDA.equals(evento)) {
+            this.vista.cargarMesasActivas();
+        }
      }
 
     public ArrayList<Mesa> getMesasActivas() {
-        return this.fachada.getMesasActivas();
+        this.mesasActivas = this.fachada.getMesasActivas();
+        return this.mesasActivas;
     }
 }

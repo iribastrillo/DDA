@@ -23,8 +23,6 @@ import componentes.PanelInfoCrupier.Escuchador;
 import dominio.Casillero;
 import dominio.Jugador;
 import dominio.modelosVista.EstadisticaCrupier;
-import java.util.HashMap;
-import java.util.ListIterator;
 import java.util.StringJoiner;
 
 /**
@@ -172,6 +170,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
         try {
             m.cerrarYPagar();
             fachada.logoutCrupier(m.getCrupier());
+            fachada.sacarMesaActiva (m);
             vista.cerrarVentana();
         } catch (ServicioUsuariosException | HayApuestasEnRondaActualException | EfectoException ex) {
             Logger.getLogger(ControladorVistaMesaCrupier.class.getName()).log(Level.SEVERE, null, ex);

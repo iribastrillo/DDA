@@ -195,6 +195,7 @@ public class Mesa extends Observable {
         if (estado.equals(EnumEstados.BLOQUEADA)) {
             //pagar a jugadores 
             lanzarYPagar();
+            this.jugadores = new ArrayList <>();
             avisar(EnumEventos.CERRAR_MESA);
         } else {
             throw new HayApuestasEnRondaActualException("No se puede cerrar la mesa, necesita lanzar y pagar");
@@ -250,7 +251,6 @@ public class Mesa extends Observable {
         this.rondaActual = new Ronda(this,this.rondaActual.getBalancePosterior());
         //se agrega el ultimo numero al inicio del array
         this.numerosSorteados.add(0,numeroSorteado);
-
     }
 
     private void guardarEstadisticasCrupier(Ronda ronda) {
