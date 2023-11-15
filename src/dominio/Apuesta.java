@@ -97,4 +97,12 @@ public class Apuesta {
         Casillero casillero = this.getCasillero(uccode);
         casillero.agregarMonto(monto);
     }
+
+    public boolean apostoRojo() {
+        return this.casilleros.containsKey("43");
+    }
+
+    public boolean apostoNegro() {
+        return this.casilleros.containsKey("44");
+    }
 }

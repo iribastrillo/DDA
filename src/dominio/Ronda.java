@@ -168,7 +168,7 @@ public class Ronda {
         setTotalApostado();
     }
 
-    private Apuesta getApuesta(String idJugador) {
+    public Apuesta getApuesta(String idJugador) {
         Apuesta apuesta = null;
         if (apuestas.containsKey(idJugador)) {
             apuesta = apuestas.get(idJugador);
@@ -287,7 +287,7 @@ public class Ronda {
                     totalGanado + totalPerdido,
                     totalGanado,
                     totalPerdido,
-                    totalGanado - totalPerdido
+                    totalGanado - Math.abs(totalPerdido)
             ));    
         }
         // lo que gana la casa (Balance)

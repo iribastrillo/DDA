@@ -4,6 +4,8 @@
  */
 package servicios;
 
+import Exceptions.ApuestaNoPermitidaException;
+import Exceptions.EfectoException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
@@ -90,7 +92,7 @@ public class ServicioMesas {
         mesa.removerJugador(idJugador);
     }
 
-    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException {
+    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException, ApuestaNoPermitidaException, EfectoException {
         Mesa mesa = this.getMesa(idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
         if (jugador.getSaldo() < monto) {
@@ -101,6 +103,10 @@ public class ServicioMesas {
             throw new MontoIgualACeroException("El monto no puede ser cero.");
         }
 
+        if (!mesa.permiteApuesta(uccode, monto, idJugador)) {
+            throw new ApuestaNoPermitidaException ("No puedes apostar a ese color.");
+        }
+        
         if (mesa.yaAposto(idJugador, uccode)) {
             mesa.agregarFichas(idJugador, monto, uccode);
         } else {

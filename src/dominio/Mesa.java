@@ -5,6 +5,7 @@
 package dominio;
 
 import Common.Observable;
+import Exceptions.ApuestaNoPermitidaException;
 import Exceptions.EfectoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.HayApuestasEnRondaActualException;
@@ -293,5 +294,33 @@ public class Mesa extends Observable {
             count = 0;
         }
         return ocurrencias;
+    }
+
+    public boolean permiteApuesta(int uccode, int monto, String idJugador) throws ApuestaNoPermitidaException, EfectoException {
+        Ronda ronda = this.getRondaAnterior();
+        boolean r = true;
+        if (ronda != null) {
+            Apuesta apuesta = ronda.getApuesta(idJugador);
+            if (apuesta != null) {
+                boolean rojo = apuesta.apostoRojo ();
+                boolean negro = apuesta.apostoNegro();
+                boolean cero = ronda.getNumeroSorteado() == 0;
+                boolean salioNegro = !this.numerosRojos.contains(ronda.getNumeroSorteado()) && uccode != 0;
+                boolean salioRojo = !salioNegro;
+                if (rojo || negro) {
+                    if ((rojo  && salioNegro) || (negro && salioRojo)) {
+                        if (apuesta.getCasillero(uccode).getMonto() < monto) {
+                            r = false;
+                        }
+                    }
+                }
+                if ((rojo && negro) && cero) {
+                    if (apuesta.getCasillero(uccode).getMonto() < monto) {
+                            r = false;
+                    }
+                }
+            } 
+        }
+        return r;
     }
 }

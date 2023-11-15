@@ -5,9 +5,11 @@
 package Logica;
 
 import Common.Observable;
+import Exceptions.ApuestaNoPermitidaException;
 import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
+import Exceptions.EfectoException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
@@ -132,7 +134,7 @@ public class Fachada extends Observable {
         avisar (EnumEventos.ABANDONAR_MESA);
     }
 
-    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException {
+    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException, ApuestaNoPermitidaException, EfectoException {
         servicioMesas.apostar (n, monto, mesa,  idJugador);
     }
 
