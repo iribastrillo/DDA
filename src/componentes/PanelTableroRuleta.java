@@ -4,6 +4,7 @@
  */
 package componentes;
 
+import dominio.modelosVista.EstadisticaCrupier;
 import dominio.modelosVista.ModeloMesaJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ public class PanelTableroRuleta extends javax.swing.JPanel {
     }
 
     public void setJugadoresSaldo(ArrayList<ModeloInfoCrupier> jugadoresSaldo) {
-       
-        if (jugadoresSaldo != null) {
+
+        if (jugadoresSaldo != null) {            
             // Limpiando la tabla para cargar datos actualizados
-            this.tbl_JugadorSaldo.setModel(new DefaultTableModel(null,new String[]{"Jugador","Saldo"}));
+            this.tbl_JugadorSaldo.setModel(new DefaultTableModel(null, new String[]{"Jugador", "Saldo"}));
             DefaultTableModel model = (DefaultTableModel) this.tbl_JugadorSaldo.getModel();
             Object rowData[] = new Object[2];
             for (ModeloInfoCrupier mjs : jugadoresSaldo) {
@@ -36,6 +37,26 @@ public class PanelTableroRuleta extends javax.swing.JPanel {
 
             }
 
+        }
+
+    }
+
+    public void setEstadisticas(ArrayList<EstadisticaCrupier> estadisticaCrupier) {
+
+        if (estadisticaCrupier != null) {
+             this.tbl_TableroMesa.removeAll();
+            this.tbl_TableroMesa.setModel(new DefaultTableModel(null, new String[]{"Ronda", "Balance Anterior", "Apuestas", "Recoleccion", "Liquidacion", "Balance Posterior"}));
+            DefaultTableModel modelo = (DefaultTableModel) this.tbl_TableroMesa.getModel();
+            Object rowData[] = new Object[6];
+            for (EstadisticaCrupier estadistica : estadisticaCrupier) {
+                rowData[0] = estadistica.getRonda();
+                rowData[1] = estadistica.getBalanceAnterior();
+                rowData[2] = estadistica.getApuestas();
+                rowData[3] = estadistica.getRecoleccion();
+                rowData[4] = estadistica.getLiquidacion();
+                rowData[5] = estadistica.getBalancePosterior();
+                modelo.addRow(rowData);
+            }
         }
 
     }

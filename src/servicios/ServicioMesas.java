@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package servicios;
+
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
@@ -20,15 +21,15 @@ import java.util.ArrayList;
 public class ServicioMesas {
 
     public Mesa agregarJugador(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
-        
-        Mesa mesa=getMesa(id);
-        if(mesa==null){
-            String mensaje=String.format("Mesa con id: %s No encontrada", id);
+
+        Mesa mesa = getMesa(id);
+        if (mesa == null) {
+            String mensaje = String.format("Mesa con id: %s No encontrada", id);
             throw new MesaNoEncontradaException(mensaje);
-        }        
-        mesa.agregarJugador(jugador);        
+        }
+        mesa.agregarJugador(jugador);
         return mesa;
-     }
+    }
 
     public ArrayList<Mesa> getMesasActivas() {
         return mesasActivas;
@@ -45,30 +46,30 @@ public class ServicioMesas {
     public void setMesasCerradas(ArrayList<Mesa> mesasCerradas) {
         this.mesasCerradas = mesasCerradas;
     }
-    
+
     private ArrayList<Mesa> mesasActivas;
     private ArrayList<Mesa> mesasCerradas; //O bloqueadas?
 
-    public ServicioMesas( ) {
+    public ServicioMesas() {
         this.mesasActivas = new ArrayList<>();
         this.mesasCerradas = new ArrayList<>();
     }
 
     public Mesa agregar(Mesa mesa) {
-      /// Agregar excepciones si hay..
-        mesasActivas.add(mesa);        
+        /// Agregar excepciones si hay..
+        mesasActivas.add(mesa);
         return mesa;
-    }    
+    }
 
     public Mesa getMesa(int mesa) {
         return mesasActivas.get(mesa);
     }
 
     public ArrayList<ModeloInfoCrupier> obtenerJugadoresSaldoParaMesa(Mesa m) {
-        ArrayList<ModeloInfoCrupier> jugadoresSaldo=new ArrayList<>();
-        ArrayList<Jugador> jugadores =m.getJugadores();
-        for(Jugador j :jugadores){
-            ModeloInfoCrupier jugadorSaldo= new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldo());
+        ArrayList<ModeloInfoCrupier> jugadoresSaldo = new ArrayList<>();
+        ArrayList<Jugador> jugadores = m.getJugadores();
+        for (Jugador j : jugadores) {
+            ModeloInfoCrupier jugadorSaldo = new ModeloInfoCrupier(j.getNombreCompleto(), j.getSaldo());
             jugadoresSaldo.add(jugadorSaldo);
         }
         return jugadoresSaldo;
@@ -76,32 +77,33 @@ public class ServicioMesas {
 
     public void abandonar(int idMesa, String idJugador) throws NoPuedeAbandonarMesaException {
         Mesa mesa = this.getMesa(idMesa);
-        if (!mesa.puedeAbandonar (idJugador)) {
-            throw new NoPuedeAbandonarMesaException ("No puedes abandonar si ya apostaste.");
+        if (!mesa.puedeAbandonar(idJugador)) {
+            throw new NoPuedeAbandonarMesaException("No puedes abandonar si ya apostaste.");
         }
-        mesa.removerJugador (idJugador);
+        mesa.removerJugador(idJugador);
     }
-    
+
     public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException {
-        Mesa mesa = this.getMesa (idMesa);
+        Mesa mesa = this.getMesa(idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
         if (jugador.getSaldo() < monto) {
-            throw new NoTieneSaldoDisponibleException ("Saldo insuficiente.");
+            throw new NoTieneSaldoDisponibleException("Saldo insuficiente.");
         }
-        
+
         if (monto == 0) {
-            throw new MontoIgualACeroException ("El monto no puede ser cero.");
+            throw new MontoIgualACeroException("El monto no puede ser cero.");
         }
-        
-        if (mesa.yaAposto (idJugador, uccode)) {
+
+        if (mesa.yaAposto(idJugador, uccode)) {
             mesa.agregarFichas(idJugador, monto, uccode);
         } else {
-            mesa.apostar (idJugador, monto, uccode);
+            mesa.apostar(idJugador, monto, uccode);
         }
-        jugador.descontar (monto);
+      
+        jugador.descontar(monto);
     }
-    
-    public void reembolsarTodo (int idMesa, String idJugador) {
+
+    public void reembolsarTodo(int idMesa, String idJugador) {
         Mesa mesa = this.getMesa(idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
         jugador.acreditar(mesa.getRondaActual().reembolsarTodo(idMesa, idJugador));

@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import componentes.PanelInfoCrupier.Escuchador;
+import dominio.Casillero;
+import dominio.Jugador;
+import dominio.modelosVista.EstadisticaCrupier;
+import java.util.HashMap;
+import java.util.ListIterator;
+import java.util.StringJoiner;
 
 /**
  *
@@ -30,6 +36,8 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
     private final Fachada fachada;
     private final IVistaMesaCrupier vista;
     private final Mesa m;
+    private final ArrayList<ModeloInfoCrupier> saldoJugadores;
+    private final ArrayList<EstadisticaCrupier> estadisticas;
 
     // Nota: le pasamos la Mesa al la vista y voy a sacar Fachada, si se precisa se instancia..
     // porque para cargar listas y demas eventos de la mesa, se precisa saber de que mesa se esta hablando
@@ -37,10 +45,12 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
     public ControladorVistaMesaCrupier(Mesa mesa, IVistaMesaCrupier vista) {
         this.fachada = Fachada.getInstancia();
         this.vista = vista;
-        this.m = mesa;          
+        this.m = mesa;
         m.agregar(this);
         this.fachada.agregar(this);
-        
+        this.saldoJugadores = new ArrayList();
+        this.estadisticas = new ArrayList();
+
     }
 
     public void mostrarTiposApuestaSeleccionados(Mesa m) {
@@ -70,6 +80,15 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
         this.vista.cargarListaJugadores(jugadoresSaldo);
     }
 
+    private void cargarFichasEnMesa() {
+        vista.borrarFichasEnMesa();
+
+        ArrayList<Casillero> casillerosConApuestas = m.getRondaActual().getCasillerosConApuestas();
+
+        vista.cargarFichasEnMesa(casillerosConApuestas);
+
+    }
+
     public void cargarDropdownEfectos() {
 
         EnumEfectos[] valoresEnum = EnumEfectos.values();
@@ -92,8 +111,14 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
             //ArrayList<ModeloListarJugadoresSaldo> jugadoresSaldo
         }
-        if (EnumEventos.APUESTA_CREADA.equals(evento)) {
+        if (EnumEventos.APUESTA_CREADA.equals(evento) || EnumEventos.APUESTA_MODIFICADA.equals(evento)) {
+            cargarFichasEnMesa();
             actualizarPanelApuestasMesa();
+        }
+        if (EnumEventos.PAGAR.equals(evento)) {
+              cargarFichasEnMesa();
+              cargarEstadisticasMesa();
+        cargarSaldoJugadores();
         }
     }
 
@@ -102,19 +127,6 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
         try {
             fachada.ActualizarEfectoEnRonda(efecto, m);
 
-//        StrategyEfecto strategyEfecto=null;
-//         switch(efecto){
-//                case  "COMPLETO":
-//                    strategyEfecto=new CompletoEfecto();
-//                break;
-//                case "PARCIAL":
-//                    strategyEfecto=new ParcialEfecto();
-//                 break;
-//                case "SIMULADOR" :
-//                    strategyEfecto=new SimuladorEfecto();
-//        }
-//        this.m.getRondaActual().setEfecto(strategyEfecto);
-//        System.out.printf("Efecto seleccionado %s ",efecto);  
         } catch (NoSeHaSeleccionadoUnEfectoException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
@@ -141,10 +153,10 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
             m.cerrarYPagar();
             fachada.logoutCrupier(m.getCrupier());
             vista.cerrarVentana();
-        } catch (ServicioUsuariosException | HayApuestasEnRondaActualException |EfectoException ex) {
+        } catch (ServicioUsuariosException | HayApuestasEnRondaActualException | EfectoException ex) {
             Logger.getLogger(ControladorVistaMesaCrupier.class.getName()).log(Level.SEVERE, null, ex);
             vista.mostrarMensajeError(ex.getMessage());
-        } 
+        }
     }
 
     @Override
@@ -152,6 +164,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
         try {
             m.lanzarYPagar();
             vista.actualizar();
+
         } catch (EfectoException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }
@@ -159,6 +172,37 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     public void cargarUltimoNumeroSorteado() {
         vista.cargarUltimoNumeroSorteado(m.getUltimoSorteado());
-     }
+    }
+
+    public void cargarNumerosSorteados() {
+        String numeros = "N/A";
+        StringJoiner joiner = new StringJoiner(", ");
+        if (m.getNumerosSorteados().size() > 0) {
+            for (int numero : m.getNumerosSorteados()) {
+                joiner.add(String.valueOf(numero));
+            }
+            numeros = joiner.toString();
+        }
+        vista.cargarNumerosSorteados(numeros);
+
+    }
+
+    public void cargarEstadisticasMesa() {
+           
+    vista.cargarEstadisticasMesa(m.getEstadisticasCrupier());
+    }
+ 
+
+ 
+    public void cargarSaldoJugadores(){
+        this.saldoJugadores.clear();
+        for(Jugador j:m.getJugadores()){
+            ModeloInfoCrupier objSaldoJugador=new ModeloInfoCrupier(j.getNombreCompleto(),j.getSaldo());
+            this.saldoJugadores.add(objSaldoJugador);
+        }
+        vista.cargarSaldoJugadores(saldoJugadores);
+    }
+    
+    
 
 }

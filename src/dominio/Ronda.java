@@ -12,6 +12,7 @@ import dominio.efectos.SimuladorEfecto;
 import dominio.efectos.StrategyEfecto;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 /**
  *
  * @author nacho
@@ -19,20 +20,26 @@ import java.util.HashMap;
 public class Ronda {
 
     private int id;
-    private float balanceAnterior;
-    private float balancePosterior;
-    private float recoleccion;
-    private float liquidacion;
+    private int balanceAnterior;
+    private int balancePosterior;
+    private int recoleccion;
+    private int liquidacion;
     private int totalApostado;
+    private int totalPerdido;
+    private int totalGanado;
+    private int balance;
     private int numeroSorteado;
     private HashMap<String, Apuesta> apuestas;
     private StrategyEfecto efecto;
     private Mesa mesa;
 
-    public Ronda(Mesa mesa) {
+    public Ronda(Mesa mesa,int balanceAnterior) {
         this.id = mesa.getUltimaIdRonda();
         this.totalApostado = 0;
-        this.balanceAnterior = 0;
+        this.totalPerdido = 0;
+        this.totalGanado=0;
+        this.balance = 0;
+        this.balanceAnterior = balanceAnterior;
         this.balancePosterior = 0;
         this.recoleccion = 0;
         this.liquidacion = 0;
@@ -42,11 +49,35 @@ public class Ronda {
 
     }
 
+    public int getTotalGanado() {
+        return totalGanado;
+    }
+
+    public void setTotalGanado(int totalGanado) {
+        this.totalGanado = totalGanado;
+    }
+
+    public int getTotalPerdido() {
+        return totalPerdido;
+    }
+
+    public void setTotalPerdido(int totalPerdido) {
+        this.totalPerdido = totalPerdido;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     public int getId() {
         return id;
     }
 
-    public float getBalanceAnterior() {
+    public int getBalanceAnterior() {
         return balanceAnterior;
     }
 
@@ -78,34 +109,30 @@ public class Ronda {
         this.efecto = efecto;
     }
 
-    public void setBalanceAnterior(float balanceAnterior) {
+    public void setBalanceAnterior(int balanceAnterior) {
         this.balanceAnterior = balanceAnterior;
     }
 
-    public float getBalancePosterior() {
+    public int getBalancePosterior() {
         return balancePosterior;
     }
 
-    public void setBalancePosterior(float balancePosterior) {
+    public void setBalancePosterior(int balancePosterior) {
         this.balancePosterior = balancePosterior;
     }
 
-    public float getRecoleccion() {
+    public int getRecoleccion() {
         return recoleccion;
     }
 
-    public void setRecoleccion(float recoleccion) {
+    public void setRecoleccion(int recoleccion) {
         this.recoleccion = recoleccion;
     }
 
-    public float getLiquidacion() {
+    public int getLiquidacion() {
         return liquidacion;
     }
-
-    public void setLiquidacion(float liquidacion) {
-        this.liquidacion = liquidacion;
-    }
-
+   
     public int getNumeroSorteado() throws EfectoException {
         this.numeroSorteado = efecto.obtenerNumero(mesa);
         return numeroSorteado;
@@ -120,11 +147,12 @@ public class Ronda {
     }
 
     public void apostar(String idJugador, Casillero casillero) {
+
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
             apuesta.apostar(casillero);
             // ver de cambiar esto a un parametro que se va sumando
-            setTotalApostado();
+//            setTotalApostado();
         } else {
             apuesta = new Apuesta(idJugador);
             apuesta.apostar(casillero);
@@ -132,10 +160,11 @@ public class Ronda {
         }
         setTotalApostado();
     }
-    
-    public void agregarFichas (String idJugador, int monto, int uccode) {
+
+    public void agregarFichas(String idJugador, int monto, int uccode) {
         Apuesta apuesta = this.getApuesta(idJugador);
-        apuesta.agregarFichas (monto, uccode);
+        apuesta.agregarFichas(monto, uccode);
+        setTotalApostado();
     }
 
     private Apuesta getApuesta(String idJugador) {
@@ -196,14 +225,17 @@ public class Ronda {
     }
 
     void pagarApuestas(Casillero casilleroSorteado) {
-
         CasilleroNumerico casilleroNumericoSorteado = (CasilleroNumerico) casilleroSorteado;
+        int montoGanado = 0;
         for (Apuesta apu : apuestas.values()) {
             // checkeo si el jugador le emboco al numero directo
             Casillero casilleroGanador = apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.uccode));
             if (casilleroGanador != null) {
                 // pago por acierto de numero
-                mesa.getJugador(apu.getIdJugador()).acreditar(casilleroGanador.monto * casilleroGanador.factorDePago);
+                montoGanado = casilleroGanador.monto * casilleroGanador.factorDePago;
+                mesa.getJugador(apu.getIdJugador()).acreditar(montoGanado);
+                // lo que pierde la casa
+                this.totalPerdido += montoGanado;
                 System.out.println("El Jugador le emboco al numero, apuesta directa...");
             }
 
@@ -218,7 +250,10 @@ public class Ronda {
                     //pago por si tambiensi  acierto al color 
                     Casillero casilleroColor = apu.getCasilleros().get((casilleroNumericoSorteado.getColor().equals("Rojo")) ? String.valueOf(43) : String.valueOf(44));
                     if (casilleroColor != null) {
-                        mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostadoEnCasillero(casilleroColor) * casilleroColor.factorDePago);
+                        montoGanado = apu.getTotalApostadoEnCasillero(casilleroColor) * casilleroColor.factorDePago;
+                        mesa.getJugador(apu.getIdJugador()).acreditar(montoGanado);
+                        // lo que pierde la casa
+                        this.totalPerdido += montoGanado;
                         System.out.println("El jugador emboco al color, pagando...");
                     }
                 }
@@ -228,22 +263,26 @@ public class Ronda {
             // me fijo en las apuestas si apostaron a alguna docena perteneciente a la docena del numero que salio,
             // es decir si el numero que salio pertenece a la 1ra docena y hay una apuesta sobre el casillero 1ra docena ahi se paga
             if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Docenas)) {
-                Casillero casilleroDocena =   apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.getDocena()));
+                Casillero casilleroDocena = apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.getDocena()));
                 if (casilleroDocena != null) {
-                    mesa.getJugador(apu.getIdJugador()).acreditar(apu.getTotalApostadoEnCasillero(casilleroDocena) * casilleroDocena.factorDePago);
+                    montoGanado = apu.getTotalApostadoEnCasillero(casilleroDocena) * casilleroDocena.factorDePago;
+                    mesa.getJugador(apu.getIdJugador()).acreditar(montoGanado);
+                    // lo que pierde la casa
+                    this.totalPerdido += montoGanado;
                     System.out.println("El jugador emboco a la docena, pagando...");
                 }
             }
         }
-
-    
+        this.totalGanado=this.totalApostado-this.totalPerdido;  // total perdido  es recoleccion (apuestas perdidas por los jugadores)
+        this.balance=this.totalGanado-this.totalPerdido;         // total ganado, es apuestas pagas liquidacion
+        this.balancePosterior=this.balanceAnterior+this.balance;
         System.out.println(
                 "TERMINO PAGAR A JUGADOR EN RONDA");
     }
 
     public boolean yaAposto(String idJugador, int uccode) {
         boolean yaAposto = false;
-        Apuesta apuesta = this.apuestas.get(id);
+        Apuesta apuesta = this.apuestas.get(idJugador);
         if (apuesta != null) {
             if (apuesta.getCasillero(uccode) != null) {
                 yaAposto = true;
@@ -252,5 +291,39 @@ public class Ronda {
 
         return yaAposto;
     }
-   
+
+    public ArrayList<Casillero> getCasillerosConApuestas() {
+
+        ArrayList<Casillero> casilleros = new ArrayList();
+        for (Apuesta a : apuestas.values()) {
+            for (Casillero c : a.getCasilleros().values()) {
+                casilleros.add(c);
+            }
+        }
+        return casilleros;
+    }
+
+//    public HashMap<String, Casillero> getCasillerosConApuestas() {
+//        HashMap<String,Casillero> casillerosConTotalApuestas = new HashMap<String,Casillero>();
+//         
+//        for (Apuesta a : apuestas.values()) {
+//            for (Casillero c : a.getCasilleros().values()) {
+//                if (casillerosConTotalApuestas.containsKey(String.valueOf(c.uccode))) {
+//                    // ver si crea un nuevo casillero al ponerlo o es una referencia al casillero?
+//                    // si esta el casillero en la lista de casilleros le sumo el monto
+//                     Casillero x=casillerosConTotalApuestas.get(String.valueOf(c.getUccode()));
+//                     x.agregarMonto(c.getMonto()+x.getMonto());
+//                    casillerosConTotalApuestas.put(String.valueOf(c.getUccode()),x) ;
+//                } else {
+//                    //creo un nuevo casillero con monto y Factor de pago desde cero por si me pasa la referencia al casillero original
+//                    Casillero casillero = new CasilleroNumerico( c.getMonto(),c.getUccode());
+//                    // lo agrego al hashmap
+//                    casillerosConTotalApuestas.put(String.valueOf(casillero.getUccode()), casillero);
+//
+//                }
+//            }
+//
+//        }
+//        return casillerosConTotalApuestas;
+//    }
 }

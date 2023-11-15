@@ -8,6 +8,7 @@ import Common.Observable;
 import Exceptions.EfectoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.HayApuestasEnRondaActualException;
+import dominio.modelosVista.EstadisticaCrupier;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,6 +31,7 @@ public class Mesa extends Observable {
     private EnumEstados estado;
     private int numeroSorteado;
     private ArrayList<Integer> numerosRojos;
+    private ArrayList<EstadisticaCrupier> estadisticasCrupier;
 
     public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier crupier) {
         this.id = autoId;
@@ -41,9 +43,10 @@ public class Mesa extends Observable {
         this.bloqueada = false;
         this.tiposApuesta = tiposApuesta;
         this.crupier = crupier;
-        this.rondaActual = new Ronda(this);
+        this.rondaActual = new Ronda(this,0);
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
-        this.rondas = new ArrayList<Ronda>();
+        this.rondas = new ArrayList<>();
+        this.estadisticasCrupier = new ArrayList<>();
         this.estado = EnumEstados.ACTIVA;
         this.numerosRojos = new ArrayList<>(
                 Arrays.asList(1, 3, 5, 7, 9, 12, 14, 16, 18, 21, 23, 25, 27, 30, 32, 34, 36));
@@ -144,10 +147,11 @@ public class Mesa extends Observable {
             ronda.agregarFichas(idJugador, monto, uccode);
         } else {
             ronda.apostar(idJugador, c);
-            avisar(EnumEventos.APUESTA_CREADA);
+//            avisar(EnumEventos.APUESTA_CREADA);
         }
 
-        ronda.apostar(idJugador, c);
+//        ronda.apostar(idJugador, c);
+        avisar(EnumEventos.APUESTA_CREADA);
 
     }
 
@@ -196,6 +200,12 @@ public class Mesa extends Observable {
         //cerrar mesas Y Ventanas, lanzar el evento cerrar mesa
     }
 
+    public ArrayList<EstadisticaCrupier> getEstadisticasCrupier() {
+        return estadisticasCrupier;
+    }
+    
+   
+
     public void lanzarYPagar() throws EfectoException {
         // generar el numero random desde la ronda
         switch (estado) {
@@ -224,15 +234,22 @@ public class Mesa extends Observable {
 
     }
 
-    private void pagar(int numeroSortedo) {
+    private void pagar(int numeroSorteado) {
         // se crea un casillero cascaron para ver de que color es en caso de apuestas a color
-        Casillero c = (numeroSortedo > 36) ? new CasilleroNoNumerico(-1, numeroSortedo) : new CasilleroNumerico(-1, numeroSortedo);
+        Casillero c = (numeroSorteado > 36) ? new CasilleroNoNumerico(-1, numeroSorteado) : new CasilleroNumerico(-1, numeroSorteado);
 
         this.rondaActual.pagarApuestas(c);
         //guardar ronda actual y crear ronda nueva
+        guardarEstadisticasCrupier(this.rondaActual);
         this.rondas.add(this.rondaActual);
-        this.rondaActual = new Ronda(this);
 
+        this.rondaActual = new Ronda(this,this.rondaActual.getBalancePosterior());
+        this.numerosSorteados.add(numeroSorteado);
+
+    }
+
+    private void guardarEstadisticasCrupier(Ronda ronda) {
+        estadisticasCrupier.add(0,new EstadisticaCrupier(ronda.getId(), ronda.getTotalGanado(),ronda.getTotalApostado(),ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
     }
 
     public boolean yaAposto(String idJugador, int uccode) {

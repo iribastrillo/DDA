@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import vistas.IVistaMesaCrupier;
 import componentes.PanelInfoCrupier.Escuchador;
+import dominio.Casillero;
+import dominio.modelosVista.EstadisticaCrupier;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -48,7 +52,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
         this.m = m;
         this.controlador = new ControladorVistaMesaCrupier(m, this);
-        setup();        
+        setup();
         actualizar();
 
     }
@@ -64,7 +68,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
         r = new componentes.PanelRuleta();
         panelInfoCrupier1 = new componentes.PanelInfoCrupier();
-        panelTableroRuleta1 = new componentes.PanelTableroRuleta();
+        estadisticas = new componentes.PanelTableroRuleta();
         jLabel1 = new javax.swing.JLabel();
         lbl_ultimosLanzamientos = new javax.swing.JLabel();
 
@@ -82,7 +86,6 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(r, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelTableroRuleta1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -92,6 +95,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                             .addComponent(panelInfoCrupier1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(estadisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,9 +108,9 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lbl_ultimosLanzamientos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelTableroRuleta1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(estadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,10 +118,10 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private componentes.PanelTableroRuleta estadisticas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbl_ultimosLanzamientos;
     private componentes.PanelInfoCrupier panelInfoCrupier1;
-    private componentes.PanelTableroRuleta panelTableroRuleta1;
     private componentes.PanelRuleta r;
     // End of variables declaration//GEN-END:variables
 
@@ -159,7 +163,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
     @Override
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo) {
-        this.panelTableroRuleta1.setJugadoresSaldo(jugadoresSaldo);
+        this.estadisticas.setJugadoresSaldo(jugadoresSaldo);
     }
 
     @Override
@@ -198,6 +202,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         controlador.cargarNumeroDeRondaEnPanel(m);
         controlador.cargarNumeroDeApuestasEnPanel(m);
         controlador.cargarUltimoNumeroSorteado();
+        controlador.cargarNumerosSorteados();
     }
 
     @Override
@@ -211,5 +216,38 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         this.panelInfoCrupier1.setNumeroMesa(m.getId());
         this.panelInfoCrupier1.agregar(this.controlador);
     }
+
+    @Override
+    public void cargarFichasEnMesa(ArrayList<Casillero> casilleros) {
+
+        for (Casillero c : casilleros) {
+            int montoActual = r.getApuesta(c.getUccode());
+            r.setApuesta(c.getUccode(), c.getMonto()+montoActual);
+        }
+
+    }
+
+    @Override
+    public void borrarFichasEnMesa() {
+        r.limpiar();
+    }
+
+    @Override
+    public void cargarNumerosSorteados(String numerosSorteados) {
+        this.lbl_ultimosLanzamientos.setText(numerosSorteados);
+     }
+
+    @Override
+    public void cargarEstadisticasMesa(ArrayList<EstadisticaCrupier> estadisticasCrupier) {
+
+        this.estadisticas.setEstadisticas(estadisticasCrupier);
+    }
+
+    @Override
+    public void cargarSaldoJugadores(ArrayList<ModeloInfoCrupier> saldoJugadores) {
+        this.estadisticas.setJugadoresSaldo(saldoJugadores);
+     }
+    
+    
 
 }

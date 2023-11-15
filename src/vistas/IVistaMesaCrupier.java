@@ -4,10 +4,13 @@
  */
 package vistas;
 
+import dominio.Casillero;
 import dominio.EnumTipoApuesta;
 import dominio.Mesa;
+import dominio.modelosVista.EstadisticaCrupier;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -25,8 +28,8 @@ public interface IVistaMesaCrupier {
 
     public void cargarNumeroDeApuestasEnPanel(int cantidadApuestas);
 
-
     public void cargarDropdownEfectos(String[] valoresEnumStrings);
+    
     public void cargarListaJugadores(ArrayList<ModeloInfoCrupier> jugadoresSaldo);
 
     public void mostrarMensajeError(String message);
@@ -40,5 +43,15 @@ public interface IVistaMesaCrupier {
     public void actualizar();
 
     public void cargarUltimoNumeroSorteado(String ultimoSorteado);
+
+    public void cargarFichasEnMesa(ArrayList<Casillero> casilleros);
+
+    public void borrarFichasEnMesa();
+
+    public void cargarNumerosSorteados(String numerosSorteados);
+
+    public void cargarEstadisticasMesa(ArrayList<EstadisticaCrupier> estadisticasCrupier);
+
+    public void cargarSaldoJugadores(ArrayList<ModeloInfoCrupier> saldoJugadores);
     
 }

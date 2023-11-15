@@ -45,7 +45,15 @@ public class Apuesta {
         this.casilleros = casilleros;
     }
 
-    public void apostar(Casillero casillero) {       
+    public void apostar(Casillero casillero) {   
+        // checkear si el casillero no esta agregado antes, sino lo que hace el put es pasarlo por arriba (ya esta en ya aposto)
+//        Casillero casilleroYaExistente=this.casilleros.get(String.valueOf(casillero.getUccode()));
+//        if(casilleroYaExistente!=null){
+//            casilleroYaExistente.agregarMonto(casillero.getMonto());
+//        }else{
+//            this.casilleros.put(String.valueOf(casillero.uccode), casillero);
+//        }
+//      
         this.casilleros.put(String.valueOf(casillero.uccode), casillero);
     }
 
