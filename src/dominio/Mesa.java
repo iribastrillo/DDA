@@ -279,13 +279,13 @@ public class Mesa extends Observable {
             this.estadisticasJugadores.put(idJugador, estadisticas);
         }
     }
-// 1, 2, 1, 3, 4, 4, 6
+    
     public HashMap<String, Float> getOcurrencias() {
         HashMap<String, Float> ocurrencias = new HashMap <> ();
         int count = 0;
-        for (int i = 0; i < this.numerosSorteados.size() - 1; i ++) {
-            for (int j = i; j < this.numerosSorteados.size() - 1; j++) {
-                    if (i == j) {
+        for (int i = 0; i < this.numerosSorteados.size(); i ++) {
+            for (int j = i; j < this.numerosSorteados.size(); j++) {
+                    if (this.numerosSorteados.get(i) == this.numerosSorteados.get(j)) {
                         count ++;
                     }
             }

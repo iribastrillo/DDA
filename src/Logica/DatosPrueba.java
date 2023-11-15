@@ -6,7 +6,6 @@ package Logica;
 
 import Exceptions.UsuarioYaExisteException;
 import dominio.Crupier;
-import dominio.EnumTipoApuesta;
 import dominio.Jugador;
 import dominio.Mesa;
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public class DatosPrueba {
     public static void iniciar(Fachada fachada) throws UsuarioYaExisteException 
     {
         Jugador[] jugadores = new Jugador[]{
-            new Jugador(1000, "Ignacio Ribas", "201", "aaa"),
-            new Jugador(500, "Agustín Miller", "202", "bbb"),
+            new Jugador(1000, "Jugador_1", "201", "aaa"),
+            new Jugador(500, "Jugador_2", "202", "bbb"),
             new Jugador(203, "Jugador_3", "203", "ccc"),
             new Jugador(204, "Jugador_4", "204", "ddd"),
             new Jugador(205, "Jugador_5", "205", "eee")
