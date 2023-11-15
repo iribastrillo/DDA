@@ -121,9 +121,7 @@ public class Fachada extends Observable {
 
         Mesa mesa = getServicioMesa().agregarJugador(id, jugador);
         avisar(EnumEventos.LOGIN_JUGADOR_MESA);
-
         return mesa;
-
     }
 
     public ArrayList<ModeloInfoCrupier> cargarJugadoresSaldo(Mesa m) {
@@ -158,5 +156,9 @@ public class Fachada extends Observable {
     public void sacarMesaActiva(Mesa m) {
         this.servicioMesas.sacarMesaActiva (m);
         avisar(EnumEventos.FACHADA_MESA_REMOVIDA);
+    }
+
+    public void sePago() {
+        avisar (EnumEventos.SE_PAGO);
     }
 }

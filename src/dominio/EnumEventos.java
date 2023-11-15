@@ -18,5 +18,6 @@ public enum EnumEventos {
     LANZAR,
     PAGAR, 
     APUESTA_MODIFICADA, 
-    FACHADA_MESA_REMOVIDA;
+    FACHADA_MESA_REMOVIDA,
+    SE_PAGO;
 }

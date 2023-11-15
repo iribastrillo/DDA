@@ -219,7 +219,6 @@ public class Mesa extends Observable {
                 numeroSorteado = lanzar();
                 avisar(EnumEventos.LANZAR);
                 estado = EnumEstados.BLOQUEADA;
-
                 break;
             case BLOQUEADA:
                 //Si la mesa esta bloqueada se procede a pagar
@@ -228,7 +227,6 @@ public class Mesa extends Observable {
                 //mesa queda activa
                 estado = EnumEstados.ACTIVA;
                 break;
-
         }
 
     }

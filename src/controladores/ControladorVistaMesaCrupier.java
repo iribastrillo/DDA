@@ -103,7 +103,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     @Override
     public void actualizar(Observable origen, Object evento) {
-        if (EnumEventos.LOGIN_JUGADOR_MESA.equals(evento)||EnumEventos.ABANDONAR_MESA.equals(evento)) {
+        if (EnumEventos.LOGIN_JUGADOR_MESA.equals(evento)||EnumEventos.ABANDONAR_MESA.equals(evento) || EnumEventos.SE_PAGO.equals(evento)) {
             // Ccrear Modelo que pase el nombre del jugador y el saldo para mostrar en la vista (esto se tiene que cargar en searvicios mesa), previa llamada a fachada
 
             cargarSaldoJugadores();
@@ -112,6 +112,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
         }
         if (EnumEventos.APUESTA_CREADA.equals(evento) || EnumEventos.APUESTA_MODIFICADA.equals(evento)) {
             cargarFichasEnMesa();
+            cargarSaldoJugadores();
             actualizarPanelApuestasMesa();
             cargarTotalApostadoEnPanel();
             cargarNumeroDeApuestasEnPanel();
@@ -128,17 +129,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
          if (EnumEventos.LANZAR.equals(evento)) {
             cargarUltimoNumeroSorteado();
         }
-       
     }
-    
-    
-//            controlador.mostrarTiposApuestaSeleccionados();
-//        controlador.cargarNumeroDeMesaEnPanel();
-//        controlador.cargarTotalApostadoEnPanel();
-//        controlador.cargarNumeroDeRondaEnPanel();
-//        controlador.cargarNumeroDeApuestasEnPanel();
-//        controlador.cargarUltimoNumeroSorteado();
-//        controlador.cargarNumerosSorteados();
 
     @Override
     public void efectoSeleccionado(String efecto) {
@@ -182,8 +173,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
     public void lanzarYPagar() {
         try {
             m.lanzarYPagar();
-         //   vista.actualizar();
-
+            fachada.sePago();
         } catch (EfectoException ex) {
             vista.mostrarMensajeError(ex.getMessage());
         }

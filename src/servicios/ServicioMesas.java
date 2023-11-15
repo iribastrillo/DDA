@@ -23,7 +23,6 @@ import java.util.HashMap;
 public class ServicioMesas {
 
     public Mesa agregarJugador(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
-
         Mesa mesa = getMesa(id);
         if (mesa == null) {
             String mensaje = String.format("Mesa con id: %s No encontrada", id);
@@ -63,8 +62,14 @@ public class ServicioMesas {
         return mesa;
     }
 
-    public Mesa getMesa(int mesa) {
-        return mesasActivas.get(mesa);
+    public Mesa getMesa(int idMesa) {
+        Mesa m = null;
+        for (Mesa mesa: this.mesasActivas) {
+            if (mesa.getId() == idMesa) {
+                m = mesa;
+            }
+        }
+        return m;
     }
 
     public ArrayList<ModeloInfoCrupier> obtenerJugadoresSaldoParaMesa(Mesa m) {
