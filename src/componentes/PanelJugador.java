@@ -6,10 +6,9 @@ package componentes;
 
 import Exceptions.NoPuedeAbandonarMesaException;
 import controladores.ControladorPanelJugador;
-import dominio.modelosVista.ModeloInfoCrupier;
+import dominio.modelosVista.EstadisticasJugador;
 import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import vistas.IVistaMesaJugador;
 /**
@@ -140,23 +139,13 @@ public class PanelJugador extends javax.swing.JPanel {
         this.estadisticas.setModel(new DefaultTableModel(null,new String[]{"Ronda","Total apostado", "Ganado", "Perdido", "Balance"}));
         DefaultTableModel model = (DefaultTableModel) this.estadisticas.getModel();
         Object rowData[] = new Object[5];
-        for (ArrayList row1 : modelo.getEstadisticas().values()) {
-            rowData[0] = row1.get(0);
-            rowData[1] = row1.get(1);
-            rowData[2] = row1.get(2);
-            rowData[3] = row1.get(3);
-            rowData[4] = row1.get(4);
+        for (EstadisticasJugador row1 : modelo.getEstadisticas()) {
+            rowData[0] = row1.getRonda();
+            rowData[1] = row1.getTotal();
+            rowData[2] = row1.getGanado();
+            rowData[3] = row1.getPerdido();
+            rowData[4] = row1.getBalance();
             model.addRow(rowData);
         }
-        
-        this.ocurrencias.setModel(new DefaultTableModel(null,new String[]{"Valor","Ocurrencia"}));
-        model = (DefaultTableModel) this.ocurrencias.getModel();
-        Object row[] = new Object[2];
-        for (ArrayList row2 : modelo.getOcurrencias().values()) {
-            row[0] = row2.get(0);
-            row[1] = row2.get(1);
-            model.addRow(row);
-        }
-        
     }
 }

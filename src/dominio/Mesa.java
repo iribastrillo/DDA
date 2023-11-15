@@ -9,8 +9,10 @@ import Exceptions.EfectoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.HayApuestasEnRondaActualException;
 import dominio.modelosVista.EstadisticaCrupier;
+import dominio.modelosVista.EstadisticasJugador;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  *
@@ -32,6 +34,7 @@ public class Mesa extends Observable {
     private int numeroSorteado;
     private ArrayList<Integer> numerosRojos;
     private ArrayList<EstadisticaCrupier> estadisticasCrupier;
+    private HashMap<String, ArrayList> estadisticasJugadores;
 
     public Mesa(ArrayList<EnumTipoApuesta> tiposApuesta, Crupier crupier) {
         this.id = autoId;
@@ -47,6 +50,7 @@ public class Mesa extends Observable {
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
         this.rondas = new ArrayList<>();
         this.estadisticasCrupier = new ArrayList<>();
+        this.estadisticasJugadores = new HashMap <>();
         this.estado = EnumEstados.ACTIVA;
         this.numerosRojos = new ArrayList<>(
                 Arrays.asList(1, 3, 5, 7, 9, 12, 14, 16, 18, 21, 23, 25, 27, 30, 32, 34, 36));
@@ -258,4 +262,21 @@ public class Mesa extends Observable {
         return this.getRondaActual().yaAposto(idJugador, uccode);
     }
 
+    public ArrayList<EstadisticasJugador> getEstadisticasDelJugador(String idJugador) {
+        ArrayList <EstadisticasJugador> estadisticas = new ArrayList <> ();
+        if (this.estadisticasJugadores.containsKey(idJugador)) {
+            estadisticas = this.estadisticasJugadores.get(idJugador);
+        }
+        return estadisticas;
+    }
+
+    void agregarEstadisticaDelJugador(String idJugador, EstadisticasJugador estadisticasJugador) {
+        ArrayList<EstadisticasJugador> estadisticas = new ArrayList <> ();
+        if (this.estadisticasJugadores.containsKey(idJugador)) {
+            this.estadisticasJugadores.get(idJugador).add(estadisticasJugador);
+        } else {
+            estadisticas.add(estadisticasJugador);
+            this.estadisticasJugadores.put(idJugador, estadisticas);
+        }
+    }
 }

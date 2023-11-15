@@ -11,6 +11,7 @@ import Exceptions.NoTieneSaldoDisponibleException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import dominio.Jugador;
 import dominio.Mesa;
+import dominio.modelosVista.EstadisticasJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 
@@ -112,5 +113,10 @@ public class ServicioMesas {
     public void agregarFichas(String idJugador, int monto, int uccode, int idMesa) {
         Mesa mesa = this.getMesa(idMesa);
         mesa.agregarFichas(idJugador, monto, uccode);
+    }
+
+    public ArrayList<EstadisticasJugador> getEstadisticasDelJugador(String idJugador, int idMesa) {
+        Mesa mesa = this.getMesa(idMesa);
+        return mesa.getEstadisticasDelJugador(idJugador);
     }
 }

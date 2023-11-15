@@ -12,6 +12,7 @@ import Logica.Fachada;
 import dominio.EnumEventos;
 import dominio.Jugador;
 import dominio.Mesa;
+import dominio.modelosVista.EstadisticasJugador;
 import dominio.modelosVista.ModeloMesaJugador;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,8 +76,7 @@ public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchad
     public ModeloMesaJugador refrescarModelo(ModeloMesaJugador modelo) {
         Jugador jugador = fachada.getJugadorById(modelo.getIdJugador());
         Mesa mesa = fachada.getMesa(modelo.getMesa());
-        HashMap<Integer, ArrayList> filas = fachada.getEstadisticasById (modelo.getIdJugador());
-        HashMap<Integer, ArrayList> ocurrencias = fachada.getOcurrenciasById (modelo.getMesa());
+        ArrayList<EstadisticasJugador> filas = fachada.getEstadisticasById (modelo.getIdJugador(), mesa.getId());
         
         ModeloMesaJugador nuevoModelo = new ModeloMesaJugador (
         jugador.getNombreCompleto(),
@@ -87,7 +87,6 @@ public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchad
         mesa.getUltimoSorteado());
         
         nuevoModelo.setEstadisticas(filas);
-        nuevoModelo.setOcurrencias (ocurrencias);
         
         return nuevoModelo;
     }

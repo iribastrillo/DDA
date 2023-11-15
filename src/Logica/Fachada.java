@@ -24,6 +24,7 @@ import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Ronda;
 import dominio.Usuario;
+import dominio.modelosVista.EstadisticasJugador;
 import dominio.modelosVista.ModeloInfoCrupier;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,19 +148,8 @@ public class Fachada extends Observable {
         ronda.ActualizarEfecto(efecto);
     }
 
-    public HashMap<Integer, ArrayList> getEstadisticasById(String idJugador) {
-        // Funcionalidad limitada con un mock de datos para desarrollar.
-        // Luego el dato viene de algun servicio.
-        HashMap<Integer, ArrayList> filas = new HashMap <> ();
-        ArrayList<Integer> fila1 = new ArrayList<> ();
-        fila1.add(1);
-        fila1.add(300);
-        fila1.add(300);
-        fila1.add(0);
-        fila1.add(300);     
-        filas.put(1, fila1);
-        filas.put(2, fila1);
-        return filas;
+    public ArrayList<EstadisticasJugador> getEstadisticasById(String idJugador, int idMesa) {
+        return this.servicioMesas.getEstadisticasDelJugador (idJugador, idMesa);        
     }
 
     public HashMap<Integer, ArrayList> getOcurrenciasById(int idMesa) {
