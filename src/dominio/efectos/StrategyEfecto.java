@@ -12,7 +12,8 @@ import dominio.Mesa;
  * @author nacho
  */
 public interface StrategyEfecto {
-    public int obtenerNumero( Mesa m) throws EfectoException;
+    
+    public int obtenerNumero( Mesa m);
     
     public String getNombreEfecto();
     

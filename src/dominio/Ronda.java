@@ -31,14 +31,15 @@ public class Ronda {
     private int balance;
     private int numeroSorteado;
     private HashMap<String, Apuesta> apuestas;
+
     private StrategyEfecto efecto;
     private Mesa mesa;
 
-    public Ronda(Mesa mesa,int balanceAnterior) {
+    public Ronda(Mesa mesa, int balanceAnterior) {
         this.id = mesa.getUltimaIdRonda();
         this.totalApostado = 0;
         this.totalPerdido = 0;
-        this.totalGanado=0;
+        this.totalGanado = 0;
         this.balance = 0;
         this.balanceAnterior = balanceAnterior;
         this.balancePosterior = 0;
@@ -84,6 +85,10 @@ public class Ronda {
 
     public int getTotalApostado() {
         return totalApostado;
+    }
+
+    public void setNumeroSorteado(int numeroSorteado) {
+        this.numeroSorteado = numeroSorteado;
     }
 
     public void setTotalApostado() {
@@ -133,11 +138,15 @@ public class Ronda {
     public int getLiquidacion() {
         return liquidacion;
     }
-   
-    public int getNumeroSorteado() throws EfectoException {
-        this.numeroSorteado = efecto.obtenerNumero(mesa);
+
+    public int getNumeroSorteado()  {     
         return numeroSorteado;
     }
+    
+    int sacarNuevoNumero() {
+        this.numeroSorteado  = efecto.obtenerNumero(mesa);
+          return numeroSorteado;
+        }
 
     public int getCantidadApuestas() {
         int cantidadApuestas = 0;
@@ -282,20 +291,20 @@ public class Ronda {
                     System.out.println("El jugador emboco a la docena, pagando...");
                 }
             }
-            mesa.agregarEstadisticaDelJugador (apu.getIdJugador(), new EstadisticasJugador (
+            mesa.agregarEstadisticaDelJugador(apu.getIdJugador(), new EstadisticasJugador(
                     this.id,
                     totalGanado + totalPerdido,
                     totalGanado,
                     totalPerdido,
                     totalGanado - Math.abs(totalPerdido)
-            ));    
+            ));
         }
         // lo que gana la casa (Balance)
         //this.totalGanado=this.totalApostado-this.totalPerdido;  // total perdido  es recoleccion (apuestas perdidas por los jugadores)
-        this.balance=this.totalApostado-this.totalPerdido;     // total ganado, es apuestas pagas liquidacion
-        this.balancePosterior=this.balanceAnterior+this.balance;
+        this.balance = this.totalApostado - this.totalPerdido;     // total ganado, es apuestas pagas liquidacion
+        this.balancePosterior = this.balanceAnterior + this.balance;
     }
-   
+
     public boolean yaAposto(String idJugador, int uccode) {
         boolean yaAposto = false;
         Apuesta apuesta = this.apuestas.get(idJugador);
@@ -318,4 +327,12 @@ public class Ronda {
         }
         return casilleros;
     }
+
+    void copy(Ronda rondaActual)  {
+        this.setApuestas(rondaActual.getApuestas());
+        this.setNumeroSorteado(rondaActual.getNumeroSorteado());
+    }
+
+    
+
 }

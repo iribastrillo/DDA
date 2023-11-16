@@ -104,7 +104,7 @@ public class ServicioMesas {
         }
 
         if (!mesa.permiteApuesta(uccode, monto, idJugador)) {
-            throw new ApuestaNoPermitidaException ("No puedes apostar a ese color.");
+            throw new ApuestaNoPermitidaException ("No puedes apostar a ese color un monto superior a la ronda pasada.");
         }
         
         if (mesa.yaAposto(idJugador, uccode)) {

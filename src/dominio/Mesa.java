@@ -118,8 +118,8 @@ public class Mesa extends Observable {
 
     public Ronda getRondaAnterior() {
         Ronda ronda = null;
-        if (this.rondas.size() > 1) {
-            ronda = this.rondas.get(this.rondas.size() - 2);
+        if (this.rondas.size() >= 1) {
+            ronda = this.rondas.get(this.rondas.size() - 1);
         }
         return ronda;
     }
@@ -230,8 +230,8 @@ public class Mesa extends Observable {
 
     }
 
-    private int lanzar() throws EfectoException {
-        this.numeroSorteado = rondaActual.getNumeroSorteado();
+    private int lanzar() {
+        this.numeroSorteado = rondaActual.sacarNuevoNumero();
         return numeroSorteado;
 
     }
@@ -243,7 +243,10 @@ public class Mesa extends Observable {
         this.rondaActual.pagarApuestas(c);
         //guardar ronda actual y crear ronda nueva
         guardarEstadisticasCrupier(this.rondaActual);
-        this.rondas.add(this.rondaActual);
+
+        Ronda rondaAGuardar = new Ronda(this, this.rondaActual.getBalancePosterior());
+        rondaAGuardar.copy(this.rondaActual);
+        this.rondas.add(rondaAGuardar);
 
         this.rondaActual = new Ronda(this, this.rondaActual.getBalancePosterior());
         //se agrega el ultimo numero al inicio del array
@@ -300,27 +303,41 @@ public class Mesa extends Observable {
         if (ronda != null) {
             Apuesta apuesta = ronda.getApuesta(idJugador);
             if (apuesta != null) {
-                boolean rojo = apuesta.apostoRojo();
-                boolean negro = apuesta.apostoNegro();
-                boolean cero = ronda.getNumeroSorteado() == 0;
-                boolean salioNegro = !this.numerosRojos.contains(ronda.getNumeroSorteado()) && uccode != 0;
-                boolean salioRojo = !salioNegro;
-                if (rojo || negro) {
-                    if ((rojo && salioNegro) || (negro && salioRojo)) {
-                        Casillero casillero = apuesta.getCasillero(uccode);
-                        if (casillero != null) {
-                            if (casillero.getMonto() < monto) {
-                                r = false;
+                boolean apostoRojo = apuesta.apostoRojo();
+                boolean apostoNegro = apuesta.apostoNegro();
+                int ultimoNumeroFavorecido = ronda.getNumeroSorteado();
+
+                boolean salioElCero = ultimoNumeroFavorecido == 0;
+
+                boolean apuestaNuevaNegro = !this.numerosRojos.contains(uccode) && uccode != 0;
+                boolean apuestaNuevaRojo = !apuestaNuevaNegro;
+
+                if (!salioElCero) {
+                    boolean salioNegro = !this.numerosRojos.contains(ultimoNumeroFavorecido);
+                    boolean salioRojo = !salioNegro;
+
+                    if ((apostoRojo && salioNegro) || (apostoNegro && salioRojo)) {
+                        if (apuestaNuevaNegro || apuestaNuevaRojo) {
+                            Casillero casillero = apuesta.getCasillero(uccode);
+                            if (casillero != null) {
+                                if (casillero.getMonto() < monto) {
+                                    r = false;
+                                }
                             }
                         }
+
                     }
-                }
-                if ((rojo && negro) && cero) {
-                    Casillero casillero = apuesta.getCasillero(uccode);
-                    if (casillero != null) {
-                        if (casillero.getMonto() < monto) {
-                            r = false;
+                } else {
+                    if ((apostoRojo && apostoNegro)) {
+                        if (apuestaNuevaNegro || apuestaNuevaRojo) {
+                            Casillero casillero = apuesta.getCasillero(uccode);
+                            if (casillero != null) {
+                                if (casillero.getMonto() < monto) {
+                                    r = false;
+                                }
+                            }
                         }
+
                     }
 
                 }

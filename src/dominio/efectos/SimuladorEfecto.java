@@ -6,6 +6,7 @@ package dominio.efectos;
 
 import Exceptions.EfectoException;
 import dominio.Mesa;
+import static java.lang.Math.random;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -26,18 +27,22 @@ public class SimuladorEfecto implements StrategyEfecto {
     //• Modo simulador: la bola sortea únicamente entre
     //los números que tienen Apuesta Directa, más el cero.
     @Override
-    public int obtenerNumero(Mesa m) throws EfectoException {
+    public int obtenerNumero(Mesa m)  {
+        
+         Random random = new Random();
+       
 
         ArrayList<Integer> numerosConApuestaDirecta = m.getNumerosConApuestaDirecta();
         if (numerosConApuestaDirecta.size() == 0) {
-            //ver si hay que tirar esta excepcion o realizar el sorteo igualmente
-            throw new EfectoException("no hay apuestas en numeros para realizar el efecto simulador");
+            //Si no hay numeros con apuesta directa realizo el sorteo con todos los numeros el sorteo igualmente
+            return  random.nextInt(37);
+//            throw new EfectoException("no hay apuestas en numeros para realizar el efecto simulador");
         } else {
             //agregar el cero si no esta
             if(!numerosConApuestaDirecta.contains(0)){
                 numerosConApuestaDirecta.add(0);
             }
-            int rnd = new Random().nextInt(numerosConApuestaDirecta.size() - 1);
+            int rnd = random.nextInt(numerosConApuestaDirecta.size() - 1);
             return numerosConApuestaDirecta.get(rnd);
         }
 
