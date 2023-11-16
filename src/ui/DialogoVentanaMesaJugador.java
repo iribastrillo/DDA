@@ -108,9 +108,9 @@ public class DialogoVentanaMesaJugador extends javax.swing.JFrame implements IVi
             int n = selector.universalCellCode;
             int monto = panelInfoJugador1.getModelo().getTotal();
             int montoAnterior = r.getApuesta(n);
-            String idJugador = modelo.getIdJugador();
-            r.setApuesta(n, montoAnterior + monto);
+            String idJugador = modelo.getIdJugador();           
             controlador.apostar (n, monto, modelo.getMesa(), idJugador);
+            r.setApuesta(n, montoAnterior + monto);
         } else {
             this.mostrarDialogoDeError("La mesa está bloqueada para apuestas.");
         }

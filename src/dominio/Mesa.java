@@ -47,11 +47,11 @@ public class Mesa extends Observable {
         this.bloqueada = false;
         this.tiposApuesta = tiposApuesta;
         this.crupier = crupier;
-        this.rondaActual = new Ronda(this,0);
+        this.rondaActual = new Ronda(this, 0);
         this.tiposApuesta.add(EnumTipoApuesta.Apuesta_Directa);
         this.rondas = new ArrayList<>();
         this.estadisticasCrupier = new ArrayList<>();
-        this.estadisticasJugadores = new HashMap <>();
+        this.estadisticasJugadores = new HashMap<>();
         this.estado = EnumEstados.ACTIVA;
         this.numerosRojos = new ArrayList<>(
                 Arrays.asList(1, 3, 5, 7, 9, 12, 14, 16, 18, 21, 23, 25, 27, 30, 32, 34, 36));
@@ -196,7 +196,7 @@ public class Mesa extends Observable {
         if (estado.equals(EnumEstados.BLOQUEADA)) {
             //pagar a jugadores 
             lanzarYPagar();
-            this.jugadores = new ArrayList <>();
+            this.jugadores = new ArrayList<>();
             avisar(EnumEventos.CERRAR_MESA);
         } else {
             throw new HayApuestasEnRondaActualException("No se puede cerrar la mesa, necesita lanzar y pagar");
@@ -209,8 +209,6 @@ public class Mesa extends Observable {
     public ArrayList<EstadisticaCrupier> getEstadisticasCrupier() {
         return estadisticasCrupier;
     }
-    
-   
 
     public void lanzarYPagar() throws EfectoException {
         // generar el numero random desde la ronda
@@ -247,14 +245,14 @@ public class Mesa extends Observable {
         guardarEstadisticasCrupier(this.rondaActual);
         this.rondas.add(this.rondaActual);
 
-        this.rondaActual = new Ronda(this,this.rondaActual.getBalancePosterior());
+        this.rondaActual = new Ronda(this, this.rondaActual.getBalancePosterior());
         //se agrega el ultimo numero al inicio del array
-        this.numerosSorteados.add(0,numeroSorteado);
+        this.numerosSorteados.add(0, numeroSorteado);
     }
 
     private void guardarEstadisticasCrupier(Ronda ronda) {
         //Se agrega la ultima estadistica de ronda al inicio del array
-        estadisticasCrupier.add(0,new EstadisticaCrupier(ronda.getId(), ronda.getBalance(),ronda.getTotalApostado(),ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
+        estadisticasCrupier.add(0, new EstadisticaCrupier(ronda.getId(), ronda.getBalance(), ronda.getTotalApostado(), ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
     }
 
     public boolean yaAposto(String idJugador, int uccode) {
@@ -262,7 +260,7 @@ public class Mesa extends Observable {
     }
 
     public ArrayList<EstadisticasJugador> getEstadisticasDelJugador(String idJugador) {
-        ArrayList <EstadisticasJugador> estadisticas = new ArrayList <> ();
+        ArrayList<EstadisticasJugador> estadisticas = new ArrayList<>();
         if (this.estadisticasJugadores.containsKey(idJugador)) {
             estadisticas = this.estadisticasJugadores.get(idJugador);
         }
@@ -270,7 +268,7 @@ public class Mesa extends Observable {
     }
 
     void agregarEstadisticaDelJugador(String idJugador, EstadisticasJugador estadisticasJugador) {
-        ArrayList<EstadisticasJugador> estadisticas = new ArrayList <> ();
+        ArrayList<EstadisticasJugador> estadisticas = new ArrayList<>();
         if (this.estadisticasJugadores.containsKey(idJugador)) {
             this.estadisticasJugadores.get(idJugador).add(estadisticasJugador);
         } else {
@@ -278,18 +276,18 @@ public class Mesa extends Observable {
             this.estadisticasJugadores.put(idJugador, estadisticas);
         }
     }
-    
+
     public HashMap<String, Float> getOcurrencias() {
-        HashMap<String, Float> ocurrencias = new HashMap <> ();
+        HashMap<String, Float> ocurrencias = new HashMap<>();
         int count = 0;
-        for (int i = 0; i < this.numerosSorteados.size(); i ++) {
+        for (int i = 0; i < this.numerosSorteados.size(); i++) {
             for (int j = i; j < this.numerosSorteados.size(); j++) {
-                    if (this.numerosSorteados.get(i) == this.numerosSorteados.get(j)) {
-                        count ++;
-                    }
+                if (this.numerosSorteados.get(i) == this.numerosSorteados.get(j)) {
+                    count++;
+                }
             }
             if (!ocurrencias.containsKey(String.valueOf(this.numerosSorteados.get(i)))) {
-                ocurrencias.put(String.valueOf(this.numerosSorteados.get(i)), (float) count/this.numerosSorteados.size());
+                ocurrencias.put(String.valueOf(this.numerosSorteados.get(i)), (float) count / this.numerosSorteados.size());
             }
             count = 0;
         }
@@ -302,24 +300,31 @@ public class Mesa extends Observable {
         if (ronda != null) {
             Apuesta apuesta = ronda.getApuesta(idJugador);
             if (apuesta != null) {
-                boolean rojo = apuesta.apostoRojo ();
+                boolean rojo = apuesta.apostoRojo();
                 boolean negro = apuesta.apostoNegro();
                 boolean cero = ronda.getNumeroSorteado() == 0;
                 boolean salioNegro = !this.numerosRojos.contains(ronda.getNumeroSorteado()) && uccode != 0;
                 boolean salioRojo = !salioNegro;
                 if (rojo || negro) {
-                    if ((rojo  && salioNegro) || (negro && salioRojo)) {
-                        if (apuesta.getCasillero(uccode).getMonto() < monto) {
-                            r = false;
+                    if ((rojo && salioNegro) || (negro && salioRojo)) {
+                        Casillero casillero = apuesta.getCasillero(uccode);
+                        if (casillero != null) {
+                            if (casillero.getMonto() < monto) {
+                                r = false;
+                            }
                         }
                     }
                 }
                 if ((rojo && negro) && cero) {
-                    if (apuesta.getCasillero(uccode).getMonto() < monto) {
+                    Casillero casillero = apuesta.getCasillero(uccode);
+                    if (casillero != null) {
+                        if (casillero.getMonto() < monto) {
                             r = false;
+                        }
                     }
+
                 }
-            } 
+            }
         }
         return r;
     }
