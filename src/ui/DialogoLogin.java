@@ -137,13 +137,8 @@ public abstract class DialogoLogin extends javax.swing.JDialog implements IVista
         Usuario usuario = loginUsuario(cedula, password);
         if (usuario != null) {
             ejecutarCasoUsoInicial(usuario);
-             this.dispose();
-          
-        } else {
-            // No hacer nada, los mensajes de error tendria que haber saltado antes      
-           //JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado, estamos investigando.", "Error", JOptionPane.ERROR_MESSAGE);
-           
-        }
+             this.dispose();     
+        } 
     }
 
     public abstract Usuario loginUsuario(String cedula, String password);

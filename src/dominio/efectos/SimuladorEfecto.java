@@ -4,7 +4,6 @@
  */
 package dominio.efectos;
 
-import Exceptions.EfectoException;
 import dominio.Mesa;
 import static java.lang.Math.random;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public class SimuladorEfecto implements StrategyEfecto {
         if (numerosConApuestaDirecta.size() == 0) {
             //Si no hay numeros con apuesta directa realizo el sorteo con todos los numeros el sorteo igualmente
             return  random.nextInt(37);
-//            throw new EfectoException("no hay apuestas en numeros para realizar el efecto simulador");
         } else {
             //agregar el cero si no esta
             if(!numerosConApuestaDirecta.contains(0)){

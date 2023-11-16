@@ -7,7 +7,6 @@ package controladores;
 import Common.Observable;
 import Common.Observador;
 import Exceptions.ApuestaNoPermitidaException;
-import Exceptions.EfectoException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoTieneSaldoDisponibleException;
 import Logica.Fachada;
@@ -74,9 +73,7 @@ public class ControladorVistaMesaJugador implements Observador, Jugador.Escuchad
             vista.mostrarDialogoDeError("El monto no puede ser igual a cero.");
         } catch (ApuestaNoPermitidaException ex) {
             vista.mostrarDialogoDeError(ex.getMessage());
-        } catch (EfectoException ex) {
-            Logger.getLogger(ControladorVistaMesaJugador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
     
     public void setup () {

@@ -31,12 +31,8 @@ public class DialogoLoginCroupier extends DialogoLogin {
      }
     
         @Override
-    protected void ejecutarCasoUsoInicial(Usuario usuario) {
-     
-        System.out.println("DialogoLoginCrupier: Caso de uso inicial para usuario Croupier");
-        new DialogoCrearMesa((java.awt.Frame) this.getParent(),false,super.fachada,(Crupier) usuario).setVisible(true);
-//        new DialogoUsuariosConectados((java.awt.Frame) this.getParent(), false, (Croupier) usuario).setVisible(true);
-        
+    protected void ejecutarCasoUsoInicial(Usuario usuario) {     
+        new DialogoCrearMesa((java.awt.Frame) this.getParent(),false,super.fachada,(Crupier) usuario).setVisible(true);        
     }
 
     @Override

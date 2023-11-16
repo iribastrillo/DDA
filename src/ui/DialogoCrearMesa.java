@@ -123,7 +123,6 @@ public class DialogoCrearMesa extends javax.swing.JDialog implements IVistaCrear
     public void iniciarMesa() {
       Object[] tipoApuestaSeleccionada =  jListaTiposApuesta.getSelectedValues();
       String[] stringArr=Arrays.copyOf(tipoApuestaSeleccionada,tipoApuestaSeleccionada.length,String[].class);
-        System.out.printf("DialogoCrearMesa: Tipos de Apuesta Seleccionadas para la mesa %s",Arrays.toString(stringArr));
         controlador.inciarMesa(c,stringArr);
     }
     

@@ -6,7 +6,6 @@ package controladores;
 
 import Common.Observable;
 import Common.Observador;
-import Exceptions.EfectoException;
 import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import Exceptions.HayApuestasEnRondaActualException;
 import Exceptions.ServicioUsuariosException;
@@ -37,9 +36,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
     private final ArrayList<ModeloInfoCrupier> saldoJugadores;
     private final ArrayList<EstadisticaCrupier> estadisticas;
 
-    // Nota: le pasamos la Mesa al la vista y voy a sacar Fachada, si se precisa se instancia..
-    // porque para cargar listas y demas eventos de la mesa, se precisa saber de que mesa se esta hablando
-    //Entonces pasamos mesa
+ 
     public ControladorVistaMesaCrupier(Mesa mesa, IVistaMesaCrupier vista) {
         this.fachada = Fachada.getInstancia();
         this.vista = vista;
@@ -61,7 +58,6 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     public void cargarTotalApostadoEnPanel() {
 
-      //  vista.cargarTotalApostadoEnPanel(m.getBalance());
         vista.cargarTotalApostadoEnPanel(m.getTotalApostado());
     }
 
@@ -104,11 +100,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
     @Override
     public void actualizar(Observable origen, Object evento) {
         if (EnumEventos.LOGIN_JUGADOR_MESA.equals(evento)||EnumEventos.ABANDONAR_MESA.equals(evento) || EnumEventos.SE_PAGO.equals(evento)) {
-            // Ccrear Modelo que pase el nombre del jugador y el saldo para mostrar en la vista (esto se tiene que cargar en searvicios mesa), previa llamada a fachada
-
             cargarSaldoJugadores();
-
-            //ArrayList<ModeloListarJugadoresSaldo> jugadoresSaldo
         }
         if (EnumEventos.APUESTA_CREADA.equals(evento) || EnumEventos.APUESTA_MODIFICADA.equals(evento)) {
             cargarFichasEnMesa();
@@ -118,13 +110,14 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
             cargarNumeroDeApuestasEnPanel();
         }
         if (EnumEventos.PAGAR.equals(evento)) {
-              cargarFichasEnMesa();
-              cargarEstadisticasMesa();
+             cargarFichasEnMesa();
+             cargarEstadisticasMesa();
              cargarSaldoJugadores();
              cargarNumerosSorteados();
              cargarTotalApostadoEnPanel();
              cargarNumeroDeApuestasEnPanel();
              cargarNumeroDeRondaEnPanel();
+  
         }
          if (EnumEventos.LANZAR.equals(evento)) {
             cargarUltimoNumeroSorteado();
@@ -150,12 +143,6 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     }
 
-    ///El crupier solo podrá cerrar su mesa en el periodo que se
-    //encuentra la mesa bloqueada, luego de lanzar y antes de pagar.
-    //Al 
-    // Agregar estados en mesa (por ahora parametros)
-    // luego seria bueno traducirlos a STATE
-    // Avisar a la ventana de jugador que se cierra la mesa
     @Override
     public void cerrarMesa() {
         try {
@@ -163,7 +150,7 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
             fachada.logoutCrupier(m.getCrupier());
             fachada.sacarMesaActiva (m);
             vista.cerrarVentana();
-        } catch (ServicioUsuariosException | HayApuestasEnRondaActualException | EfectoException ex) {
+        } catch (ServicioUsuariosException | HayApuestasEnRondaActualException  ex) {
             Logger.getLogger(ControladorVistaMesaCrupier.class.getName()).log(Level.SEVERE, null, ex);
             vista.mostrarMensajeError(ex.getMessage());
         }
@@ -171,12 +158,9 @@ public class ControladorVistaMesaCrupier implements Observador, Escuchador {
 
     @Override
     public void lanzarYPagar() {
-        try {
+       
             m.lanzarYPagar();
             fachada.sePago();
-        } catch (EfectoException ex) {
-            vista.mostrarMensajeError(ex.getMessage());
-        }
     }
 
     public void cargarUltimoNumeroSorteado() {

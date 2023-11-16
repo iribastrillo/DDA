@@ -4,7 +4,6 @@
  */
 package dominio;
 
-import Exceptions.EfectoException;
 import Exceptions.NoSeHaSeleccionadoUnEfectoException;
 import dominio.efectos.CompletoEfecto;
 import dominio.efectos.ParcialEfecto;
@@ -139,14 +138,14 @@ public class Ronda {
         return liquidacion;
     }
 
-    public int getNumeroSorteado()  {     
+    public int getNumeroSorteado() {
         return numeroSorteado;
     }
-    
+
     int sacarNuevoNumero() {
-        this.numeroSorteado  = efecto.obtenerNumero(mesa);
-          return numeroSorteado;
-        }
+        this.numeroSorteado = efecto.obtenerNumero(mesa);
+        return numeroSorteado;
+    }
 
     public int getCantidadApuestas() {
         int cantidadApuestas = 0;
@@ -161,8 +160,6 @@ public class Ronda {
         Apuesta apuesta = this.getApuesta(idJugador);
         if (apuesta != null) {
             apuesta.apostar(casillero);
-            // ver de cambiar esto a un parametro que se va sumando
-//            setTotalApostado();
         } else {
             apuesta = new Apuesta(idJugador);
             apuesta.apostar(casillero);
@@ -200,7 +197,6 @@ public class Ronda {
 
     public void ActualizarEfecto(String efecto) throws NoSeHaSeleccionadoUnEfectoException {
 
-        // Habra que checkear si la ronda esta activa o bloqueada?,  o es instantaneo, cuando se lanza se pasa la ronda activa a la lista de rondas completadas?
         if (!efecto.isEmpty() || !efecto.isBlank()) {
             StrategyEfecto strategyEfecto = null;
             switch (efecto) {
@@ -214,7 +210,6 @@ public class Ronda {
                     strategyEfecto = new SimuladorEfecto(mesa);
             }
             this.efecto = strategyEfecto;
-            System.out.printf("\nEfecto seleccionado %s  y configurado a la ronda actual ", efecto);
         } else {
             throw new NoSeHaSeleccionadoUnEfectoException("No se ha seleccionado un efecto");
         }
@@ -251,16 +246,9 @@ public class Ronda {
                 mesa.getJugador(apu.getIdJugador()).acreditar(montoGanado);
                 // lo que pierde la casa
                 this.totalPerdido += montoGanado;
-                System.out.println("El Jugador le emboco al numero, apuesta directa...");
             }
-
-            // Si el casillero sorteado no es el 0, procedemos a checkear
-            // de que color o docena es, dependiendo de que tipos de apuestas estan activas en la mesa
             if (casilleroNumericoSorteado.uccode != 0) {
 
-                //Si esta habilitado el tipo de apuesta por colores
-                /// ver si el color del uuid que selecciono esta en la lista de los rojos
-                //ver el color del numero que salio
                 if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Colores)) {
                     //pago por si tambiensi  acierto al color 
                     Casillero casilleroColor = apu.getCasilleros().get((casilleroNumericoSorteado.getColor().equals("Rojo")) ? String.valueOf(43) : String.valueOf(44));
@@ -271,14 +259,11 @@ public class Ronda {
                         mesa.getJugador(apu.getIdJugador()).acreditar(montoGanado);
                         // lo que pierde la casa
                         this.totalPerdido += montoGanado;
-                        System.out.println("El jugador emboco al color, pagando...");
                     }
                 }
 
             }
-            //Si esta habilitado el tipo de apuesta por docenas
-            // me fijo en las apuestas si apostaron a alguna docena perteneciente a la docena del numero que salio,
-            // es decir si el numero que salio pertenece a la 1ra docena y hay una apuesta sobre el casillero 1ra docena ahi se paga
+
             if (mesa.listarTiposApuestaSeleccionados().contains(EnumTipoApuesta.Docenas)) {
                 Casillero casilleroDocena = apu.getCasilleros().get(String.valueOf(casilleroNumericoSorteado.getDocena()));
                 if (casilleroDocena != null) {
@@ -288,7 +273,6 @@ public class Ronda {
                     mesa.getJugador(apu.getIdJugador()).acreditar(montoGanado);
                     // lo que pierde la casa
                     this.totalPerdido += montoGanado;
-                    System.out.println("El jugador emboco a la docena, pagando...");
                 }
             }
             mesa.agregarEstadisticaDelJugador(apu.getIdJugador(), new EstadisticasJugador(
@@ -299,9 +283,8 @@ public class Ronda {
                     totalGanado - Math.abs(totalPerdido)
             ));
         }
-        // lo que gana la casa (Balance)
-        //this.totalGanado=this.totalApostado-this.totalPerdido;  // total perdido  es recoleccion (apuestas perdidas por los jugadores)
-        this.balance = this.totalApostado - this.totalPerdido;     // total ganado, es apuestas pagas liquidacion
+
+        this.balance = this.totalApostado - this.totalPerdido;
         this.balancePosterior = this.balanceAnterior + this.balance;
     }
 
@@ -328,11 +311,9 @@ public class Ronda {
         return casilleros;
     }
 
-    void copy(Ronda rondaActual)  {
+    void copy(Ronda rondaActual) {
         this.setApuestas(rondaActual.getApuestas());
         this.setNumeroSorteado(rondaActual.getNumeroSorteado());
     }
-
-    
 
 }

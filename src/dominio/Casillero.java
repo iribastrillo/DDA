@@ -13,14 +13,11 @@ public abstract class Casillero {
     protected int factorDePago;
     protected int uccode;
  
-   // private ArrayList<Integer> numerosRojos;
-    
+ 
     public Casillero (int monto, int uccode) {
         this.monto = monto;
         this.uccode = uccode;
-        this.factorDePago = 36; // Luego cambiamos para mapear con el UCCode;
-      //  this.numerosRojos=new ArrayList<>( Arrays.asList(1,3,5,7,9,12,14,16,18,21,23,25,27,30,32,34,36));
-        
+        this.factorDePago = 36; 
     }
 
     public float getFactorDePago() {

@@ -5,7 +5,6 @@
 package servicios;
 
 import Exceptions.ApuestaNoPermitidaException;
-import Exceptions.EfectoException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
@@ -87,12 +86,12 @@ public class ServicioMesas {
     public void abandonar(int idMesa, String idJugador) throws NoPuedeAbandonarMesaException {
         Mesa mesa = this.getMesa(idMesa);
         if (!mesa.puedeAbandonar(idJugador)) {
-            throw new NoPuedeAbandonarMesaException("No puedes abandonar si ya apostaste.");
+            throw new NoPuedeAbandonarMesaException("No puedes abandonar si ya apostaste.No puede abandonar hasta completar la ronda.");
         }
         mesa.removerJugador(idJugador);
     }
 
-    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException, ApuestaNoPermitidaException, EfectoException {
+    public void apostar(int uccode, int monto, int idMesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException, ApuestaNoPermitidaException {
         Mesa mesa = this.getMesa(idMesa);
         Jugador jugador = mesa.getJugador(idJugador);
         if (jugador.getSaldo() < monto) {

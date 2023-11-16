@@ -23,9 +23,6 @@ public class ParcialEfecto implements StrategyEfecto {
         this.mesa = m;
     }
 
-    //  Modo aleatorio parcial:
-    //la bola determina un valor aleatorio, pero asegurando de no repetir los últimos 3 valores. Por 
-//ejemplo, si en una ronda sale el número N, N no volverá a salir sorteado durante al menos las siguientes 3 rondas.
     @Override
     public int obtenerNumero(Mesa m) {
         List<Integer> numerosSorteados = mesa.getNumerosSorteados();

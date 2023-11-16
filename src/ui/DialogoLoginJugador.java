@@ -36,11 +36,8 @@ public class DialogoLoginJugador extends DialogoLogin {
 
     @Override
     protected void ejecutarCasoUsoInicial(Usuario usuario) {
-        System.out.println("DialogoLoginCrupier: Caso de uso inicial para usuario Croupier");
         new DialogoUnirse((java.awt.Frame) this.getParent(),false,super.fachada,(Jugador) usuario).setVisible(true);
-        
-//        TODO aca va un dialogo que muestra las mesas activas?
-//        new DialogoAgenda((java.awt.Frame) this.getParent(), false, (Usuario) usuario).setVisible(true);
+
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ServicioUsuarios {
         Jugador j = jugadores.get(u.getCedula());
         if (j == null) {
 
-            throw new ServicioUsuariosException("No se ha encontrado usuario en el sistema");
+            throw new ServicioUsuariosException("Credenciales incorrectas.");
 
         } else {
             if (j.getPassword().equals(u.getPassword()) && j.getCedula().equals(u.getCedula())) {
@@ -73,7 +73,7 @@ public class ServicioUsuarios {
         Crupier c = croupieres.get(u.getCedula());
         if (c == null) {
             //Si el crupier ya se encuentra como conectado se tiramos exepcion
-            throw new ServicioUsuariosException("No se ha encontrado usuario en el sistema");
+            throw new ServicioUsuariosException("Credenciales incorrectas.");
 
         } else {
             if (c.getPassword().equals(u.getPassword())) {
@@ -83,10 +83,10 @@ public class ServicioUsuarios {
 
                 } else {
                     //Si el crupier ya se encuentra como conectado se tiramos exepcion
-                    throw new ServicioUsuariosException("El usuario ya tiene una sesion activa en el sistema");
+                    throw new ServicioUsuariosException("Acceso denegado. El usuario ya tiene una sesión activa.");
                 }
             } else {
-                throw new ServicioUsuariosException("No se ha encontrado usuario para los datos ingresados");
+                throw new ServicioUsuariosException("Credenciales incorrectas.");
             }
         }
         return c;

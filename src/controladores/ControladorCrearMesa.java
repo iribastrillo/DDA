@@ -27,8 +27,6 @@ public class ControladorCrearMesa {
     public ControladorCrearMesa(Fachada fachada, IVistaCrearMesa vista) {
         this.fachada = fachada;
         this.vista = vista;
-        System.out.println("ControladorCrearMesa: Caso de Uso Crupier");
-
     }
 
     public void cargarListaTiposDeApuestas() {
@@ -64,7 +62,6 @@ public class ControladorCrearMesa {
         for (String tipoApuesta : tiposDeApuesta) {
             tiposDeApuestaSeleccionados.add(EnumTipoApuesta.valueOf(tipoApuesta));
         }
-//        System.out.printf("ControladorCrearMesa: Tipos de apuestas seleccionados %s",Arrays.toString(tiposDeApuestaSeleccionados.toArray()));
         Mesa mesaIniciada;
         try {
             mesaIniciada = fachada.iniciarMesa(c, tiposDeApuestaSeleccionados);

@@ -130,11 +130,9 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
         for (EnumTipoApuesta enumApuesta : listarTiposApuestaSeleccionados) {
             switch (enumApuesta) {
                 case Colores:
-                    // mostrarColor();
                     displayer.mostrarColor(r);
                     break;
                 case Docenas:
-                    // mostrarDocenas();
                     displayer.mostrarDocenas(r);
                     break;
             }
@@ -222,7 +220,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
 
         for (Casillero c : casilleros) {
             int montoActual = r.getApuesta(c.getUccode());
-            r.setApuesta(c.getUccode(), c.getMonto()+montoActual);
+            r.setApuesta(c.getUccode(), c.getMonto() + montoActual);
         }
 
     }
@@ -235,7 +233,7 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     @Override
     public void cargarNumerosSorteados(String numerosSorteados) {
         this.lbl_ultimosLanzamientos.setText(numerosSorteados);
-     }
+    }
 
     @Override
     public void cargarEstadisticasMesa(ArrayList<EstadisticaCrupier> estadisticasCrupier) {
@@ -246,8 +244,6 @@ public class DialogoVentanaMesaCrupier extends javax.swing.JFrame implements IVi
     @Override
     public void cargarSaldoJugadores(ArrayList<ModeloInfoCrupier> saldoJugadores) {
         this.estadisticas.setJugadoresSaldo(saldoJugadores);
-     }
-    
-    
+    }
 
 }

@@ -28,7 +28,6 @@ public class App {
 
             datosPrueba.iniciar(f);
         } catch (UsuarioYaExisteException ex) {
-            System.out.println("Algun usuario ya existe");
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
 
         }

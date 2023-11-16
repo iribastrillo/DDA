@@ -1,1 +1,2 @@
-Se utilizo JDK 17 prara compilar esta version
+- Se utilizo JDK 17 prara compilar esta version
+- La documentacion esta en la carpeta Documentacion

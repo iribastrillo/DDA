@@ -78,18 +78,13 @@ public abstract class Usuario {
 
 
     private boolean esNombreValido() {
-        // TODO: Mejorar validacion
         return (!this.nombreCompleto.isEmpty());
     }
 
     private boolean esCedulaValida() {
-                // TODO: Mejorar validacion
-
         return !this.cedula.isEmpty();
     }
        private boolean esPasswordValida() {
-                // TODO: Mejorar validacion
-
         return !this.password.isEmpty();
     }
     

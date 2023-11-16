@@ -4,7 +4,6 @@
  */
 package dominio.efectos;
 
-import Exceptions.EfectoException;
 import dominio.Mesa;
 
 /**

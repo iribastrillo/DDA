@@ -9,7 +9,6 @@ import Exceptions.ApuestaNoPermitidaException;
 import servicios.ServicioMesas;
 import servicios.ServicioUsuarios;
 import Exceptions.CedulaUsuarioInvalidaException;
-import Exceptions.EfectoException;
 import Exceptions.MesaNoEncontradaException;
 import Exceptions.MontoIgualACeroException;
 import Exceptions.NoPuedeAbandonarMesaException;
@@ -94,7 +93,6 @@ public class Fachada extends Observable {
         servicioUsuarios.agregar(croupier);
     }
     
-    // Este metodo se usa en cargar datos 
     public void agregar(Mesa mesa) throws UsuarioYaExisteException {
         servicioMesas.agregar(mesa);
         avisar(EnumEventos.FACHADA_NUEVA_MESA_AGREGADA);
@@ -118,7 +116,6 @@ public class Fachada extends Observable {
         return servicioMesas.getMesa(mesa);
     }
 
-    // Agregar jugador a mesa
     public Mesa agregar(int id, Jugador jugador) throws MesaNoEncontradaException, UsuarioYaEstaEnLaMesaException {
 
         Mesa mesa = getServicioMesa().agregarJugador(id, jugador);
@@ -134,7 +131,7 @@ public class Fachada extends Observable {
         avisar (EnumEventos.ABANDONAR_MESA);
     }
 
-    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException, ApuestaNoPermitidaException, EfectoException {
+    public void apostar(int n, int monto, int mesa, String idJugador) throws NoTieneSaldoDisponibleException, MontoIgualACeroException, ApuestaNoPermitidaException {
         servicioMesas.apostar (n, monto, mesa,  idJugador);
     }
 

@@ -235,7 +235,6 @@ public class VentanaMesa extends javax.swing.JFrame {
                 @Override
                 public void celdaSeleccionada(int universalCellCode) {
                     int apuesta = Integer.valueOf(jTextField1.getText());
-                    System.out.println("Id de celda seleccionada: " + universalCellCode + ". Apuesta anterior: " + r.getApuesta(universalCellCode) + ". Apuesta nueva:" + apuesta);
                     r.setApuesta(universalCellCode, apuesta);
                 }
             });

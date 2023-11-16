@@ -6,7 +6,6 @@ package dominio;
 
 import Common.Observable;
 import Exceptions.ApuestaNoPermitidaException;
-import Exceptions.EfectoException;
 import Exceptions.UsuarioYaEstaEnLaMesaException;
 import Exceptions.HayApuestasEnRondaActualException;
 import dominio.modelosVista.EstadisticaCrupier;
@@ -102,7 +101,7 @@ public class Mesa extends Observable {
 
     public void agregarJugador(Jugador jugador) throws UsuarioYaEstaEnLaMesaException {
         if (jugadores.contains(jugador)) {
-            throw new UsuarioYaEstaEnLaMesaException("El usuario ya está en la mesa.");
+            throw new UsuarioYaEstaEnLaMesaException("El jugador ya participa de esta mesa.");
         }
         jugadores.add(jugador);
     }
@@ -152,10 +151,7 @@ public class Mesa extends Observable {
             ronda.agregarFichas(idJugador, monto, uccode);
         } else {
             ronda.apostar(idJugador, c);
-//            avisar(EnumEventos.APUESTA_CREADA);
         }
-
-//        ronda.apostar(idJugador, c);
         avisar(EnumEventos.APUESTA_CREADA);
 
     }
@@ -191,7 +187,7 @@ public class Mesa extends Observable {
         return rondaActual.getTotalApostado();
     }
 
-    public void cerrarYPagar() throws HayApuestasEnRondaActualException, EfectoException {
+    public void cerrarYPagar() throws HayApuestasEnRondaActualException {
         //checkear si no hay rondas activas, si hay tirar excepcion
         if (estado.equals(EnumEstados.BLOQUEADA)) {
             //pagar a jugadores 
@@ -210,8 +206,8 @@ public class Mesa extends Observable {
         return estadisticasCrupier;
     }
 
-    public void lanzarYPagar() throws EfectoException {
-        // generar el numero random desde la ronda
+    public void lanzarYPagar() {
+     
         switch (estado) {
             case ACTIVA:
                 // si la mesa esta activa se sortea el numero
@@ -237,24 +233,25 @@ public class Mesa extends Observable {
     }
 
     private void pagar(int numeroSorteado) {
-        // se crea un casillero cascaron para ver de que color es en caso de apuestas a color
+
         Casillero c = (numeroSorteado > 36) ? new CasilleroNoNumerico(-1, numeroSorteado) : new CasilleroNumerico(-1, numeroSorteado);
 
         this.rondaActual.pagarApuestas(c);
-        //guardar ronda actual y crear ronda nueva
+        
         guardarEstadisticasCrupier(this.rondaActual);
 
         Ronda rondaAGuardar = new Ronda(this, this.rondaActual.getBalancePosterior());
+        
         rondaAGuardar.copy(this.rondaActual);
+       
         this.rondas.add(rondaAGuardar);
 
         this.rondaActual = new Ronda(this, this.rondaActual.getBalancePosterior());
-        //se agrega el ultimo numero al inicio del array
+
         this.numerosSorteados.add(0, numeroSorteado);
     }
 
     private void guardarEstadisticasCrupier(Ronda ronda) {
-        //Se agrega la ultima estadistica de ronda al inicio del array
         estadisticasCrupier.add(0, new EstadisticaCrupier(ronda.getId(), ronda.getBalance(), ronda.getTotalApostado(), ronda.getBalanceAnterior(), ronda.getTotalPerdido(), ronda.getBalancePosterior()));
     }
 
@@ -297,7 +294,7 @@ public class Mesa extends Observable {
         return ocurrencias;
     }
 
-    public boolean permiteApuesta(int uccode, int monto, String idJugador) throws ApuestaNoPermitidaException, EfectoException {
+    public boolean permiteApuesta(int uccode, int monto, String idJugador) throws ApuestaNoPermitidaException {
         Ronda ronda = this.getRondaAnterior();
         boolean r = true;
         if (ronda != null) {

@@ -72,7 +72,7 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
 
     }
 
-    public void setDropdownEfectos(String[] efectos) {
+    public void setDropdownEfectos(String[] efectos) {   
         for (String e : efectos) {
             this.cb_efectos.addItem(e);
         }
@@ -224,22 +224,19 @@ public class PanelInfoCrupier extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtn_LanzarPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_LanzarPagarActionPerformed
-        // TODO add your handling code here:
         for(Escuchador e:escuchadores){
             e.lanzarYPagar();
         }
     }//GEN-LAST:event_jBtn_LanzarPagarActionPerformed
 
     private void jBtn_CerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CerrarMesaActionPerformed
-        // TODO add your handling code here:
          for (Escuchador e : escuchadores) {
             e.cerrarMesa();
         }
     }//GEN-LAST:event_jBtn_CerrarMesaActionPerformed
 
     private void cb_efectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_efectosActionPerformed
-        // TODO add your handling code here:
-        // Si la ronda esta bloqueada deshabilitar esta op[cion
+             
         String efecto = this.cb_efectos.getSelectedItem().toString();
         for (Escuchador e : escuchadores) {
             e.efectoSeleccionado(efecto);
